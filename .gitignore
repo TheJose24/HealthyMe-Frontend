@@ -1,17 +1,26 @@
-# See https://docs.github.com/get-started/getting-started-with-git/ignoring-files for more about ignoring files.
-
 # Compiled output
 /dist
 /tmp
 /out-tsc
 /bazel-out
 
-# Node
-/node_modules
-npm-debug.log
-yarn-error.log
+# Angular specific
+/.angular/cache
+/.angular/cli-lib
+/.sass-cache
 
-# IDEs and editors
+# Dependencies
+/node_modules
+
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.history/*
+
+# IDE - Other
 .idea/
 .project
 .classpath
@@ -20,23 +29,38 @@ yarn-error.log
 .settings/
 *.sublime-workspace
 
-# Visual Studio Code
-.vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
-.history/*
-
-# Miscellaneous
-/.angular/cache
-.sass-cache/
+# Misc
+/.sass-cache
 /connect.lock
 /coverage
 /libpeerconnection.log
 testem.log
 /typings
 
-# System files
+# System Files
 .DS_Store
 Thumbs.db
+
+# Debug logs
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+
+# Test coverage
+/coverage
+/.nyc_output
+
+# Environment files
+.env
+.env.local
+.env.*
+!.env.example
+
+# Build artifacts
+*.js.map
+*.css.map
+
+# Husky
+.husky/_
+.nx/cache
+.nx/workspace-data
