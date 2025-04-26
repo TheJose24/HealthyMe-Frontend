@@ -201,12 +201,14 @@ tipo(<módulo>): título descriptivo en minúsculas y sin punto final
 - Detalle 2
 - Etc.
 ```
+
+```plaintext
 feat(auth): implementar sistema de registro con verificación de email
 
 - Añadido formulario de registro con validación
 - Integración con servicio de envío de emails
 - Creada página de confirmación de registro
-```plaintext
+```
 
 ```plaintext
 fix(citas): corregir conflicto en la programación simultánea de horarios
