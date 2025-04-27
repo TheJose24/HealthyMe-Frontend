@@ -4,13 +4,22 @@
   "trailingComma": "es5",
   "printWidth": 100,
   "tabWidth": 2,
+  "useTabs": false,
   "semi": true,
   "bracketSpacing": true,
+  "bracketSameLine": false,
   "arrowParens": "avoid",
   "endOfLine": "lf",
   "htmlWhitespaceSensitivity": "css",
+  "quoteProps": "as-needed",
+  "embeddedLanguageFormatting": "auto",
+  "proseWrap": "preserve",
+  "vueIndentScriptAndStyle": false,
   "overrides": [
     { "files": "*.html", "options": { "parser": "html" } },
-    { "files": "*.component.html", "options": { "parser": "angular" } }
+    { "files": "*.component.html", "options": { "parser": "angular" } },
+    { "files": "*.md", "options": { "parser": "markdown" } },
+    { "files": "*.json", "options": { "parser": "json" } },
+    { "files": "*.ts", "options": { "parser": "typescript" } }
   ]
 }

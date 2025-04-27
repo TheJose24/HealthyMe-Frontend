@@ -11,6 +11,7 @@
         "plugin:@angular-eslint/template/process-inline-templates",
         "plugin:prettier/recommended"
       ],
+      "plugins": ["@typescript-eslint", "@angular-eslint", "unused-imports"],
       "rules": {
         "@angular-eslint/directive-selector": [
           "error",
@@ -24,17 +25,37 @@
         "@typescript-eslint/no-explicit-any": "warn",
         "@typescript-eslint/no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
         "@typescript-eslint/no-empty-function": "warn",
-        "prettier/prettier": [
-          "error",
-          {
-            "singleQuote": true,
-            "trailingComma": "es5",
-            "printWidth": 100,
-            "tabWidth": 2,
-            "semi": true,
-            "bracketSpacing": true
-          }
-        ]
+        "@typescript-eslint/explicit-member-accessibility": [
+          "warn",
+          { "accessibility": "explicit" }
+        ],
+        "@typescript-eslint/member-ordering": "warn",
+        "no-restricted-imports": ["error", { "patterns": ["../**/*/index"] }],
+        "@typescript-eslint/consistent-type-imports": "warn",
+        "@typescript-eslint/naming-convention": [
+          "warn",
+          { "selector": "interface", "format": ["PascalCase"], "prefix": ["I"] },
+          { "selector": "class", "format": ["PascalCase"] },
+          { "selector": "enum", "format": ["PascalCase"], "prefix": ["E"] },
+          { "selector": "typeAlias", "format": ["PascalCase"], "prefix": ["T"] }
+        ],
+        "@angular-eslint/contextual-lifecycle": "error",
+        "@angular-eslint/no-conflicting-lifecycle": "error",
+        "@angular-eslint/no-host-metadata-property": "error",
+        "@angular-eslint/no-input-rename": "error",
+        "@angular-eslint/no-inputs-metadata-property": "error",
+        "@angular-eslint/no-output-native": "error",
+        "@angular-eslint/no-output-on-prefix": "error",
+        "@angular-eslint/no-output-rename": "error",
+        "@angular-eslint/no-outputs-metadata-property": "error",
+        "@angular-eslint/use-lifecycle-interface": "error",
+        "@angular-eslint/use-pipe-transform-interface": "error",
+        "@angular-eslint/no-empty-lifecycle-method": "warn",
+        "unused-imports/no-unused-imports": "error",
+        "no-console": ["warn", { "allow": ["error", "warn"] }],
+        "max-len": ["warn", { "code": 140 }],
+        "arrow-parens": ["off"],
+        "prefer-arrow/prefer-arrow-functions": "off"
       }
     },
     {
@@ -46,7 +67,9 @@
       ],
       "rules": {
         "@angular-eslint/template/alt-text": "error",
-        "@angular-eslint/template/button-has-type": "warn"
+        "@angular-eslint/template/button-has-type": "warn",
+        "@angular-eslint/template/banana-in-box": "error",
+        "@angular-eslint/template/no-negated-async": "error"
       }
     }
   ]
