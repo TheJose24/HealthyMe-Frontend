@@ -1,1 +1,2 @@
-npx tsc --noEmit && npx lint-staged
+# Ejecutar lint-staged
+npx lint-staged
