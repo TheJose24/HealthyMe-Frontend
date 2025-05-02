@@ -1,0 +1,67 @@
+.logo-container {
+  transition: all 0.4s ease-in-out;
+}
+
+.logo-container * {
+  transition:
+    fill 0.4s ease-in-out,
+    stroke 0.4s ease-in-out;
+}
+
+/* ======= MODO CLARO ======= */
+.logo-light .main-cross rect {
+  fill: #2260ff;
+}
+
+.logo-light .organic-parts path {
+  fill: white;
+}
+
+.logo-light .organic-parts .leaf-center {
+  fill: #2260ff;
+}
+
+.logo-light .small-cross-container rect {
+  fill: white;
+}
+
+.logo-light .small-cross-container circle {
+  fill: url(#paint1_linear_1_823);
+}
+
+.logo-light .logo-text-main {
+  fill: url(#paint1_linear_1_823);
+}
+
+.logo-light .logo-text-small {
+  fill: #2260ff;
+}
+
+/* ======= MODO OSCURO ======= */
+.logo-dark .main-cross rect {
+  fill: white;
+}
+
+.logo-dark .organic-parts path {
+  fill: #2260ff;
+}
+
+.logo-dark .organic-parts .leaf-center {
+  fill: white;
+}
+
+.logo-dark .small-cross-container rect {
+  fill: #2260ff;
+}
+
+.logo-dark .small-cross-container circle {
+  fill: white;
+}
+
+.logo-dark .logo-text-main {
+  fill: white;
+}
+
+.logo-dark .logo-text-small {
+  fill: white;
+}
