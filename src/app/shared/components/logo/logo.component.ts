@@ -6,7 +6,7 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './logo.component.html',
-  styleUrl: './logo.component.css',
+  styleUrls: ['./logo.component.css'],
 })
 export class LogoComponent {
   @Input() public isDarkMode = false;

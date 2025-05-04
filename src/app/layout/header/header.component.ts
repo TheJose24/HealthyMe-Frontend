@@ -12,7 +12,7 @@ import { LogoComponent } from '../../shared/components/logo/logo.component';
 })
 export class HeaderComponent implements OnInit {
   public navigationItems = [
-    { label: 'Inicio', route: '/home' },
+    { label: 'Inicio', route: '/' },
     { label: 'Servicios', route: '/servicios' },
     { label: 'Busca tu doctor', route: '/doctores' },
     { label: 'Nosotros', route: '/nosotros' },
