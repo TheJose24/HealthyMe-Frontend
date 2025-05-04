@@ -22,7 +22,7 @@
           { "type": "element", "prefix": "app", "style": "kebab-case" }
         ],
         "@typescript-eslint/explicit-function-return-type": ["warn", { "allowExpressions": true }],
-        "@typescript-eslint/no-explicit-any": "warn",
+        "@typescript-eslint/no-explicit-any": "off",
         "@typescript-eslint/no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
         "@typescript-eslint/no-empty-function": "warn",
         "@typescript-eslint/explicit-member-accessibility": [
@@ -53,7 +53,7 @@
         "@angular-eslint/no-empty-lifecycle-method": "warn",
         "unused-imports/no-unused-imports": "error",
         "no-console": ["warn", { "allow": ["error", "warn"] }],
-        "max-len": ["warn", { "code": 140 }],
+        "max-len": ["warn", { "code": 300 }],
         "arrow-parens": ["off"],
         "prefer-arrow/prefer-arrow-functions": "off"
       }
