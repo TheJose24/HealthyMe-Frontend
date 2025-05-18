@@ -1,0 +1,231 @@
+<div class="min-h-screen bg-gray-100 px-4 py-12 font-sans sm:px-6 lg:px-8">
+  <div class="mx-auto max-w-7xl">
+    <!-- Tarjeta principal (sin cambios) -->
+    <div class="mx-auto mb-16 max-w-4xl">
+      <div class="relative overflow-hidden rounded-xl shadow-lg">
+        <img
+          src="assets/images/contacto.jpg"
+          alt="Imagen de fondo contacto"
+          class="h-64 w-full object-cover object-center"
+        />
+        <div class="absolute inset-0 flex items-center justify-center bg-white bg-opacity-80">
+          <h1 class="animate-fade-in-down animate-duration-1000 text-4xl font-bold text-blue-600">
+            CONTACTO Y PREGUNTAS FRECUENTES
+          </h1>
+        </div>
+      </div>
+    </div>
+
+    <!-- Preguntas frecuentes (sección corregida) -->
+    <div class="mx-auto mb-16 max-w-4xl">
+      <h2
+        class="animate-fade-in animate-duration-1000 animate-delay-200 mb-8 text-center text-3xl font-bold text-gray-800"
+      >
+        PREGUNTAS FRECUENTES
+      </h2>
+      <div class="space-y-4">
+        <!-- Cambié los div por button + keyup.enter -->
+        <button
+          *ngFor="let faq of faqs; let i = index"
+          type="button"
+          class="w-full rounded-lg bg-white p-6 text-left shadow-md transition-transform duration-300 ease-in-out hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          (click)="toggleFaq(i)"
+          (keyup.enter)="toggleFaq(i)"
+        >
+          <div class="flex items-center justify-between">
+            <h3 class="text-xl font-semibold text-gray-800">{{ faq.pregunta }}</h3>
+            <span
+              class="text-gray-600 text-2xl transition-transform duration-300 transform {{
+                faq.abierto ? 'rotate-180' : ''
+              }}"
+              >{{ faq.abierto ? '-' : '+' }}</span
+            >
+          </div>
+          <div *ngIf="faq.abierto" class="animate-fade-in animate-duration-300 mt-4">
+            <p class="text-gray-600">{{ faq.respuesta }}</p>
+          </div>
+        </button>
+      </div>
+    </div>
+
+    <!-- Sección de contacto (sin cambios) -->
+    <div class="mx-auto max-w-7xl">
+      <h2
+        class="animate-fade-in animate-duration-1000 animate-delay-300 mb-8 text-center text-3xl font-bold text-gray-800"
+      >
+        CONTACTO
+      </h2>
+      <div class="flex flex-col gap-8 lg:flex-row">
+        <!-- Formulario (sin cambios) -->
+        <div class="lg:w-1/2">
+          <form
+            [formGroup]="contactForm"
+            (ngSubmit)="submitForm()"
+            class="animate-fade-in-left animate-duration-1000 rounded-lg bg-white p-8 shadow-md"
+          >
+            <div class="space-y-6">
+              <div>
+                <label for="nombre" class="mb-1 block text-sm font-medium text-gray-700"
+                  >Nombre completo</label
+                >
+                <input
+                  type="text"
+                  id="nombre"
+                  formControlName="nombre"
+                  class="w-full rounded-md border border-gray-300 px-4 py-2 shadow-sm transition duration-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-500"
+                  required
+                />
+                <div
+                  *ngIf="contactForm.get('nombre')?.invalid && contactForm.get('nombre')?.touched"
+                  class="mt-1 text-sm text-red-500"
+                >
+                  Nombre es requerido
+                </div>
+              </div>
+              <div>
+                <label for="email" class="mb-1 block text-sm font-medium text-gray-700"
+                  >Correo electrónico</label
+                >
+                <input
+                  type="email"
+                  id="email"
+                  formControlName="email"
+                  class="w-full rounded-md border border-gray-300 px-4 py-2 shadow-sm transition duration-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-500"
+                  required
+                />
+                <div
+                  *ngIf="contactForm.get('email')?.invalid && contactForm.get('email')?.touched"
+                  class="mt-1 text-sm text-red-500"
+                >
+                  Ingrese un email válido
+                </div>
+              </div>
+              <div>
+                <label for="telefono" class="mb-1 block text-sm font-medium text-gray-700"
+                  >Teléfono (opcional)</label
+                >
+                <input
+                  type="tel"
+                  id="telefono"
+                  formControlName="telefono"
+                  class="w-full rounded-md border border-gray-300 px-4 py-2 shadow-sm transition duration-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
+              <div>
+                <label for="mensaje" class="mb-1 block text-sm font-medium text-gray-700"
+                  >Mensaje</label
+                >
+                <textarea
+                  id="mensaje"
+                  formControlName="mensaje"
+                  rows="4"
+                  class="w-full rounded-md border border-gray-300 px-4 py-2 shadow-sm transition duration-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-500"
+                  required
+                ></textarea>
+                <div
+                  *ngIf="contactForm.get('mensaje')?.invalid && contactForm.get('mensaje')?.touched"
+                  class="mt-1 text-sm text-red-500"
+                >
+                  Mensaje es requerido
+                </div>
+              </div>
+              <div>
+                <button
+                  type="submit"
+                  [disabled]="contactForm.invalid"
+                  class="w-full transform rounded-md bg-blue-600 px-4 py-2 text-white transition duration-300 hover:scale-105 hover:bg-blue-700 disabled:bg-gray-400"
+                >
+                  Enviar mensaje
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+
+        <!-- Imagen (sin cambios) -->
+        <div class="lg:w-1/2">
+          <div
+            class="animate-float animate-duration-3000 animate-infinite h-full overflow-hidden rounded-lg shadow-lg"
+          >
+            <img
+              src="assets/images/preguntas.png"
+              alt="Imagen de contacto"
+              class="h-full min-h-[300px] w-full object-cover"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Estilos (sin cambios) -->
+<style>
+  .animate-fade-in-down {
+    animation: fadeInDown 1s ease-out;
+  }
+  .animate-fade-in {
+    animation: fadeIn 1s ease-out;
+  }
+  .animate-fade-in-left {
+    animation: fadeInLeft 1s ease-out;
+  }
+  .animate-float {
+    animation: float 3s ease-in-out infinite;
+  }
+  @keyframes fadeInDown {
+    from {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  @keyframes fadeInLeft {
+    from {
+      opacity: 0;
+      transform: translateX(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+  @keyframes float {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+  .animate-duration-300 {
+    animation-duration: 300ms;
+  }
+  .animate-duration-1000 {
+    animation-duration: 1000ms;
+  }
+  .animate-duration-3000 {
+    animation-duration: 3000ms;
+  }
+  .animate-delay-200 {
+    animation-delay: 200ms;
+  }
+  .animate-delay-300 {
+    animation-delay: 300ms;
+  }
+  .animate-infinite {
+    animation-iteration-count: infinite;
+  }
+</style>
