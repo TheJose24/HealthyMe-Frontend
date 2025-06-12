@@ -18,12 +18,14 @@ export const routes: Routes = [
           import('./pages/servicios/servicios.component').then(c => c.ServiciosComponent),
         title: 'Servicios',
       },
+      */
       {
         path: 'doctores',
         loadComponent: () =>
           import('./pages/doctores/doctores.component').then(c => c.DoctoresComponent),
         title: 'Busca tu doctor',
       },
+      /*
       {
         path: 'nosotros',
         loadComponent: () =>
