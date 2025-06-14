@@ -1,0 +1,20 @@
+services:
+  healthyme-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - '8097:80'
+    container_name: angular_healthyme
+    restart: unless-stopped
+    networks:
+      - healthyme-network
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 512M
+
+networks:
+  healthyme-network:
+    driver: bridge
