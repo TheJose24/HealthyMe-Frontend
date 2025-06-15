@@ -12,6 +12,15 @@ export const routes: Routes = [
         pathMatch: 'full',
         title: 'Inicio',
       },
+      {
+        path: 'libro-reclamaciones',
+        loadComponent: () =>
+          import('./pages/libro-reclamaciones/libro-reclamaciones.component').then(
+            c => c.LibroReclamacionesComponent
+          ),
+        title: 'Libro de Reclamaciones',
+      },
+
       /*{
         path: 'servicios',
         loadComponent: () =>

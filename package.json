@@ -29,7 +29,7 @@
     "remixicon": "^4.6.0",
     "rxjs": "~7.8.0",
     "scrollreveal": "^4.0.9",
-    "swiper": "^11.2.6",
+    "swiper": "^11.2.8",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.3"
   },
