@@ -1,19 +1,21 @@
 <div class="relative overflow-hidden bg-white dark:bg-gray-900">
-  <section class="relative h-80">
+  <section class="relative max-h-96">
     <picture>
       <img
-        class="h-auto w-auto -translate-y-28 dark:grayscale"
+        class="w-[100%] xl:-translate-y-[15%]"
         src="./assets/images/sedes-background.webp"
-        alt=""
+        alt="sedes-background"
       />
     </picture>
     <span
-      class="absolute bottom-5 left-[50%] -translate-x-1/2 text-6xl font-bold tracking-wider text-white"
+      class="absolute bottom-5 left-[50%] -translate-x-1/2 text-xl font-bold tracking-wider text-white sm:text-2xl md:text-5xl xl:text-6xl"
       >Nuestras Sedes</span
     >
   </section>
-  <section class="relative grid grid-cols-2 bg-white p-10 dark:bg-gray-800">
-    <div class="grid px-5 py-10">
+  <section
+    class="relative grid grid-cols-1 gap-4 bg-white p-10 dark:bg-gray-800 lg:grid-cols-2 lg:p-20"
+  >
+    <div class="grid">
       <div class="flex flex-col">
         <span class="py-4 text-4xl font-bold text-blue-500 dark:text-blue-500">Visitanos!</span>
         <span class="text-md text-gray-600 dark:text-gray-200"
@@ -21,7 +23,7 @@
           pacientes</span
         >
       </div>
-      <div class="grid grid-cols-2 space-x-5">
+      <div class="grid grid-cols-1 gap-4 py-8 md:grid-cols-2">
         <div
           class="flex flex-col rounded-3xl bg-blue-50 p-4 drop-shadow-xl duration-500 hover:scale-105 dark:bg-gray-700"
         >
@@ -49,11 +51,11 @@
         </div>
       </div>
     </div>
-    <div class="flex px-5 py-10">
+    <div class="flex">
       <iframe
-        class="rounded-2xl border border-blue-200 drop-shadow-xl duration-500 hover:scale-105 dark:grayscale"
+        class="rounded-2xl border border-blue-200 drop-shadow-xl duration-500 hover:scale-105"
         src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1950.6568446159597!2d-77.01854231799294!3d-12.090664469834659!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9105c87b88720717%3A0xbe5951bf11dea58c!2sAv.%20Javier%20Prado%20Este%201066%2C%20San%20Isidro%2015036!5e0!3m2!1ses-419!2spe!4v1749944132827!5m2!1ses-419!2spe"
-        width="600"
+        width="100%"
         height="450"
         allowfullscreen=""
         loading="lazy"
