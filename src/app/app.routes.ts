@@ -35,6 +35,11 @@ export const routes: Routes = [
         loadChildren: () => import('./pages/citas/citas.routes').then(r => r.citasRoutes),
       },*/
       {
+        path: 'sedes',
+        loadComponent: () => import('./pages/sedes/sedes.component').then(c => c.SedesComponent),
+        title: 'Nuestras Sedes',
+      },
+      {
         path: '404',
         loadComponent: () =>
           import('./pages/not-found/not-found.component').then(c => c.NotFoundComponent),
