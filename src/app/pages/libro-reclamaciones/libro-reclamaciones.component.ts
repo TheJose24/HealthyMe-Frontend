@@ -1,8 +1,12 @@
 import { Component } from '@angular/core';
 import type { OnInit, AfterViewInit } from '@angular/core';
 import { CommonModule, NgIf } from '@angular/common';
-import { ReactiveFormsModule, Validators } from '@angular/forms';
-import type { FormGroup, FormBuilder } from '@angular/forms';
+
+// eslint-disable-next-line @typescript-eslint/consistent-type-imports
+import { FormBuilder, Validators } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
+import type { FormGroup } from '@angular/forms';
+
 import ScrollReveal from 'scrollreveal';
 
 @Component({
@@ -29,13 +33,12 @@ export class LibroReclamacionesComponent implements OnInit, AfterViewInit {
   ];
   public tiposRelacion: string[] = ['Titular', 'Familiar', 'Representante Legal', 'Amigo', 'Otro'];
 
-  // Getter para los controles del formulario (declarado antes de los métodos para el orden de miembros)
+  public constructor(private fb: FormBuilder) {} // 'private' porque solo se usa dentro de la clase
+
+  // Getter para los controles del formulario
   public get formControls(): FormGroup['controls'] {
     return this.reclamationForm.controls;
   }
-
-  // Constructor con modificador de accesibilidad
-  constructor(private fb: FormBuilder) {}
 
   // Métodos del ciclo de vida con modificador de accesibilidad
   public ngOnInit(): void {
@@ -124,16 +127,18 @@ export class LibroReclamacionesComponent implements OnInit, AfterViewInit {
   }
 
   public ngAfterViewInit(): void {
+    // Inicializa ScrollReveal después de que la vista ha sido renderizada
     setTimeout(() => {
+      // Pequeño retraso para asegurar que el DOM esté completamente listo
       ScrollReveal().reveal('.scroll-animate', {
         delay: 200,
         distance: '50px',
         origin: 'bottom',
-        interval: 100,
+        interval: 100, // Escalonar animaciones para elementos con la misma clase
         easing: 'ease-in-out',
         scale: 1,
         opacity: 0,
-        duration: 800,
+        duration: 800, // Duración de la animación
       });
     }, 0);
   }
