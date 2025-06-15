@@ -29,13 +29,13 @@ export class LibroReclamacionesComponent implements OnInit, AfterViewInit {
   ];
   public tiposRelacion: string[] = ['Titular', 'Familiar', 'Representante Legal', 'Amigo', 'Otro'];
 
-  // Getter para los controles del formulario
+  // Getter para los controles del formulario (declarado antes de los métodos para el orden de miembros)
   public get formControls(): FormGroup['controls'] {
     return this.reclamationForm.controls;
   }
 
   // Constructor con modificador de accesibilidad
-  constructor(private fb: FormBuilder) {} // 'private' para el solo uso dentro de la clase
+  constructor(private fb: FormBuilder) {}
 
   // Métodos del ciclo de vida con modificador de accesibilidad
   public ngOnInit(): void {
@@ -273,10 +273,10 @@ export class LibroReclamacionesComponent implements OnInit, AfterViewInit {
   public onSubmit(): void {
     this.reclamationForm.markAllAsTouched();
     if (this.reclamationForm.valid) {
-      // console.log('Formulario válido. Datos:', this.reclamationForm.value);
+      // console.log('Formulario válido. Datos:', this.reclamationForm.value); // Comentado por no-console rule
       alert('¡Reclamo enviado con éxito!');
     } else {
-      // console.log('Formulario inválido. Errores:', this.reclamationForm.errors);
+      // console.log('Formulario inválido. Errores:', this.reclamationForm.errors); // Comentado por no-console rule
       alert('Por favor, completa todos los campos requeridos y corrige los errores.');
     }
   }
