@@ -1,0 +1,1622 @@
+<section class="min-h-screen bg-gray-50 dark:bg-gray-900">
+  <div class="relative h-64 w-full overflow-hidden md:h-80 lg:h-96">
+    <img
+      src="/assets/images/libro-reclamaciones/reclamaciones-portada.png"
+      alt="Libro de Reclamaciones Banner"
+      class="absolute inset-0 h-full w-full object-cover object-center"
+      onerror="this.onerror=null;this.src='https://placehold.co/1200x400/C0E0FF/000000?text=Imagen+No+Disponible';"
+    />
+    <div
+      class="absolute inset-0 flex flex-col items-center justify-end bg-blue-500 bg-opacity-20 pb-8 md:pb-12 lg:pb-16"
+    >
+      <h1 class="mb-2 text-center text-3xl font-semibold text-black drop-shadow-lg md:text-4xl">
+        Libro de
+      </h1>
+      <h1
+        class="text-center text-5xl font-extrabold text-blue-600 drop-shadow-lg md:text-6xl lg:text-7xl"
+      >
+        Reclamaciones
+      </h1>
+    </div>
+  </div>
+
+  <div class="container mx-auto px-4 py-8 sm:px-6 md:py-12 lg:px-8">
+    <form [formGroup]="reclamationForm" (ngSubmit)="onSubmit()">
+      <!-- SECCIÓN 1: IDENTIFICACIÓN DEL USUARIO (PACIENTE) O TERCERO LEGITIMADO -->
+      <div class="scroll-animate mb-10">
+        <h2
+          class="mb-4 flex items-center px-4 text-xl font-bold text-blue-800 dark:text-blue-200 md:text-2xl"
+        >
+          <span
+            class="mr-3 inline-flex h-8 w-8 items-center justify-center rounded-full bg-blue-600 text-white"
+            >1</span
+          >
+          IDENTIFICACIÓN DEL USUARIO (PACIENTE) O TERCERO LEGITIMADO
+        </h2>
+        <div class="rounded-lg bg-blue-50 p-6 shadow-inner dark:bg-blue-900/20 md:p-10">
+          <div class="mb-6 grid grid-cols-1 gap-6 md:grid-cols-3">
+            <div>
+              <label
+                for="nombresUsuario"
+                class="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300"
+                >Nombres:</label
+              >
+              <input
+                type="text"
+                id="nombresUsuario"
+                formControlName="nombresUsuario"
+                class="mt-1 block w-full rounded-md border border-gray-300 px-4 py-2 shadow-sm transition-all duration-300 ease-in-out focus:border-blue-500 focus:outline-none focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
+                placeholder="Nombres"
+              />
+              <div
+                *ngIf="
+                  formControls['nombresUsuario'].invalid &&
+                  (formControls['nombresUsuario'].dirty || formControls['nombresUsuario'].touched)
+                "
+                class="mt-1 text-xs text-red-500"
+              >
+                Nombre es requerido.
+              </div>
+            </div>
+            <div>
+              <label
+                for="apellidoPaternoUsuario"
+                class="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300"
+                >Apellido paterno:</label
+              >
+              <input
+                type="text"
+                id="apellidoPaternoUsuario"
+                formControlName="apellidoPaternoUsuario"
+                class="mt-1 block w-full rounded-md border border-gray-300 px-4 py-2 shadow-sm transition-all duration-300 ease-in-out focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
+                placeholder="Apellido Paterno"
+              />
+              <div
+                *ngIf="
+                  formControls['apellidoPaternoUsuario'].invalid &&
+                  (formControls['apellidoPaternoUsuario'].dirty ||
+                    formControls['apellidoPaternoUsuario'].touched)
+                "
+                class="mt-1 text-xs text-red-500"
+              >
+                Apellido paterno es requerido.
+              </div>
+            </div>
+            <div>
+              <label
+                for="apellidoMaternoUsuario"
+                class="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300"
+                >Apellido materno:</label
+              >
+              <input
+                type="text"
+                id="apellidoMaternoUsuario"
+                formControlName="apellidoMaternoUsuario"
+                class="mt-1 block w-full rounded-md border border-gray-300 px-4 py-2 shadow-sm transition-all duration-300 ease-in-out focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
+                placeholder="Apellido Materno"
+              />
+              <div
+                *ngIf="
+                  formControls['apellidoMaternoUsuario'].invalid &&
+                  (formControls['apellidoMaternoUsuario'].dirty ||
+                    formControls['apellidoMaternoUsuario'].touched)
+                "
+                class="mt-1 text-xs text-red-500"
+              >
+                Apellido materno es requerido.
+              </div>
+            </div>
+          </div>
+
+          <h3 class="mb-4 text-lg font-semibold text-gray-800 dark:text-gray-200">Domicilio</h3>
+          <div class="mb-6 grid grid-cols-1 gap-6 md:grid-cols-3">
+            <div>
+              <label
+                for="departamentoUsuario"
+                class="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300"
+                >Departamento:</label
+              >
+              <select
+                id="departamentoUsuario"
+                formControlName="departamentoUsuario"
+                class="mt-1 block w-full rounded-md border border-gray-300 py-2 pl-3 pr-10 shadow-sm transition-all duration-300 ease-in-out focus:border-blue-500 focus:outline-none focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+              >
+                <option value="" disabled>Seleccione</option>
+                <option *ngFor="let dep of departamentos" [value]="dep">{{ dep }}</option>
+              </select>
+              <div
+                *ngIf="
+                  formControls['departamentoUsuario'].invalid &&
+                  (formControls['departamentoUsuario'].dirty ||
+                    formControls['departamentoUsuario'].touched)
+                "
+                class="mt-1 text-xs text-red-500"
+              >
+                Departamento es requerido.
+              </div>
+            </div>
+            <div>
+              <label
+                for="provinciaUsuario"
+                class="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300"
+                >Provincia:</label
+              >
+              <select
+                id="provinciaUsuario"
+                formControlName="provinciaUsuario"
+                class="mt-1 block w-full rounded-md border border-gray-300 py-2 pl-3 pr-10 shadow-sm transition-all duration-300 ease-in-out focus:border-blue-500 focus:outline-none focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+              >
+                <option value="" disabled>Seleccione</option>
+                <option *ngFor="let prov of provincias" [value]="prov">{{ prov }}</option>
+              </select>
+              <div
+                *ngIf="
+                  formControls['provinciaUsuario'].invalid &&
+                  (formControls['provinciaUsuario'].dirty ||
+                    formControls['provinciaUsuario'].touched)
+                "
+                class="mt-1 text-xs text-red-500"
+              >
+                Provincia es requerida.
+              </div>
+            </div>
+            <div>
+              <label
+                for="distritoUsuario"
+                class="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300"
+                >Distrito:</label
+              >
+              <select
+                id="distritoUsuario"
+                formControlName="distritoUsuario"
+                class="mt-1 block w-full rounded-md border border-gray-300 py-2 pl-3 pr-10 shadow-sm transition-all duration-300 ease-in-out focus:border-blue-500 focus:outline-none focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+              >
+                <option value="" disabled>Seleccione</option>
+                <option *ngFor="let dist of distritos" [value]="dist">{{ dist }}</option>
+              </select>
+              <div
+                *ngIf="
+                  formControls['distritoUsuario'].invalid &&
+                  (formControls['distritoUsuario'].dirty || formControls['distritoUsuario'].touched)
+                "
+                class="mt-1 text-xs text-red-500"
+              >
+                Distrito es requerido.
+              </div>
+            </div>
+          </div>
+
+          <!-- Campos de dirección con selector de tipo y campo de valor -->
+          <div class="mb-6 grid grid-cols-1 gap-6 md:grid-cols-2">
+            <!-- Calle/Av./Jr. -->
+            <div>
+              <!-- Se añade 'for' para asociar el label con el select de tipo de vía -->
+              <label
+                for="calleAvJrTipoUsuario"
+                class="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300"
+                >Calle/Av./Jr.:</label
+              >
+              <div class="flex space-x-2">
+                <!-- Se añade 'id' al select para la asociación con el label -->
+                <select
+                  id="calleAvJrTipoUsuario"
+                  formControlName="calleAvJrTipoUsuario"
+                  (change)="handleAddressTypeChange($event, 'calleAvJrValorUsuario')"
+                  class="mt-1 block w-1/3 rounded-md border border-gray-300 px-3 py-2 shadow-sm transition-all duration-300 ease-in-out focus:border-blue-500 focus:outline-none focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+                >
+                  <option value="" disabled>Tipo</option>
+                  <option *ngFor="let tipo of callesTipos" [value]="tipo">{{ tipo }}</option>
+                </select>
+                <input
+                  type="text"
+                  formControlName="calleAvJrValorUsuario"
+                  class="mt-1 block w-2/3 rounded-md border border-gray-300 px-4 py-2 shadow-sm transition-all duration-300 ease-in-out focus:border-blue-500 focus:outline-none focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
+                  [class.bg-gray-200]="formControls['calleAvJrValorUsuario'].disabled"
+                  [class.dark:bg-gray-600]="formControls['calleAvJrValorUsuario'].disabled && true"
+                  placeholder="Nombre de la vía"
+                />
+              </div>
+              <div
+                *ngIf="
+                  formControls['calleAvJrTipoUsuario'].invalid &&
+                  (formControls['calleAvJrTipoUsuario'].dirty ||
+                    formControls['calleAvJrTipoUsuario'].touched)
+                "
+                class="mt-1 text-xs text-red-500"
+              >
+                Tipo de vía es requerido.
+              </div>
+              <div
+                *ngIf="
+                  formControls['calleAvJrValorUsuario'].invalid &&
+                  (formControls['calleAvJrValorUsuario'].dirty ||
+                    formControls['calleAvJrValorUsuario'].touched)
+                "
+                class="mt-1 text-xs text-red-500"
+              >
+                Valor de la vía es requerido.
+              </div>
+            </div>
+            <!-- Nro./Mza. -->
+            <div>
+              <!-- Se añade 'for' para asociar el label con el select de tipo de número/manzana -->
+              <label
+                for="nroMzaTipoUsuario"
+                class="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300"
+                >Nro./Mza.:</label
+              >
+              <div class="flex space-x-2">
+                <!-- Se añade 'id' al select para la asociación con el label -->
+                <select
+                  id="nroMzaTipoUsuario"
+                  formControlName="nroMzaTipoUsuario"
+                  (change)="handleAddressTypeChange($event, 'nroMzaValorUsuario')"
+                  class="mt-1 block w-1/3 rounded-md border border-gray-300 px-3 py-2 shadow-sm transition-all duration-300 ease-in-out focus:border-blue-500 focus:outline-none focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+                >
+                  <option value="" disabled>Tipo</option>
+                  <option value="No aplica">No aplica</option>
+                  <option value="Nro.">Nro.</option>
+                  <option value="Mza.">Mza.</option>
+                </select>
+                <input
+                  type="text"
+                  formControlName="nroMzaValorUsuario"
+                  class="mt-1 block w-2/3 rounded-md border border-gray-300 px-4 py-2 shadow-sm transition-all duration-300 ease-in-out focus:border-blue-500 focus:outline-none focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
+                  [class.bg-gray-200]="formControls['nroMzaValorUsuario'].disabled"
+                  [class.dark:bg-gray-600]="formControls['nroMzaValorUsuario'].disabled && true"
+                  placeholder="Número/Manzana"
+                />
+              </div>
+              <div
+                *ngIf="
+                  formControls['nroMzaTipoUsuario'].invalid &&
+                  (formControls['nroMzaTipoUsuario'].dirty ||
+                    formControls['nroMzaTipoUsuario'].touched)
+                "
+                class="mt-1 text-xs text-red-500"
+              >
+                Tipo es requerido.
+              </div>
+              <div
+                *ngIf="
+                  formControls['nroMzaValorUsuario'].invalid &&
+                  (formControls['nroMzaValorUsuario'].dirty ||
+                    formControls['nroMzaValorUsuario'].touched)
+                "
+                class="mt-1 text-xs text-red-500"
+              >
+                Valor es requerido.
+              </div>
+            </div>
+          </div>
+
+          <div class="mb-6 grid grid-cols-1 gap-6 md:grid-cols-2">
+            <!-- Lote/Int -->
+            <div>
+              <!-- Se añade 'for' para asociar el label con el select de tipo de lote/interior -->
+              <label
+                for="loteIntTipoUsuario"
+                class="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300"
+                >Lote/Int:</label
+              >
+              <div class="flex space-x-2">
+                <!-- Se añade 'id' al select para la asociación con el label -->
+                <select
+                  id="loteIntTipoUsuario"
+                  formControlName="loteIntTipoUsuario"
+                  (change)="handleAddressTypeChange($event, 'loteIntValorUsuario')"
+                  class="mt-1 block w-1/3 rounded-md border border-gray-300 px-3 py-2 shadow-sm transition-all duration-300 ease-in-out focus:border-blue-500 focus:outline-none focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+                >
+                  <option value="" disabled>Tipo</option>
+                  <option value="No aplica">No aplica</option>
+                  <option value="Lote">Lote</option>
+                  <option value="Int.">Int.</option>
+                </select>
+                <input
+                  type="text"
+                  formControlName="loteIntValorUsuario"
+                  class="mt-1 block w-2/3 rounded-md border border-gray-300 px-4 py-2 shadow-sm transition-all duration-300 ease-in-out focus:border-blue-500 focus:outline-none focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
+                  [class.bg-gray-200]="formControls['loteIntValorUsuario'].disabled"
+                  [class.dark:bg-gray-600]="formControls['loteIntValorUsuario'].disabled && true"
+                  placeholder="Lote/Interior"
+                />
+              </div>
+              <div
+                *ngIf="
+                  formControls['loteIntTipoUsuario'].invalid &&
+                  (formControls['loteIntTipoUsuario'].dirty ||
+                    formControls['loteIntTipoUsuario'].touched)
+                "
+                class="mt-1 text-xs text-red-500"
+              >
+                Tipo es requerido.
+              </div>
+              <div
+                *ngIf="
+                  formControls['loteIntValorUsuario'].invalid &&
+                  (formControls['loteIntValorUsuario'].dirty ||
+                    formControls['loteIntValorUsuario'].touched)
+                "
+                class="mt-1 text-xs text-red-500"
+              >
+                Valor es requerido.
+              </div>
+            </div>
+            <!-- Urb./Coop./AAHH -->
+            <div>
+              <!-- Se añade 'for' para asociar el label con el select de tipo de urbanización -->
+              <label
+                for="urbCoopAahhTipoUsuario"
+                class="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300"
+                >Urb./Coop./AAHH:</label
+              >
+              <div class="flex space-x-2">
+                <!-- Se añade 'id' al select para la asociación con el label -->
+                <select
+                  id="urbCoopAahhTipoUsuario"
+                  formControlName="urbCoopAahhTipoUsuario"
+                  (change)="handleAddressTypeChange($event, 'urbCoopAahhValorUsuario')"
+                  class="mt-1 block w-1/3 rounded-md border border-gray-300 px-3 py-2 shadow-sm transition-all duration-300 ease-in-out focus:border-blue-500 focus:outline-none focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+                >
+                  <option value="" disabled>Tipo</option>
+                  <option value="No aplica">No aplica</option>
+                  <option value="Urb.">Urb.</option>
+                  <option value="Coop.">Coop.</option>
+                  <option value="AAHH">AAHH</option>
+                </select>
+                <input
+                  type="text"
+                  formControlName="urbCoopAahhValorUsuario"
+                  class="mt-1 block w-2/3 rounded-md border border-gray-300 px-4 py-2 shadow-sm transition-all duration-300 ease-in-out focus:border-blue-500 focus:outline-none focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
+                  [class.bg-gray-200]="formControls['urbCoopAahhValorUsuario'].disabled"
+                  [class.dark:bg-gray-600]="
+                    formControls['urbCoopAahhValorUsuario'].disabled && true
+                  "
+                  placeholder="Urbanización/Cooperativa/AAHH"
+                />
+              </div>
+              <div
+                *ngIf="
+                  formControls['urbCoopAahhTipoUsuario'].invalid &&
+                  (formControls['urbCoopAahhTipoUsuario'].dirty ||
+                    formControls['urbCoopAahhTipoUsuario'].touched)
+                "
+                class="mt-1 text-xs text-red-500"
+              >
+                Tipo es requerido.
+              </div>
+              <div
+                *ngIf="
+                  formControls['urbCoopAahhValorUsuario'].invalid &&
+                  (formControls['urbCoopAahhValorUsuario'].dirty ||
+                    formControls['urbCoopAahhValorUsuario'].touched)
+                "
+                class="mt-1 text-xs text-red-500"
+              >
+                Valor es requerido.
+              </div>
+            </div>
+          </div>
+
+          <div class="mb-6">
+            <label
+              for="referenciaDomicilioUsuario"
+              class="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300"
+              >Referencia de Domicilio:</label
+            >
+            <input
+              type="text"
+              id="referenciaDomicilioUsuario"
+              formControlName="referenciaDomicilioUsuario"
+              class="mt-1 block w-full rounded-md border border-gray-300 px-4 py-2 shadow-sm transition-all duration-300 ease-in-out focus:border-blue-500 focus:outline-none focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
+              placeholder="Ej: Frente a parque, al lado de la iglesia"
+            />
+          </div>
+
+          <h3 class="mb-4 text-lg font-semibold text-gray-800 dark:text-gray-200">
+            Tipo de documento
+          </h3>
+          <!-- Modificación: Envolver cada input de tipo radio y su label directamente en una etiqueta <label> -->
+          <div class="mb-6 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
+            <label
+              for="tipoDocRuc"
+              class="flex items-center text-sm font-medium text-gray-700 dark:text-gray-300"
+            >
+              <input
+                type="radio"
+                id="tipoDocRuc"
+                value="RUC"
+                formControlName="tipoDocumentoUsuario"
+                class="h-4 w-4 border-gray-300 text-blue-600 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:focus:ring-blue-600"
+              />
+              <span class="ml-2">RUC</span>
+            </label>
+            <label
+              for="tipoDocDni"
+              class="flex items-center text-sm font-medium text-gray-700 dark:text-gray-300"
+            >
+              <input
+                type="radio"
+                id="tipoDocDni"
+                value="DNI"
+                formControlName="tipoDocumentoUsuario"
+                class="h-4 w-4 border-gray-300 text-blue-600 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:focus:ring-blue-600"
+              />
+              <span class="ml-2">DNI</span>
+            </label>
+            <label
+              for="tipoDocPasaporte"
+              class="flex items-center text-sm font-medium text-gray-700 dark:text-gray-300"
+            >
+              <input
+                type="radio"
+                id="tipoDocPasaporte"
+                value="Pasaporte"
+                formControlName="tipoDocumentoUsuario"
+                class="h-4 w-4 border-gray-300 text-blue-600 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:focus:ring-blue-600"
+              />
+              <span class="ml-2">Pasaporte</span>
+            </label>
+            <label
+              for="tipoDocCex"
+              class="flex items-center text-sm font-medium text-gray-700 dark:text-gray-300"
+            >
+              <input
+                type="radio"
+                id="tipoDocCex"
+                value="CEX"
+                formControlName="tipoDocumentoUsuario"
+                class="h-4 w-4 border-gray-300 text-blue-600 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:focus:ring-blue-600"
+              />
+              <span class="ml-2">CEX</span>
+            </label>
+            <label
+              for="tipoDocPnac"
+              class="flex items-center text-sm font-medium text-gray-700 dark:text-gray-300"
+            >
+              <input
+                type="radio"
+                id="tipoDocPnac"
+                value="PNAC"
+                formControlName="tipoDocumentoUsuario"
+                class="h-4 w-4 border-gray-300 text-blue-600 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:focus:ring-blue-600"
+              />
+              <span class="ml-2">PNAC</span>
+            </label>
+            <label
+              for="tipoDocDocumentoExtranjero"
+              class="flex items-center text-sm font-medium text-gray-700 dark:text-gray-300"
+            >
+              <input
+                type="radio"
+                id="tipoDocDocumentoExtranjero"
+                value="Documento de identidad extranjero"
+                formControlName="tipoDocumentoUsuario"
+                class="h-4 w-4 border-gray-300 text-blue-600 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:focus:ring-blue-600"
+              />
+              <span class="ml-2">Documento de identidad extranjero</span>
+            </label>
+            <label
+              for="tipoDocCodigoUnico"
+              class="flex items-center text-sm font-medium text-gray-700 dark:text-gray-300"
+            >
+              <input
+                type="radio"
+                id="tipoDocCodigoUnico"
+                value="Código único de identificación"
+                formControlName="tipoDocumentoUsuario"
+                class="h-4 w-4 border-gray-300 text-blue-600 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:focus:ring-blue-600"
+              />
+              <span class="ml-2">Código único de identificación</span>
+            </label>
+            <label
+              for="tipoDocPermisoTemporal"
+              class="flex items-center text-sm font-medium text-gray-700 dark:text-gray-300"
+            >
+              <input
+                type="radio"
+                id="tipoDocPermisoTemporal"
+                value="Permiso temporal de permanencia"
+                formControlName="tipoDocumentoUsuario"
+                class="h-4 w-4 border-gray-300 text-blue-600 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:focus:ring-blue-600"
+              />
+              <span class="ml-2">Permiso temporal de permanencia</span>
+            </label>
+            <label
+              for="tipoDocOtro"
+              class="flex items-center text-sm font-medium text-gray-700 dark:text-gray-300"
+            >
+              <input
+                type="radio"
+                id="tipoDocOtro"
+                value="Otro"
+                formControlName="tipoDocumentoUsuario"
+                class="h-4 w-4 border-gray-300 text-blue-600 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:focus:ring-blue-600"
+              />
+              <span class="ml-2">Otro</span>
+            </label>
+          </div>
+          <div
+            *ngIf="
+              formControls['tipoDocumentoUsuario'].invalid &&
+              (formControls['tipoDocumentoUsuario'].dirty ||
+                formControls['tipoDocumentoUsuario'].touched)
+            "
+            class="mt-1 text-xs text-red-500"
+          >
+            Tipo de documento es requerido.
+          </div>
+
+          <div class="mb-6 grid grid-cols-1 gap-6 md:grid-cols-3">
+            <div>
+              <label
+                for="emailUsuario"
+                class="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300"
+                >E-mail:</label
+              >
+              <input
+                type="email"
+                id="emailUsuario"
+                formControlName="emailUsuario"
+                class="mt-1 block w-full rounded-md border border-gray-300 px-4 py-2 shadow-sm transition-all duration-300 ease-in-out focus:border-blue-500 focus:outline-none focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
+                placeholder="correo@ejemplo.com"
+              />
+              <div
+                *ngIf="
+                  formControls['emailUsuario'].invalid &&
+                  (formControls['emailUsuario'].dirty || formControls['emailUsuario'].touched)
+                "
+                class="mt-1 text-xs text-red-500"
+              >
+                Email es requerido y debe ser válido.
+              </div>
+            </div>
+            <div>
+              <label
+                for="telefonoUsuario"
+                class="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300"
+                >Teléfono:</label
+              >
+              <input
+                type="tel"
+                id="telefonoUsuario"
+                formControlName="telefonoUsuario"
+                class="mt-1 block w-full rounded-md border border-gray-300 px-4 py-2 shadow-sm transition-all duration-300 ease-in-out focus:border-blue-500 focus:outline-none focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
+                placeholder="Ej: 987654321"
+              />
+              <div
+                *ngIf="
+                  formControls['telefonoUsuario'].invalid &&
+                  (formControls['telefonoUsuario'].dirty || formControls['telefonoUsuario'].touched)
+                "
+                class="mt-1 text-xs text-red-500"
+              >
+                Teléfono es requerido.
+              </div>
+            </div>
+            <div>
+              <label
+                for="sexoUsuario"
+                class="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300"
+                >Sexo:</label
+              >
+              <select
+                id="sexoUsuario"
+                formControlName="sexoUsuario"
+                class="mt-1 block w-full rounded-md border border-gray-300 py-2 pl-3 pr-10 shadow-sm transition-all duration-300 ease-in-out focus:border-blue-500 focus:outline-none focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+              >
+                <option value="" disabled>Seleccione</option>
+                <option value="M">Masculino</option>
+                <option value="F">Femenino</option>
+                <option value="O">Otro</option>
+              </select>
+              <div
+                *ngIf="
+                  formControls['sexoUsuario'].invalid &&
+                  (formControls['sexoUsuario'].dirty || formControls['sexoUsuario'].touched)
+                "
+                class="mt-1 text-xs text-red-500"
+              >
+                Sexo es requerido.
+              </div>
+            </div>
+          </div>
+
+          <div class="mb-6 grid grid-cols-1 gap-6 md:grid-cols-2">
+            <div>
+              <label
+                for="numeroDocumentoUsuario"
+                class="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300"
+                >Número de documento:</label
+              >
+              <input
+                type="text"
+                id="numeroDocumentoUsuario"
+                formControlName="numeroDocumentoUsuario"
+                class="mt-1 block w-full rounded-md border border-gray-300 px-4 py-2 shadow-sm transition-all duration-300 ease-in-out focus:border-blue-500 focus:outline-none focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
+                placeholder="Número de documento"
+              />
+              <div
+                *ngIf="
+                  formControls['numeroDocumentoUsuario'].invalid &&
+                  (formControls['numeroDocumentoUsuario'].dirty ||
+                    formControls['numeroDocumentoUsuario'].touched)
+                "
+                class="mt-1 text-xs text-red-500"
+              >
+                Número de documento es requerido.
+              </div>
+            </div>
+            <div>
+              <label
+                for="fechaNacimientoUsuario"
+                class="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300"
+                >Fecha de nacimiento:</label
+              >
+              <input
+                type="date"
+                id="fechaNacimientoUsuario"
+                formControlName="fechaNacimientoUsuario"
+                class="mt-1 block w-full rounded-md border border-gray-300 px-4 py-2 shadow-sm transition-all duration-300 ease-in-out focus:border-blue-500 focus:outline-none focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+              />
+              <div
+                *ngIf="
+                  formControls['fechaNacimientoUsuario'].invalid &&
+                  (formControls['fechaNacimientoUsuario'].dirty ||
+                    formControls['fechaNacimientoUsuario'].touched)
+                "
+                class="mt-1 text-xs text-red-500"
+              >
+                Fecha de nacimiento es requerida.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SECCIÓN 2: IDENTIFICACIÓN DE QUIÉN PRESENTA EL RECLAMO -->
+      <div class="scroll-animate mb-10">
+        <h2
+          class="mb-4 flex items-center px-4 text-xl font-bold text-blue-800 dark:text-blue-200 md:text-2xl"
+        >
+          <span
+            class="mr-3 inline-flex h-8 w-8 items-center justify-center rounded-full bg-blue-600 text-white"
+            >2</span
+          >
+          IDENTIFICACIÓN DE QUIÉN PRESENTA EL RECLAMO
+          <span class="ml-3 flex items-center text-sm font-normal text-gray-600 dark:text-gray-400">
+            (En caso de ser el usuario afectado marque aquí:
+            <input
+              type="checkbox"
+              formControlName="esUsuarioAfectado"
+              class="ml-2 h-5 w-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:focus:ring-blue-600"
+            />
+            )
+          </span>
+        </h2>
+        <div class="rounded-lg bg-blue-50 p-6 shadow-inner dark:bg-blue-900/20 md:p-10">
+          <!-- Campos de esta sección, visibles si el checkbox NO está marcado -->
+          <div *ngIf="!isAffectedUserChecked">
+            <div class="mb-6 grid grid-cols-1 gap-6 md:grid-cols-3">
+              <div>
+                <label
+                  for="nombresReclamante"
+                  class="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300"
+                  >Nombres:</label
+                >
+                <input
+                  type="text"
+                  id="nombresReclamante"
+                  formControlName="nombresReclamante"
+                  class="mt-1 block w-full rounded-md border border-gray-300 px-4 py-2 shadow-sm transition-all duration-300 ease-in-out focus:border-blue-500 focus:outline-none focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
+                  placeholder="Nombres"
+                />
+                <div
+                  *ngIf="
+                    formControls['nombresReclamante'].invalid &&
+                    (formControls['nombresReclamante'].dirty ||
+                      formControls['nombresReclamante'].touched)
+                  "
+                  class="mt-1 text-xs text-red-500"
+                >
+                  Nombre es requerido.
+                </div>
+              </div>
+              <div>
+                <label
+                  for="apellidoPaternoReclamante"
+                  class="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300"
+                  >Apellido paterno:</label
+                >
+                <input
+                  type="text"
+                  id="apellidoPaternoReclamante"
+                  formControlName="apellidoPaternoReclamante"
+                  class="mt-1 block w-full rounded-md border border-gray-300 px-4 py-2 shadow-sm transition-all duration-300 ease-in-out focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
+                  placeholder="Apellido Paterno"
+                />
+                <div
+                  *ngIf="
+                    formControls['apellidoPaternoReclamante'].invalid &&
+                    (formControls['apellidoPaternoReclamante'].dirty ||
+                      formControls['apellidoPaternoReclamante'].touched)
+                  "
+                  class="mt-1 text-xs text-red-500"
+                >
+                  Apellido paterno es requerido.
+                </div>
+              </div>
+              <div>
+                <label
+                  for="apellidoMaternoReclamante"
+                  class="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300"
+                  >Apellido materno:</label
+                >
+                <input
+                  type="text"
+                  id="apellidoMaternoReclamante"
+                  formControlName="apellidoMaternoReclamante"
+                  class="mt-1 block w-full rounded-md border border-gray-300 px-4 py-2 shadow-sm transition-all duration-300 ease-in-out focus:border-blue-500 focus:outline-none focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
+                  placeholder="Apellido Materno"
+                />
+                <div
+                  *ngIf="
+                    formControls['apellidoMaternoReclamante'].invalid &&
+                    (formControls['apellidoMaternoReclamante'].dirty ||
+                      formControls['apellidoMaternoReclamante'].touched)
+                  "
+                  class="mt-1 text-xs text-red-500"
+                >
+                  Apellido materno es requerido.
+                </div>
+              </div>
+            </div>
+
+            <h3 class="mb-4 text-lg font-semibold text-gray-800 dark:text-gray-200">Domicilio</h3>
+            <div class="mb-6 grid grid-cols-1 gap-6 md:grid-cols-3">
+              <div>
+                <label
+                  for="departamentoReclamante"
+                  class="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300"
+                  >Departamento:</label
+                >
+                <select
+                  id="departamentoReclamante"
+                  formControlName="departamentoReclamante"
+                  class="mt-1 block w-full rounded-md border border-gray-300 py-2 pl-3 pr-10 shadow-sm transition-all duration-300 ease-in-out focus:border-blue-500 focus:outline-none focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+                >
+                  <option value="" disabled>Seleccione</option>
+                  <option *ngFor="let dep of departamentos" [value]="dep">{{ dep }}</option>
+                </select>
+                <div
+                  *ngIf="
+                    formControls['departamentoReclamante'].invalid &&
+                    (formControls['departamentoReclamante'].dirty ||
+                      formControls['departamentoReclamante'].touched)
+                  "
+                  class="mt-1 text-xs text-red-500"
+                >
+                  Departamento es requerido.
+                </div>
+              </div>
+              <div>
+                <label
+                  for="provinciaReclamante"
+                  class="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300"
+                  >Provincia:</label
+                >
+                <select
+                  id="provinciaReclamante"
+                  formControlName="provinciaReclamante"
+                  class="mt-1 block w-full rounded-md border border-gray-300 py-2 pl-3 pr-10 shadow-sm transition-all duration-300 ease-in-out focus:border-blue-500 focus:outline-none focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+                >
+                  <option value="" disabled>Seleccione</option>
+                  <option *ngFor="let prov of provincias" [value]="prov">{{ prov }}</option>
+                </select>
+                <div
+                  *ngIf="
+                    formControls['provinciaReclamante'].invalid &&
+                    (formControls['provinciaReclamante'].dirty ||
+                      formControls['provinciaReclamante'].touched)
+                  "
+                  class="mt-1 text-xs text-red-500"
+                >
+                  Provincia es requerida.
+                </div>
+              </div>
+              <div>
+                <label
+                  for="distritoReclamante"
+                  class="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300"
+                  >Distrito:</label
+                >
+                <select
+                  id="distritoReclamante"
+                  formControlName="distritoReclamante"
+                  class="mt-1 block w-full rounded-md border border-gray-300 py-2 pl-3 pr-10 shadow-sm transition-all duration-300 ease-in-out focus:border-blue-500 focus:outline-none focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+                >
+                  <option value="" disabled>Seleccione</option>
+                  <option *ngFor="let dist of distritos" [value]="dist">{{ dist }}</option>
+                </select>
+                <div
+                  *ngIf="
+                    formControls['distritoReclamante'].invalid &&
+                    (formControls['distritoReclamante'].dirty ||
+                      formControls['distritoReclamante'].touched)
+                  "
+                  class="mt-1 text-xs text-red-500"
+                >
+                  Distrito es requerido.
+                </div>
+              </div>
+            </div>
+
+            <!-- Nuevos campos de dirección con selector de tipo y campo de valor para Reclamante -->
+            <div class="mb-6 grid grid-cols-1 gap-6 md:grid-cols-2">
+              <!-- Calle/Av./Jr. Reclamante -->
+              <div>
+                <!-- Se añade 'for' para asociar el label con el select de tipo de vía -->
+                <label
+                  for="calleAvJrTipoReclamante"
+                  class="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300"
+                  >Calle/Av./Jr.:</label
+                >
+                <div class="flex space-x-2">
+                  <!-- Se añade 'id' al select para la asociación con el label -->
+                  <select
+                    id="calleAvJrTipoReclamante"
+                    formControlName="calleAvJrTipoReclamante"
+                    (change)="handleAddressTypeChange($event, 'calleAvJrValorReclamante')"
+                    class="mt-1 block w-1/3 rounded-md border border-gray-300 px-3 py-2 shadow-sm transition-all duration-300 ease-in-out focus:border-blue-500 focus:outline-none focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+                  >
+                    <option value="" disabled>Tipo</option>
+                    <option *ngFor="let tipo of callesTipos" [value]="tipo">{{ tipo }}</option>
+                  </select>
+                  <input
+                    type="text"
+                    formControlName="calleAvJrValorReclamante"
+                    class="mt-1 block w-2/3 rounded-md border border-gray-300 px-4 py-2 shadow-sm transition-all duration-300 ease-in-out focus:border-blue-500 focus:outline-none focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
+                    [class.bg-gray-200]="formControls['calleAvJrValorReclamante'].disabled"
+                    [class.dark:bg-gray-600]="
+                      formControls['calleAvJrValorReclamante'].disabled && true
+                    "
+                    placeholder="Nombre de la vía"
+                  />
+                </div>
+                <div
+                  *ngIf="
+                    formControls['calleAvJrTipoReclamante'].invalid &&
+                    (formControls['calleAvJrTipoReclamante'].dirty ||
+                      formControls['calleAvJrTipoReclamante'].touched)
+                  "
+                  class="mt-1 text-xs text-red-500"
+                >
+                  Tipo de vía es requerido.
+                </div>
+                <div
+                  *ngIf="
+                    formControls['calleAvJrValorReclamante'].invalid &&
+                    (formControls['calleAvJrValorReclamante'].dirty ||
+                      formControls['calleAvJrValorReclamante'].touched)
+                  "
+                  class="mt-1 text-xs text-red-500"
+                >
+                  Valor de la vía es requerido.
+                </div>
+              </div>
+              <!-- Nro./Mza. Reclamante -->
+              <div>
+                <!-- Se añade 'for' para asociar el label con el select de tipo de número/manzana -->
+                <label
+                  for="nroMzaTipoReclamante"
+                  class="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300"
+                  >Nro./Mza.:</label
+                >
+                <div class="flex space-x-2">
+                  <!-- Se añade 'id' al select para la asociación con el label -->
+                  <select
+                    id="nroMzaTipoReclamante"
+                    formControlName="nroMzaTipoReclamante"
+                    (change)="handleAddressTypeChange($event, 'nroMzaValorReclamante')"
+                    class="mt-1 block w-1/3 rounded-md border border-gray-300 px-3 py-2 shadow-sm transition-all duration-300 ease-in-out focus:border-blue-500 focus:outline-none focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+                  >
+                    <option value="" disabled>Tipo</option>
+                    <option value="No aplica">No aplica</option>
+                    <option value="Nro.">Nro.</option>
+                    <option value="Mza.">Mza.</option>
+                  </select>
+                  <input
+                    type="text"
+                    formControlName="nroMzaValorReclamante"
+                    class="mt-1 block w-2/3 rounded-md border border-gray-300 px-4 py-2 shadow-sm transition-all duration-300 ease-in-out focus:border-blue-500 focus:outline-none focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
+                    [class.bg-gray-200]="formControls['nroMzaValorReclamante'].disabled"
+                    [class.dark:bg-gray-600]="
+                      formControls['nroMzaValorReclamante'].disabled && true
+                    "
+                    placeholder="Número/Manzana"
+                  />
+                </div>
+                <div
+                  *ngIf="
+                    formControls['nroMzaTipoReclamante'].invalid &&
+                    (formControls['nroMzaTipoReclamante'].dirty ||
+                      formControls['nroMzaTipoReclamante'].touched)
+                  "
+                  class="mt-1 text-xs text-red-500"
+                >
+                  Tipo es requerido.
+                </div>
+                <div
+                  *ngIf="
+                    formControls['nroMzaValorReclamante'].invalid &&
+                    (formControls['nroMzaValorReclamante'].dirty ||
+                      formControls['nroMzaValorReclamante'].touched)
+                  "
+                  class="mt-1 text-xs text-red-500"
+                >
+                  Valor es requerido.
+                </div>
+              </div>
+            </div>
+
+            <div class="mb-6 grid grid-cols-1 gap-6 md:grid-cols-2">
+              <!-- Lote/Int Reclamante -->
+              <div>
+                <!-- Se añade 'for' para asociar el label con el select de tipo de lote/interior -->
+                <label
+                  for="loteIntTipoReclamante"
+                  class="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300"
+                  >Lote/Int:</label
+                >
+                <div class="flex space-x-2">
+                  <!-- Se añade 'id' al select para la asociación con el label -->
+                  <select
+                    id="loteIntTipoReclamante"
+                    formControlName="loteIntTipoReclamante"
+                    (change)="handleAddressTypeChange($event, 'loteIntValorReclamante')"
+                    class="mt-1 block w-1/3 rounded-md border border-gray-300 px-3 py-2 shadow-sm transition-all duration-300 ease-in-out focus:border-blue-500 focus:outline-none focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+                  >
+                    <option value="" disabled>Tipo</option>
+                    <option value="No aplica">No aplica</option>
+                    <option value="Lote">Lote</option>
+                    <option value="Int.">Int.</option>
+                  </select>
+                  <input
+                    type="text"
+                    formControlName="loteIntValorReclamante"
+                    class="mt-1 block w-2/3 rounded-md border border-gray-300 px-4 py-2 shadow-sm transition-all duration-300 ease-in-out focus:border-blue-500 focus:outline-none focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
+                    [class.bg-gray-200]="formControls['loteIntValorReclamante'].disabled"
+                    [class.dark:bg-gray-600]="
+                      formControls['loteIntValorReclamante'].disabled && true
+                    "
+                    placeholder="Lote/Interior"
+                  />
+                </div>
+                <div
+                  *ngIf="
+                    formControls['loteIntTipoReclamante'].invalid &&
+                    (formControls['loteIntTipoReclamante'].dirty ||
+                      formControls['loteIntTipoReclamante'].touched)
+                  "
+                  class="mt-1 text-xs text-red-500"
+                >
+                  Tipo es requerido.
+                </div>
+                <div
+                  *ngIf="
+                    formControls['loteIntValorReclamante'].invalid &&
+                    (formControls['loteIntValorReclamante'].dirty ||
+                      formControls['loteIntValorReclamante'].touched)
+                  "
+                  class="mt-1 text-xs text-red-500"
+                >
+                  Valor es requerido.
+                </div>
+              </div>
+              <!-- Urb./Coop./AAHH Reclamante -->
+              <div>
+                <!-- Se añade 'for' para asociar el label con el select de tipo de urbanización -->
+                <label
+                  for="urbCoopAahhTipoReclamante"
+                  class="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300"
+                  >Urb./Coop./AAHH:</label
+                >
+                <div class="flex space-x-2">
+                  <!-- Se añade 'id' al select para la asociación con el label -->
+                  <select
+                    id="urbCoopAahhTipoReclamante"
+                    formControlName="urbCoopAahhTipoReclamante"
+                    (change)="handleAddressTypeChange($event, 'urbCoopAahhValorReclamante')"
+                    class="mt-1 block w-1/3 rounded-md border border-gray-300 px-3 py-2 shadow-sm transition-all duration-300 ease-in-out focus:border-blue-500 focus:outline-none focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+                  >
+                    <option value="" disabled>Tipo</option>
+                    <option value="No aplica">No aplica</option>
+                    <option value="Urb.">Urb.</option>
+                    <option value="Coop.">Coop.</option>
+                    <option value="AAHH">AAHH</option>
+                  </select>
+                  <input
+                    type="text"
+                    formControlName="urbCoopAahhValorReclamante"
+                    class="mt-1 block w-2/3 rounded-md border border-gray-300 px-4 py-2 shadow-sm transition-all duration-300 ease-in-out focus:border-blue-500 focus:outline-none focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
+                    [class.bg-gray-200]="formControls['urbCoopAahhValorReclamante'].disabled"
+                    [class.dark:bg-gray-600]="
+                      formControls['urbCoopAahhValorReclamante'].disabled && true
+                    "
+                    placeholder="Urbanización/Cooperativa/AAHH"
+                  />
+                </div>
+                <div
+                  *ngIf="
+                    formControls['urbCoopAahhTipoReclamante'].invalid &&
+                    (formControls['urbCoopAahhTipoReclamante'].dirty ||
+                      formControls['urbCoopAahhTipoReclamante'].touched)
+                  "
+                  class="mt-1 text-xs text-red-500"
+                >
+                  Tipo es requerido.
+                </div>
+                <div
+                  *ngIf="
+                    formControls['urbCoopAahhValorReclamante'].invalid &&
+                    (formControls['urbCoopAahhValorReclamante'].dirty ||
+                      formControls['urbCoopAahhValorReclamante'].touched)
+                  "
+                  class="mt-1 text-xs text-red-500"
+                >
+                  Valor es requerido.
+                </div>
+              </div>
+            </div>
+
+            <div class="mb-6">
+              <label
+                for="referenciaDomicilioReclamante"
+                class="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300"
+                >Referencia de Domicilio:</label
+              >
+              <input
+                type="text"
+                id="referenciaDomicilioReclamante"
+                formControlName="referenciaDomicilioReclamante"
+                class="mt-1 block w-full rounded-md border border-gray-300 px-4 py-2 shadow-sm transition-all duration-300 ease-in-out focus:border-blue-500 focus:outline-none focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
+                placeholder="Ej: Frente a parque, al lado de la iglesia"
+              />
+            </div>
+
+            <h3 class="mb-4 text-lg font-semibold text-gray-800 dark:text-gray-200">
+              Tipo de documento
+            </h3>
+            <!-- Modificación: Envolver cada input de tipo radio y su label directamente en una etiqueta <label> -->
+            <div class="mb-6 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
+              <label
+                for="tipoDocRucR"
+                class="flex items-center text-sm font-medium text-gray-700 dark:text-gray-300"
+              >
+                <input
+                  type="radio"
+                  id="tipoDocRucR"
+                  value="RUC"
+                  formControlName="tipoDocumentoReclamante"
+                  class="h-4 w-4 border-gray-300 text-blue-600 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:focus:ring-blue-600"
+                />
+                <span class="ml-2">RUC</span>
+              </label>
+              <label
+                for="tipoDocDniR"
+                class="flex items-center text-sm font-medium text-gray-700 dark:text-gray-300"
+              >
+                <input
+                  type="radio"
+                  id="tipoDocDniR"
+                  value="DNI"
+                  formControlName="tipoDocumentoReclamante"
+                  class="h-4 w-4 border-gray-300 text-blue-600 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:focus:ring-blue-600"
+                />
+                <span class="ml-2">DNI</span>
+              </label>
+              <label
+                for="tipoDocPasaporteR"
+                class="flex items-center text-sm font-medium text-gray-700 dark:text-gray-300"
+              >
+                <input
+                  type="radio"
+                  id="tipoDocPasaporteR"
+                  value="Pasaporte"
+                  formControlName="tipoDocumentoReclamante"
+                  class="h-4 w-4 border-gray-300 text-blue-600 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:focus:ring-blue-600"
+                />
+                <span class="ml-2">Pasaporte</span>
+              </label>
+              <label
+                for="tipoDocCexR"
+                class="flex items-center text-sm font-medium text-gray-700 dark:text-gray-300"
+              >
+                <input
+                  type="radio"
+                  id="tipoDocCexR"
+                  value="CEX"
+                  formControlName="tipoDocumentoReclamante"
+                  class="h-4 w-4 border-gray-300 text-blue-600 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:focus:ring-blue-600"
+                />
+                <span class="ml-2">CEX</span>
+              </label>
+              <label
+                for="tipoDocPnacR"
+                class="flex items-center text-sm font-medium text-gray-700 dark:text-gray-300"
+              >
+                <input
+                  type="radio"
+                  id="tipoDocPnacR"
+                  value="PNAC"
+                  formControlName="tipoDocumentoReclamante"
+                  class="h-4 w-4 border-gray-300 text-blue-600 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:focus:ring-blue-600"
+                />
+                <span class="ml-2">PNAC</span>
+              </label>
+              <label
+                for="tipoDocDocumentoExtranjeroR"
+                class="flex items-center text-sm font-medium text-gray-700 dark:text-gray-300"
+              >
+                <input
+                  type="radio"
+                  id="tipoDocDocumentoExtranjeroR"
+                  value="Documento de identidad extranjero"
+                  formControlName="tipoDocumentoReclamante"
+                  class="h-4 w-4 border-gray-300 text-blue-600 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:focus:ring-blue-600"
+                />
+                <span class="ml-2">Documento de identidad extranjero</span>
+              </label>
+              <label
+                for="tipoDocCodigoUnicoR"
+                class="flex items-center text-sm font-medium text-gray-700 dark:text-gray-300"
+              >
+                <input
+                  type="radio"
+                  id="tipoDocCodigoUnicoR"
+                  value="Código único de identificación"
+                  formControlName="tipoDocumentoReclamante"
+                  class="h-4 w-4 border-gray-300 text-blue-600 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:focus:ring-blue-600"
+                />
+                <span class="ml-2">Código único de identificación</span>
+              </label>
+              <label
+                for="tipoDocPermisoTemporalR"
+                class="flex items-center text-sm font-medium text-gray-700 dark:text-gray-300"
+              >
+                <input
+                  type="radio"
+                  id="tipoDocPermisoTemporalR"
+                  value="Permiso temporal de permanencia"
+                  formControlName="tipoDocumentoReclamante"
+                  class="h-4 w-4 border-gray-300 text-blue-600 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:focus:ring-blue-600"
+                />
+                <span class="ml-2">Permiso temporal de permanencia</span>
+              </label>
+              <label
+                for="tipoDocOtroR"
+                class="flex items-center text-sm font-medium text-gray-700 dark:text-gray-300"
+              >
+                <input
+                  type="radio"
+                  id="tipoDocOtroR"
+                  value="Otro"
+                  formControlName="tipoDocumentoReclamante"
+                  class="h-4 w-4 border-gray-300 text-blue-600 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:focus:ring-blue-600"
+                />
+                <span class="ml-2">Otro</span>
+              </label>
+            </div>
+            <div
+              *ngIf="
+                formControls['tipoDocumentoReclamante'].invalid &&
+                (formControls['tipoDocumentoReclamante'].dirty ||
+                  formControls['tipoDocumentoReclamante'].touched)
+              "
+              class="mt-1 text-xs text-red-500"
+            >
+              Tipo de documento es requerido.
+            </div>
+
+            <div class="mb-6 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
+              <div>
+                <label
+                  for="tipoReclamante"
+                  class="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300"
+                  >Tipo de reclamante:</label
+                >
+                <select
+                  id="tipoReclamante"
+                  formControlName="tipoReclamante"
+                  class="mt-1 block w-full rounded-md border border-gray-300 py-2 pl-3 pr-10 shadow-sm transition-all duration-300 ease-in-out focus:border-blue-500 focus:outline-none focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+                >
+                  <option value="" disabled>Seleccione</option>
+                  <option *ngFor="let tipo of tiposReclamante" [value]="tipo">{{ tipo }}</option>
+                </select>
+                <div
+                  *ngIf="
+                    formControls['tipoReclamante'].invalid &&
+                    (formControls['tipoReclamante'].dirty || formControls['tipoReclamante'].touched)
+                  "
+                  class="mt-1 text-xs text-red-500"
+                >
+                  Tipo de reclamante es requerido.
+                </div>
+              </div>
+              <div>
+                <label
+                  for="emailReclamante"
+                  class="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300"
+                  >E-mail:</label
+                >
+                <input
+                  type="email"
+                  id="emailReclamante"
+                  formControlName="emailReclamante"
+                  class="mt-1 block w-full rounded-md border border-gray-300 px-4 py-2 shadow-sm transition-all duration-300 ease-in-out focus:border-blue-500 focus:outline-none focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
+                  placeholder="correo@ejemplo.com"
+                />
+                <div
+                  *ngIf="
+                    formControls['emailReclamante'].invalid &&
+                    (formControls['emailReclamante'].dirty ||
+                      formControls['emailReclamante'].touched)
+                  "
+                  class="mt-1 text-xs text-red-500"
+                >
+                  Email es requerido y debe ser válido.
+                </div>
+              </div>
+              <div>
+                <label
+                  for="telefonoReclamante"
+                  class="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300"
+                  >Teléfono:</label
+                >
+                <input
+                  type="tel"
+                  id="telefonoReclamante"
+                  formControlName="telefonoReclamante"
+                  class="mt-1 block w-full rounded-md border border-gray-300 px-4 py-2 shadow-sm transition-all duration-300 ease-in-out focus:border-blue-500 focus:outline-none focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
+                  placeholder="Ej: 987654321"
+                />
+                <div
+                  *ngIf="
+                    formControls['telefonoReclamante'].invalid &&
+                    (formControls['telefonoReclamante'].dirty ||
+                      formControls['telefonoReclamante'].touched)
+                  "
+                  class="mt-1 text-xs text-red-500"
+                >
+                  Teléfono es requerido.
+                </div>
+              </div>
+              <div>
+                <label
+                  for="sexoReclamante"
+                  class="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300"
+                  >Sexo:</label
+                >
+                <select
+                  id="sexoReclamante"
+                  formControlName="sexoReclamante"
+                  class="mt-1 block w-full rounded-md border border-gray-300 py-2 pl-3 pr-10 shadow-sm transition-all duration-300 ease-in-out focus:border-blue-500 focus:outline-none focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+                >
+                  <option value="" disabled>Seleccione</option>
+                  <option value="M">Masculino</option>
+                  <option value="F">Femenino</option>
+                  <option value="O">Otro</option>
+                </select>
+                <div
+                  *ngIf="
+                    formControls['sexoReclamante'].invalid &&
+                    (formControls['sexoReclamante'].dirty || formControls['sexoReclamante'].touched)
+                  "
+                  class="mt-1 text-xs text-red-500"
+                >
+                  Sexo es requerido.
+                </div>
+              </div>
+            </div>
+
+            <div class="mb-6 grid grid-cols-1 gap-6 md:grid-cols-2">
+              <div>
+                <label
+                  for="numeroDocumentoReclamante"
+                  class="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300"
+                  >Número de documento:</label
+                >
+                <input
+                  type="text"
+                  id="numeroDocumentoReclamante"
+                  formControlName="numeroDocumentoReclamante"
+                  class="mt-1 block w-full rounded-md border border-gray-300 px-4 py-2 shadow-sm transition-all duration-300 ease-in-out focus:border-blue-500 focus:outline-none focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
+                  placeholder="Número de documento"
+                />
+                <div
+                  *ngIf="
+                    formControls['numeroDocumentoReclamante'].invalid &&
+                    (formControls['numeroDocumentoReclamante'].dirty ||
+                      formControls['numeroDocumentoReclamante'].touched)
+                  "
+                  class="mt-1 text-xs text-red-500"
+                >
+                  Número de documento es requerido.
+                </div>
+              </div>
+              <div>
+                <label
+                  for="fechaNacimientoReclamante"
+                  class="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300"
+                  >Fecha de nacimiento:</label
+                >
+                <input
+                  type="date"
+                  id="fechaNacimientoReclamante"
+                  formControlName="fechaNacimientoReclamante"
+                  class="mt-1 block w-full rounded-md border border-gray-300 px-4 py-2 shadow-sm transition-all duration-300 ease-in-out focus:border-blue-500 focus:outline-none focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+                />
+                <div
+                  *ngIf="
+                    formControls['fechaNacimientoReclamante'].invalid &&
+                    (formControls['fechaNacimientoReclamante'].dirty ||
+                      formControls['fechaNacimientoReclamante'].touched)
+                  "
+                  class="mt-1 text-xs text-red-500"
+                >
+                  Fecha de nacimiento es requerida.
+                </div>
+              </div>
+            </div>
+            <div>
+              <label
+                for="tipoRelacionReclamante"
+                class="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300"
+                >Tipo de relación:</label
+              >
+              <select
+                id="tipoRelacionReclamante"
+                formControlName="tipoRelacionReclamante"
+                class="mt-1 block w-full rounded-md border border-gray-300 py-2 pl-3 pr-10 shadow-sm transition-all duration-300 ease-in-out focus:border-blue-500 focus:outline-none focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+              >
+                <option value="" disabled>Seleccione</option>
+                <option *ngFor="let tipo of tiposRelacion" [value]="tipo">{{ tipo }}</option>
+              </select>
+              <div
+                *ngIf="
+                  formControls['tipoRelacionReclamante'].invalid &&
+                  (formControls['tipoRelacionReclamante'].dirty ||
+                    formControls['tipoRelacionReclamante'].touched)
+                "
+                class="mt-1 text-xs text-red-500"
+              >
+                Tipo de relación es requerido.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SECCIÓN 3: DETALLE DEL RECLAMO -->
+      <div class="scroll-animate mb-10">
+        <h2
+          class="mb-4 flex items-center px-4 text-xl font-bold text-blue-800 dark:text-blue-200 md:text-2xl"
+        >
+          <span
+            class="mr-3 inline-flex h-8 w-8 items-center justify-center rounded-full bg-blue-600 text-white"
+            >3</span
+          >
+          DETALLE DEL RECLAMO
+        </h2>
+        <div class="rounded-lg bg-blue-50 p-6 shadow-inner dark:bg-blue-900/20 md:p-10">
+          <div class="mb-6 grid grid-cols-1 gap-6 md:grid-cols-3">
+            <div>
+              <label
+                for="fechaOcurrencia"
+                class="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300"
+                >Fecha de ocurrencia:</label
+              >
+              <input
+                type="date"
+                id="fechaOcurrencia"
+                formControlName="fechaOcurrencia"
+                class="mt-1 block w-full rounded-md border border-gray-300 px-4 py-2 shadow-sm transition-all duration-300 ease-in-out focus:border-blue-500 focus:outline-none focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+              />
+              <div
+                *ngIf="
+                  formControls['fechaOcurrencia'].invalid &&
+                  (formControls['fechaOcurrencia'].dirty || formControls['fechaOcurrencia'].touched)
+                "
+                class="mt-1 text-xs text-red-500"
+              >
+                Fecha de ocurrencia es requerida.
+              </div>
+            </div>
+            <div>
+              <label
+                for="sedeOcurrencia"
+                class="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300"
+                >Sede de ocurrencia:</label
+              >
+              <select
+                id="sedeOcurrencia"
+                formControlName="sedeOcurrencia"
+                class="mt-1 block w-full rounded-md border border-gray-300 py-2 pl-3 pr-10 shadow-sm transition-all duration-300 ease-in-out focus:border-blue-500 focus:outline-none focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+              >
+                <option value="" disabled>Seleccione</option>
+                <option value="Sede A">Sede A</option>
+                <option value="Sede B">Sede B</option>
+                <option value="Sede C">Sede C</option>
+              </select>
+              <div
+                *ngIf="
+                  formControls['sedeOcurrencia'].invalid &&
+                  (formControls['sedeOcurrencia'].dirty || formControls['sedeOcurrencia'].touched)
+                "
+                class="mt-1 text-xs text-red-500"
+              >
+                Sede de ocurrencia es requerida.
+              </div>
+            </div>
+            <div>
+              <label
+                for="tipoProductoServicio"
+                class="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300"
+                >Tipo Producto/Servicio:</label
+              >
+              <select
+                id="tipoProductoServicio"
+                formControlName="tipoProductoServicio"
+                class="mt-1 block w-full rounded-md border border-gray-300 py-2 pl-3 pr-10 shadow-sm transition-all duration-300 ease-in-out focus:border-blue-500 focus:outline-none focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+              >
+                <option value="" disabled>Seleccione</option>
+                <option value="Servicio Medico">Servicio Médico</option>
+                <option value="Producto Farmaceutico">Producto Farmacéutico</option>
+                <option value="Administrativo">Administrativo</option>
+              </select>
+              <div
+                *ngIf="
+                  formControls['tipoProductoServicio'].invalid &&
+                  (formControls['tipoProductoServicio'].dirty ||
+                    formControls['tipoProductoServicio'].touched)
+                "
+                class="mt-1 text-xs text-red-500"
+              >
+                Tipo de producto/servicio es requerido.
+              </div>
+            </div>
+          </div>
+
+          <div class="mb-6">
+            <label
+              for="descripcionReclamo"
+              class="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300"
+              >Descripción del reclamo:</label
+            >
+            <textarea
+              id="descripcionReclamo"
+              formControlName="descripcionReclamo"
+              rows="6"
+              class="mt-1 block w-full rounded-md border border-gray-300 px-4 py-2 shadow-sm transition-all duration-300 ease-in-out focus:border-blue-500 focus:outline-none focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
+              placeholder="Detalla aquí tu reclamo (máximo 1500 caracteres)"
+            ></textarea>
+            <p class="text-right text-xs text-gray-500 dark:text-gray-400">
+              Máximo 1500 caracteres
+            </p>
+            <div
+              *ngIf="
+                formControls['descripcionReclamo'].invalid &&
+                (formControls['descripcionReclamo'].dirty ||
+                  formControls['descripcionReclamo'].touched)
+              "
+              class="mt-1 text-xs text-red-500"
+            >
+              Descripción del reclamo es requerida y no debe exceder los 1500 caracteres.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SECCIÓN 4: AUTORIZO NOTIFICACIÓN DE RESULTADO DE RECLAMO A E-MAIL CONSIGNADO -->
+      <div class="scroll-animate mb-10">
+        <h2
+          class="mb-4 flex items-center px-4 text-xl font-bold text-blue-800 dark:text-blue-200 md:text-2xl"
+        >
+          <span
+            class="mr-3 inline-flex h-8 w-8 items-center justify-center rounded-full bg-blue-600 text-white"
+            >4</span
+          >
+          AUTORIZO NOTIFICACIÓN DE RESULTADO DE RECLAMO A E-MAIL CONSIGNADO
+        </h2>
+        <div class="rounded-lg bg-blue-50 p-6 shadow-inner dark:bg-blue-900/20 md:p-10">
+          <!-- Modificación: Envolver cada input de tipo radio y su label directamente en una etiqueta <label> -->
+          <div class="mb-6 flex items-center space-x-6">
+            <label
+              for="autorizaSi"
+              class="flex items-center text-sm font-medium text-gray-700 dark:text-gray-300"
+            >
+              <input
+                type="radio"
+                id="autorizaSi"
+                value="Si"
+                formControlName="autorizaNotificacionEmail"
+                class="h-4 w-4 border-gray-300 text-blue-600 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:focus:ring-blue-600"
+              />
+              <span class="ml-2">Sí</span>
+            </label>
+            <label
+              for="autorizaNo"
+              class="flex items-center text-sm font-medium text-gray-700 dark:text-gray-300"
+            >
+              <input
+                type="radio"
+                id="autorizaNo"
+                value="No"
+                formControlName="autorizaNotificacionEmail"
+                class="h-4 w-4 border-gray-300 text-blue-600 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:focus:ring-blue-600"
+              />
+              <span class="ml-2">No</span>
+            </label>
+          </div>
+          <div
+            *ngIf="
+              formControls['autorizaNotificacionEmail'].invalid &&
+              (formControls['autorizaNotificacionEmail'].dirty ||
+                formControls['autorizaNotificacionEmail'].touched)
+            "
+            class="mt-1 text-xs text-red-500"
+          >
+            Debe autorizar la notificación.
+          </div>
+
+          <p class="mb-6 text-sm text-gray-600 dark:text-gray-400">
+            Las IAFAS, IPRESS o UGIPRESS deben atender el reclamo en un plazo de 30 días hábiles.
+          </p>
+          <p class="mb-6 text-sm text-gray-600 dark:text-gray-400">
+            "Estimado usuario: Usted puede presentar su denuncia ante Susalud ante hechos o actos
+            que vulneren o pudieran vulnerar el derecho a la salud, o cuando no le hayan brindado un
+            servicio, prestación o coberturas solicitada o recibidas de las IAFAS o IPRESS, o que
+            dependan de la UGIPRESS pública, privada o mixtas. También ante la negativa de atención
+            de su reclamo, irregularidad en su tratamiento o disconformidad con el resultado del
+            mismo o hacer uso de los mecanismos alternativos de solución de controversias ante el
+            Centro de Conciliación y Arbitraje - CECONAR de SUSALUD"
+          </p>
+
+          <div class="mb-6 flex items-center">
+            <label
+              for="declaroDatosReales"
+              class="flex items-center text-sm font-medium text-gray-700 dark:text-gray-300"
+            >
+              <input
+                type="checkbox"
+                id="declaroDatosReales"
+                formControlName="declaroDatosReales"
+                class="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:focus:ring-blue-600"
+              />
+              <span class="ml-2">Declaro que los datos consignados son reales</span>
+            </label>
+          </div>
+          <div
+            *ngIf="
+              formControls['declaroDatosReales'].invalid &&
+              (formControls['declaroDatosReales'].dirty ||
+                formControls['declaroDatosReales'].touched)
+            "
+            class="mt-1 text-xs text-red-500"
+          >
+            Debe declarar que los datos consignados son reales.
+          </div>
+
+          <div class="mt-8 flex justify-center">
+            <button
+              type="submit"
+              class="transform rounded-full bg-blue-600 px-8 py-3 font-bold text-white shadow-lg transition duration-300 ease-in-out hover:scale-105 hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-800"
+            >
+              Registrar reclamo
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</section>
