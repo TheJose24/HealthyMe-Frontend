@@ -1,6 +1,6 @@
 <div class="relative">
   <section
-    class="grid min-h-[450px] grid-cols-1 gap-x-5 gap-y-5 bg-gradient-to-r from-blue-400 from-10% via-blue-500 via-50% to-sky-400 to-95% px-2 py-10 sm:px-8 md:grid-cols-2 lg:px-10 xl:px-32"
+    class="grid min-h-[500px] grid-cols-1 gap-x-5 gap-y-5 bg-gradient-to-b from-blue-400 via-blue-500 via-70% to-white to-100% px-2 py-10 dark:bg-gradient-to-b dark:from-gray-900 dark:to-gray-800 sm:px-8 md:grid-cols-2 lg:px-10 xl:px-32"
   >
     <div class="flex flex-col justify-center">
       <span
@@ -9,7 +9,7 @@
         Tu salud merece al mejor <strong class="text-indigo-700">especialista</strong>
       </span>
       <p
-        class="lg:text-md max-w-96 px-6 py-2 text-sm font-light text-white 2xl:max-w-[800px] 2xl:text-xl"
+        class="lg:text-md max-w-96 px-6 py-2 text-sm font-light text-gray-100 2xl:max-w-[800px] 2xl:text-xl"
       >
         Con expertos certificados y años de experiencia, tu salud está en las mejores manos.
       </p>
@@ -24,7 +24,7 @@
       />
     </div>
   </section>
-  <section class="flex p-10">
+  <section class="flex bg-white p-10 dark:bg-gray-800">
     <div class="container mx-auto px-4 py-8">
       <!-- Filtros -->
       <div class="mb-8">
@@ -44,21 +44,29 @@
       </div>
 
       <!-- Contador de resultados -->
-      <p class="mb-6 text-gray-600">Contamos con {{ doctoresFiltrados.length }} doctores</p>
+      <p class="mb-6 text-gray-600 dark:text-white">
+        Contamos con {{ doctoresFiltrados.length }} doctores
+      </p>
 
       <!-- Doctores -->
       <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
         <div
           *ngFor="let doctor of doctoresPaginados"
-          class="overflow-hidden rounded-2xl shadow-lg shadow-blue-200 transition-all duration-500 hover:scale-[1.02] hover:shadow-lg hover:shadow-blue-400"
+          class="overflow-hidden rounded-2xl shadow-lg shadow-blue-200 transition-all duration-500 hover:scale-[1.02] hover:shadow-lg hover:shadow-blue-400 dark:shadow-gray-200"
         >
-          <div class="flex justify-center bg-blue-50">
+          <div class="flex justify-center bg-sky-50 dark:bg-slate-500">
             <img class="h-96 py-2" src="{{ doctor.imagen }}" alt="{{ doctor.nombre }}" />
           </div>
           <div class="flex flex-col items-center justify-center p-6">
-            <h3 class="mb-2 text-xl font-bold text-blue-950">{{ doctor.nombre }}</h3>
-            <p class="mb-2 font-semibold text-blue-900">{{ doctor.especialidad }}</p>
-            <p class="text-center font-normal text-gray-400">{{ doctor.descripcion }}</p>
+            <h3 class="mb-2 text-xl font-bold text-blue-950 dark:text-white">
+              {{ doctor.nombre }}
+            </h3>
+            <p class="mb-2 font-semibold text-blue-900 dark:text-gray-300">
+              {{ doctor.especialidad }}
+            </p>
+            <p class="text-center font-normal text-gray-400 dark:text-blue-100">
+              {{ doctor.descripcion }}
+            </p>
           </div>
         </div>
       </div>
@@ -68,7 +76,7 @@
         <nav class="inline-flex">
           <button
             (click)="anterior()"
-            class="mx-1 px-4 py-2 text-lg font-extrabold text-blue-500"
+            class="mx-1 px-4 py-2 text-lg font-extrabold text-blue-500 dark:text-white"
             [disabled]="paginaActual === 1"
           >
             ←
@@ -77,7 +85,7 @@
           <button
             *ngFor="let pagina of [].constructor(totalPaginas); let i = index"
             (click)="cambiarPagina(i + 1)"
-            class="mx-1 rounded-lg px-4 py-2"
+            class="mx-1 rounded-lg px-4 py-2 dark:text-white"
             [class.bg-blue-500]="paginaActual === i + 1"
             [class.text-white]="paginaActual === i + 1"
           >
@@ -86,7 +94,7 @@
 
           <button
             (click)="siguiente()"
-            class="mx-1 px-4 py-2 text-lg font-extrabold text-blue-500"
+            class="mx-1 px-4 py-2 text-lg font-extrabold text-blue-500 dark:text-white"
             [disabled]="paginaActual === totalPaginas"
           >
             →
