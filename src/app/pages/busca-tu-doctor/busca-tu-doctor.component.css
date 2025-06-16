@@ -1,0 +1,13 @@
+img {
+  mask-image: linear-gradient(black 80%, transparent);
+}
+
+:host {
+  display: block;
+  overflow-x: hidden;
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
