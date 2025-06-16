@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import type { ElementRef } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { trigger, transition, style, animate, query, stagger } from '@angular/animations';
 
 @Component({
@@ -297,7 +298,7 @@ export class BuscaTuDoctorComponent {
   cambiarPagina(pagina: number) {
     setTimeout(() => {
       this.paginaActual = pagina;
-      this.scrollToTop();
+      this.scrollToElement();
     }, 50);
   }
 
@@ -305,7 +306,7 @@ export class BuscaTuDoctorComponent {
     if (this.paginaActual > 1) {
       setTimeout(() => {
         this.paginaActual--;
-        this.scrollToTop();
+        this.scrollToElement();
       }, 50);
     }
   }
@@ -314,15 +315,17 @@ export class BuscaTuDoctorComponent {
     if (this.paginaActual < this.totalPaginas) {
       setTimeout(() => {
         this.paginaActual++;
-        this.scrollToTop();
+        this.scrollToElement();
       }, 50);
     }
   }
 
-  private scrollToTop() {
-    window.scrollTo({
-      top: 0,
+  @ViewChild('listaDoctores') position!: ElementRef<HTMLElement>;
+
+  private scrollToElement() {
+    this.position.nativeElement.scrollIntoView({
       behavior: 'smooth',
+      block: 'start',
     });
   }
 }
