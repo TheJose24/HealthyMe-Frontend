@@ -38,11 +38,17 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./pages/nosotros/nosotros.component').then(c => c.NosotrosComponent),
         title: 'Nosotros',
+      },*/
+      {
+        path: 'citas/agendar',
+        loadComponent: () => import('./pages/citas/citas.component').then(r => r.CitasComponent),
+        title: 'Solicitar Cita',
       },
       {
-        path: 'citas',
-        loadChildren: () => import('./pages/citas/citas.routes').then(r => r.citasRoutes),
-      },*/
+        path: 'sedes',
+        loadComponent: () => import('./pages/sedes/sedes.component').then(c => c.SedesComponent),
+        title: 'Nuestras Sedes',
+      },
       {
         path: '404',
         loadComponent: () =>
