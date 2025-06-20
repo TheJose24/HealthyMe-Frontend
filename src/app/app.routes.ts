@@ -21,6 +21,12 @@ export const routes: Routes = [
         title: 'Libro de Reclamaciones',
       },
 
+      {
+        path: 'unidades-especializadas',
+        loadChildren: () =>
+          import('./pages/unidades-especializadas/unidades.routes').then(m => m.unidadesRoutes),
+        title: 'Unidades Especializadas',
+      },
       /*{
         path: 'servicios',
         loadComponent: () =>
