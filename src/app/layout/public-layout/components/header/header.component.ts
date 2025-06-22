@@ -2,7 +2,7 @@ import type { OnInit } from '@angular/core';
 import { Component, signal, effect, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-import { LogoComponent } from '../../shared/components/logo/logo.component';
+import { LogoComponent } from '../../../../shared/components/logo/logo.component';
 
 @Component({
   selector: 'app-header',
