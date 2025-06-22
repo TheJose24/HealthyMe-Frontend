@@ -1,0 +1,146 @@
+<ng-container *ngIf="unidad; else notFound">
+  <div class="min-h-screen bg-white dark:bg-gray-900">
+    <section
+      class="sr-hero-detail mx-auto grid max-w-6xl grid-cols-1 items-start gap-12 bg-white px-4 py-16 dark:bg-gray-900 lg:grid-cols-2 lg:px-0"
+    >
+      <div class="space-y-6">
+        <button
+          type="button"
+          (click)="goBack()"
+          class="text-blue-600 hover:underline dark:text-blue-300"
+        >
+          &larr; Volver
+        </button>
+
+        <h1 class="text-4xl font-bold text-gray-900 dark:text-white">
+          {{ unidad.title }}
+        </h1>
+        <p class="text-xl font-semibold text-blue-600 dark:text-blue-400">
+          {{ unidad.tagline }}
+        </p>
+
+        <div class="space-y-4 rounded-lg bg-blue-50 p-6 dark:bg-gray-800">
+          <p class="text-gray-800 dark:text-gray-100">{{ unidad.overview }}</p>
+          <ul class="space-y-2">
+            <li *ngFor="let obj of unidad.objectives" class="flex items-start space-x-3">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-5 w-5 flex-shrink-0 text-green-500 dark:text-green-400"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M5 13l4 4L19 7"
+                />
+              </svg>
+              <span class="text-gray-800 dark:text-gray-100">{{ obj }}</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="mt-8">
+          <h3 class="mb-4 text-lg font-semibold text-gray-900 dark:text-white">
+            Beneficios Adicionales
+          </h3>
+
+          <div class="space-y-3 rounded-lg bg-gray-50 p-6 dark:bg-gray-800">
+            <ul class="space-y-3">
+              <li *ngFor="let det of unidad.detailsList" class="flex items-start space-x-3">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="mt-1 h-5 w-5 flex-shrink-0 text-blue-600 dark:text-blue-400"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M9 5l7 7-7 7"
+                  />
+                </svg>
+                <span class="text-gray-800 dark:text-gray-200">{{ det }}</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div>
+          <h3 class="mb-2 text-lg font-semibold text-gray-900 dark:text-white">
+            Servicios Destacados
+          </h3>
+          <div class="flex flex-wrap gap-3">
+            <span
+              *ngFor="let ex of unidad.extras"
+              class="rounded-full bg-blue-600 px-4 py-1 text-sm font-medium text-white dark:bg-blue-400 dark:text-gray-900"
+            >
+              {{ ex }}
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="relative flex justify-center lg:justify-end">
+        <img
+          [src]="unidad.image2"
+          [alt]="unidad.title"
+          class="h-[800px] w-full rounded-lg object-cover shadow-lg"
+        />
+      </div>
+    </section>
+
+    <!-- STATS -->
+    <section
+      class="sr-stats mx-auto grid max-w-4xl grid-cols-1 gap-6 bg-white px-4 py-8 dark:bg-gray-900 sm:grid-cols-3"
+    >
+      <div *ngFor="let s of unidad.stats" class="space-y-1 text-center">
+        <p class="text-3xl font-bold text-blue-600 dark:text-blue-400">{{ s.value }}</p>
+        <p class="text-gray-700 dark:text-gray-300">{{ s.label }}</p>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="sr-faq mx-auto max-w-4xl space-y-6 bg-white px-4 py-12 dark:bg-gray-900">
+      <h2 class="text-2xl font-semibold text-gray-900 dark:text-white">Preguntas Frecuentes</h2>
+      <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+        <div
+          *ngFor="let f of unidad.faqs"
+          class="rounded-lg bg-blue-50 p-6 shadow dark:bg-gray-800"
+        >
+          <p class="mb-2 font-medium text-gray-900 dark:text-white">{{ f.question }}</p>
+          <p class="text-gray-700 dark:text-gray-300">{{ f.answer }}</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="sr-cta w-full bg-gradient-to-r from-blue-600 to-blue-500 py-16 text-white">
+      <div class="mx-auto flex max-w-4xl flex-col items-center gap-6 px-4">
+        <p class="text-center text-xl font-semibold">{{ unidad.ctaText }}</p>
+        <div class="flex flex-wrap justify-center gap-4">
+          <a
+            [routerLink]="unidad.ctaLink"
+            class="rounded-full bg-white px-6 py-3 font-medium text-blue-600 transition hover:bg-gray-100"
+          >
+            {{ unidad.ctaButton }}
+          </a>
+          <a
+            routerLink="/contacto"
+            class="rounded-full border border-white px-6 py-3 font-medium transition hover:bg-white/20"
+          >
+            Contactar
+          </a>
+        </div>
+      </div>
+    </section>
+  </div>
+</ng-container>
+
+<ng-template #notFound>
+  <p class="py-16 text-center text-red-600 dark:text-red-400">No encontramos esa unidad.</p>
+</ng-template>

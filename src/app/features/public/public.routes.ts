@@ -52,6 +52,27 @@ export const PUBLIC_ROUTES: Routes = [
         loadComponent: () => import('./pages/sedes/sedes.component').then(c => c.SedesComponent),
         title: 'Nuestras Sedes',
       },
+      {
+        path: 'unidades-especializadas',
+        title: 'Unidades Especializadas',
+        children: [
+          {
+            path: '',
+            loadComponent: () =>
+              import('./pages/unidades-especializadas/especializadas.component').then(
+                c => c.EspecialidadComponent
+              ),
+            title: 'Unidades Especializadas',
+          },
+          {
+            path: ':slug',
+            loadComponent: () =>
+              import('./pages/unidades-especializadas/detalle-unidad.component').then(
+                c => c.DetalleUnidadComponent
+              ),
+          },
+        ],
+      },
     ],
   },
 ];
