@@ -36,13 +36,13 @@ export const PUBLIC_ROUTES: Routes = [
           ),
         title: 'Busca tu doctor',
       },
-      /*
       {
         path: 'nosotros',
         loadComponent: () =>
           import('./pages/nosotros/nosotros.component').then(c => c.NosotrosComponent),
         title: 'Nosotros',
       },
+      /*
       {
         path: 'citas',
         loadChildren: () => import('./pages/citas/citas.routes').then(r => r.citasRoutes),
