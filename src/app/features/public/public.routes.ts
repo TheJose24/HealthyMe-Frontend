@@ -42,11 +42,11 @@ export const PUBLIC_ROUTES: Routes = [
           import('./pages/nosotros/nosotros.component').then(c => c.NosotrosComponent),
         title: 'Nosotros',
       },
-      /*
       {
-        path: 'citas',
-        loadChildren: () => import('./pages/citas/citas.routes').then(r => r.citasRoutes),
-      },*/
+        path: 'citas/agendar',
+        loadComponent: () => import('./pages/citas/citas.component').then(r => r.CitasComponent),
+        title: 'Solicitar Cita',
+      },
       {
         path: 'sedes',
         loadComponent: () => import('./pages/sedes/sedes.component').then(c => c.SedesComponent),
