@@ -73,6 +73,16 @@ export const PUBLIC_ROUTES: Routes = [
           },
         ],
       },
+      {
+        path: 'contacto',
+        loadComponent: () =>
+          import('./pages/contacto/contacto.component').then(c => c.ContactoComponent),
+        title: 'Contacto - HealthyMe',
+        data: {
+          description: 'Contacta con HealthyMe para agendar citas y resolver consultas médicas',
+          keywords: 'contacto, citas médicas, consultas, healthyme',
+        },
+      },
     ],
   },
 ];

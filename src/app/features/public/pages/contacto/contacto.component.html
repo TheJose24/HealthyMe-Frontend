@@ -1,0 +1,358 @@
+<div
+  class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800"
+>
+  <!-- Hero Section -->
+  <section class="hero-background relative overflow-hidden py-20">
+    <!-- Overlay gradiente -->
+    <div class="hero-gradient-overlay absolute inset-0"></div>
+
+    <!-- Overlay oscuro adicional -->
+    <div class="hero-dark-overlay absolute inset-0"></div>
+
+    <div class="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="text-center" [@fadeInUp]>
+        <h1
+          class="text-shadow text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl"
+        >
+          Contáctanos
+        </h1>
+        <p class="text-shadow-md mx-auto mt-6 max-w-2xl text-xl text-blue-100">
+          Estamos aquí para ayudarte. Contáctanos para agendar tu cita o resolver cualquier consulta
+          sobre nuestros servicios médicos.
+        </p>
+        <div class="mt-8 flex justify-center space-x-6">
+          <a
+            href="tel:+51987654321"
+            class="inline-flex items-center rounded-full bg-white/20 px-6 py-3 text-white shadow-lg backdrop-blur-sm transition hover:bg-white/30 hover:shadow-xl"
+          >
+            <i class="ri-phone-line mr-2"></i>
+            Llamar ahora
+          </a>
+          <a
+            href="https://wa.me/51987654321"
+            class="inline-flex items-center rounded-full bg-green-500 px-6 py-3 text-white shadow-lg transition hover:bg-green-600 hover:shadow-xl"
+          >
+            <i class="ri-whatsapp-line mr-2"></i>
+            WhatsApp
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Content -->
+  <div class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+    <!-- Contact Info Cards -->
+    <section class="mb-16" [@fadeInUp]>
+      <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+        <div
+          *ngFor="let info of contactInfo"
+          class="group relative overflow-hidden rounded-2xl bg-white p-6 shadow-lg transition-all duration-300 hover:-translate-y-2 hover:shadow-xl dark:bg-gray-800"
+        >
+          <div class="flex items-start space-x-4">
+            <div
+              [class]="info.color"
+              class="flex h-12 w-12 items-center justify-center rounded-xl text-white"
+            >
+              <i [class]="info.icono + ' text-xl'"></i>
+            </div>
+            <div class="flex-1">
+              <h3 class="font-semibold text-gray-900 dark:text-white">{{ info.titulo }}</h3>
+              <p class="mt-1 text-sm text-gray-600 dark:text-gray-300">{{ info.contenido }}</p>
+              <a
+                *ngIf="info.enlace"
+                [href]="info.enlace"
+                class="mt-2 inline-flex items-center text-sm font-medium text-blue-600 hover:text-blue-700 dark:text-blue-400"
+              >
+                Contactar
+                <i class="ri-external-link-line ml-1"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Form and Office Hours -->
+    <div class="grid gap-8 lg:grid-cols-3">
+      <!-- Contact Form -->
+      <div class="lg:col-span-2" [@fadeInUp]>
+        <div class="rounded-2xl bg-white p-8 shadow-lg dark:bg-gray-800">
+          <div class="mb-8">
+            <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Envíanos un mensaje</h2>
+            <p class="mt-2 text-gray-600 dark:text-gray-300">
+              Completa el formulario y nos pondremos en contacto contigo lo antes posible.
+            </p>
+          </div>
+
+          <!-- Success Message -->
+          <div
+            *ngIf="showSuccessMessage"
+            class="mb-6 rounded-lg border border-green-200 bg-green-50 p-4"
+          >
+            <div class="flex items-center">
+              <i class="ri-check-circle-line mr-3 text-2xl text-green-600"></i>
+              <div>
+                <h3 class="text-sm font-medium text-green-800">¡Mensaje enviado exitosamente!</h3>
+                <p class="mt-1 text-sm text-green-700">Te contactaremos pronto.</p>
+              </div>
+            </div>
+          </div>
+
+          <form [formGroup]="contactForm" (ngSubmit)="submitForm()" class="space-y-6">
+            <!-- Nombre y Email -->
+            <div class="grid gap-6 md:grid-cols-2">
+              <div>
+                <label
+                  for="nombre"
+                  class="block text-sm font-medium text-gray-700 dark:text-gray-300"
+                >
+                  Nombre completo *
+                </label>
+                <input
+                  type="text"
+                  id="nombre"
+                  formControlName="nombre"
+                  class="mt-1 block w-full rounded-lg border border-gray-300 px-4 py-3 shadow-sm transition focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:ring-opacity-20 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+                  placeholder="Tu nombre completo"
+                />
+                <p *ngIf="getFieldError('nombre')" class="mt-1 text-sm text-red-600">
+                  {{ getFieldError('nombre') }}
+                </p>
+              </div>
+
+              <div>
+                <label
+                  for="email"
+                  class="block text-sm font-medium text-gray-700 dark:text-gray-300"
+                >
+                  Correo electrónico *
+                </label>
+                <input
+                  type="email"
+                  id="email"
+                  formControlName="email"
+                  class="mt-1 block w-full rounded-lg border border-gray-300 px-4 py-3 shadow-sm transition focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:ring-opacity-20 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+                  placeholder="tu@email.com"
+                />
+                <p *ngIf="getFieldError('email')" class="mt-1 text-sm text-red-600">
+                  {{ getFieldError('email') }}
+                </p>
+              </div>
+            </div>
+
+            <!-- Teléfono y Tipo de Consulta -->
+            <div class="grid gap-6 md:grid-cols-2">
+              <div>
+                <label
+                  for="telefono"
+                  class="block text-sm font-medium text-gray-700 dark:text-gray-300"
+                >
+                  Teléfono
+                </label>
+                <input
+                  type="tel"
+                  id="telefono"
+                  formControlName="telefono"
+                  class="mt-1 block w-full rounded-lg border border-gray-300 px-4 py-3 shadow-sm transition focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:ring-opacity-20 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+                  placeholder="51987654321"
+                />
+                <p *ngIf="getFieldError('telefono')" class="mt-1 text-sm text-red-600">
+                  {{ getFieldError('telefono') }}
+                </p>
+              </div>
+
+              <div>
+                <label
+                  for="tipoConsulta"
+                  class="block text-sm font-medium text-gray-700 dark:text-gray-300"
+                >
+                  Tipo de consulta *
+                </label>
+                <select
+                  id="tipoConsulta"
+                  formControlName="tipoConsulta"
+                  class="mt-1 block w-full rounded-lg border border-gray-300 px-4 py-3 shadow-sm transition focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:ring-opacity-20 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+                >
+                  <option value="general">Consulta General</option>
+                  <option value="cita">Agendar Cita</option>
+                  <option value="urgencia">Urgencia Médica</option>
+                  <option value="seguro">Seguros</option>
+                  <option value="telemedicina">Telemedicina</option>
+                  <option value="otro">Otro</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Asunto -->
+            <div>
+              <label
+                for="asunto"
+                class="block text-sm font-medium text-gray-700 dark:text-gray-300"
+              >
+                Asunto *
+              </label>
+              <input
+                type="text"
+                id="asunto"
+                formControlName="asunto"
+                class="mt-1 block w-full rounded-lg border border-gray-300 px-4 py-3 shadow-sm transition focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:ring-opacity-20 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+                placeholder="Resumen de tu consulta"
+              />
+              <p *ngIf="getFieldError('asunto')" class="mt-1 text-sm text-red-600">
+                {{ getFieldError('asunto') }}
+              </p>
+            </div>
+
+            <!-- Mensaje -->
+            <div>
+              <label
+                for="mensaje"
+                class="block text-sm font-medium text-gray-700 dark:text-gray-300"
+              >
+                Mensaje *
+              </label>
+              <textarea
+                id="mensaje"
+                formControlName="mensaje"
+                rows="4"
+                class="mt-1 block w-full rounded-lg border border-gray-300 px-4 py-3 shadow-sm transition focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:ring-opacity-20 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+                placeholder="Describe tu consulta o mensaje..."
+              ></textarea>
+              <p *ngIf="getFieldError('mensaje')" class="mt-1 text-sm text-red-600">
+                {{ getFieldError('mensaje') }}
+              </p>
+            </div>
+
+            <!-- Términos -->
+            <div class="flex items-start space-x-3">
+              <input
+                type="checkbox"
+                id="aceptaTerminos"
+                formControlName="aceptaTerminos"
+                class="mt-1 h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+              />
+              <label for="aceptaTerminos" class="text-sm text-gray-600 dark:text-gray-300">
+                Acepto los
+                <a href="#" class="text-blue-600 hover:text-blue-700">términos y condiciones</a> y
+                la
+                <a href="#" class="text-blue-600 hover:text-blue-700">política de privacidad</a> *
+              </label>
+            </div>
+            <p *ngIf="getFieldError('aceptaTerminos')" class="text-sm text-red-600">
+              {{ getFieldError('aceptaTerminos') }}
+            </p>
+
+            <!-- Submit Button -->
+            <button
+              type="submit"
+              [disabled]="contactForm.invalid || isSubmitting"
+              class="w-full rounded-lg bg-blue-600 px-6 py-3 font-medium text-white shadow-lg transition hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-400"
+            >
+              <span *ngIf="!isSubmitting" class="flex items-center justify-center">
+                <i class="ri-send-plane-line mr-2"></i>
+                Enviar mensaje
+              </span>
+              <span *ngIf="isSubmitting" class="flex items-center justify-center">
+                <i class="ri-loader-4-line mr-2 animate-spin"></i>
+                Enviando...
+              </span>
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Office Hours -->
+      <div class="lg:col-span-1" [@fadeInUp]>
+        <div class="rounded-2xl bg-white p-6 shadow-lg dark:bg-gray-800">
+          <h3 class="mb-4 text-xl font-bold text-gray-900 dark:text-white">
+            <i class="ri-time-line mr-2 text-blue-600"></i>
+            Horarios de Atención
+          </h3>
+          <div class="space-y-3">
+            <div
+              *ngFor="let horario of officeHours"
+              class="flex items-center justify-between border-b border-gray-100 py-2 last:border-b-0 dark:border-gray-700"
+            >
+              <span class="text-sm font-medium text-gray-700 dark:text-gray-300">{{
+                horario.dia
+              }}</span>
+              <span
+                [class]="
+                  horario.activo
+                    ? 'text-green-600 dark:text-green-400'
+                    : 'text-red-600 dark:text-red-400'
+                "
+                class="text-sm font-medium"
+              >
+                {{ horario.horario }}
+              </span>
+            </div>
+          </div>
+
+          <div class="mt-6 rounded-lg bg-blue-50 p-4 dark:bg-blue-900/20">
+            <h4 class="font-semibold text-blue-900 dark:text-blue-100">Emergencias 24/7</h4>
+            <p class="mt-1 text-sm text-blue-700 dark:text-blue-300">
+              Para emergencias médicas, nuestro servicio está disponible las 24 horas.
+            </p>
+            <a
+              href="tel:+51987654321"
+              class="mt-2 inline-flex items-center text-sm font-medium text-blue-600 hover:text-blue-700"
+            >
+              <i class="ri-phone-line mr-1"></i>
+              Llamar emergencias
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FAQ Section -->
+    <section class="mt-16" [@fadeInUp]>
+      <div class="mb-12 text-center">
+        <h2 class="text-3xl font-bold text-gray-900 dark:text-white">Preguntas Frecuentes</h2>
+        <p class="mt-4 text-gray-600 dark:text-gray-300">
+          Encuentra respuestas a las consultas más comunes
+        </p>
+      </div>
+
+      <div class="mx-auto max-w-4xl">
+        <div class="space-y-4">
+          <div
+            *ngFor="let faq of faqs; let i = index"
+            class="overflow-hidden rounded-xl bg-white shadow-md dark:bg-gray-800"
+          >
+            <button
+              type="button"
+              (click)="toggleFaq(i)"
+              class="w-full px-6 py-4 text-left transition hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500 dark:hover:bg-gray-700"
+            >
+              <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                  <div
+                    class="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-100 dark:bg-blue-900"
+                  >
+                    <i [class]="faq.icono + ' text-blue-600 dark:text-blue-400'"></i>
+                  </div>
+                  <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+                    {{ faq.pregunta }}
+                  </h3>
+                </div>
+                <i
+                  [class]="faq.abierto ? 'ri-subtract-line' : 'ri-add-line'"
+                  class="text-xl text-gray-500 transition-transform"
+                ></i>
+              </div>
+            </button>
+
+            <div [@slideDown]="faq.abierto ? 'open' : 'closed'">
+              <div class="px-6 pb-4">
+                <p class="leading-relaxed text-gray-600 dark:text-gray-300">{{ faq.respuesta }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
