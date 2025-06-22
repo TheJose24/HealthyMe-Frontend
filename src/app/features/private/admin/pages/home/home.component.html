@@ -1,0 +1,185 @@
+<div class="min-h-screen bg-gray-50 p-6 dark:bg-gray-900">
+  <!-- Header -->
+  <div class="mb-8">
+    <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Dashboard Administrativo</h1>
+    <p class="text-gray-600 dark:text-gray-300">Resumen general de HealthyMe</p>
+  </div>
+
+  <!-- Estadísticas Generales -->
+  <div class="mb-8 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-5">
+    <div class="rounded-lg bg-white p-6 shadow-lg dark:bg-gray-800">
+      <div class="flex items-center">
+        <div class="rounded-full bg-blue-100 p-3 dark:bg-blue-900">
+          <i class="ri-user-line text-2xl text-blue-600 dark:text-blue-400"></i>
+        </div>
+        <div class="ml-4">
+          <p class="text-sm font-medium text-gray-600 dark:text-gray-400">Total Pacientes</p>
+          <p class="text-2xl font-bold text-gray-900 dark:text-white">
+            {{ generalStats.totalPatients }}
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="rounded-lg bg-white p-6 shadow-lg dark:bg-gray-800">
+      <div class="flex items-center">
+        <div class="rounded-full bg-green-100 p-3 dark:bg-green-900">
+          <i class="ri-user-heart-line text-2xl text-green-600 dark:text-green-400"></i>
+        </div>
+        <div class="ml-4">
+          <p class="text-sm font-medium text-gray-600 dark:text-gray-400">Médicos</p>
+          <p class="text-2xl font-bold text-gray-900 dark:text-white">
+            {{ generalStats.totalDoctors }}
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="rounded-lg bg-white p-6 shadow-lg dark:bg-gray-800">
+      <div class="flex items-center">
+        <div class="rounded-full bg-purple-100 p-3 dark:bg-purple-900">
+          <i class="ri-calendar-check-line text-2xl text-purple-600 dark:text-purple-400"></i>
+        </div>
+        <div class="ml-4">
+          <p class="text-sm font-medium text-gray-600 dark:text-gray-400">Citas del Mes</p>
+          <p class="text-2xl font-bold text-gray-900 dark:text-white">
+            {{ generalStats.monthlyAppointments }}
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="rounded-lg bg-white p-6 shadow-lg dark:bg-gray-800">
+      <div class="flex items-center">
+        <div class="rounded-full bg-yellow-100 p-3 dark:bg-yellow-900">
+          <i class="ri-test-tube-line text-2xl text-yellow-600 dark:text-yellow-400"></i>
+        </div>
+        <div class="ml-4">
+          <p class="text-sm font-medium text-gray-600 dark:text-gray-400">Laboratorios</p>
+          <p class="text-2xl font-bold text-gray-900 dark:text-white">
+            {{ generalStats.laboratories }}
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="rounded-lg bg-white p-6 shadow-lg dark:bg-gray-800">
+      <div class="flex items-center">
+        <div class="rounded-full bg-red-100 p-3 dark:bg-red-900">
+          <i class="ri-hotel-bed-line text-2xl text-red-600 dark:text-red-400"></i>
+        </div>
+        <div class="ml-4">
+          <p class="text-sm font-medium text-gray-600 dark:text-gray-400">Salas</p>
+          <p class="text-2xl font-bold text-gray-900 dark:text-white">{{ generalStats.rooms }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Fila Principal de Gráficos -->
+  <div class="mb-8 grid grid-cols-1 gap-6 lg:grid-cols-2">
+    <!-- Nuevos Pacientes -->
+    <div class="rounded-lg bg-white p-6 shadow-lg dark:bg-gray-800">
+      <h2 class="mb-4 text-xl font-bold text-gray-900 dark:text-white">Nuevos Pacientes</h2>
+      <div class="h-64">
+        <canvas
+          baseChart
+          [data]="newPatientsChartData"
+          [options]="newPatientsChartOptions"
+          [type]="'bar'"
+        >
+        </canvas>
+      </div>
+    </div>
+
+    <!-- Balance Financiero -->
+    <div class="rounded-lg bg-white p-6 shadow-lg dark:bg-gray-800">
+      <h2 class="mb-4 text-xl font-bold text-gray-900 dark:text-white">Balance Financiero</h2>
+      <div class="h-64">
+        <canvas baseChart [data]="balanceChartData" [options]="balanceChartOptions" [type]="'line'">
+        </canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- Segunda Fila -->
+  <div class="mb-8 grid grid-cols-1 gap-6 lg:grid-cols-3">
+    <!-- Últimos Pagos -->
+    <div class="rounded-lg bg-white p-6 shadow-lg dark:bg-gray-800">
+      <h2 class="mb-4 text-xl font-bold text-gray-900 dark:text-white">Últimos Pagos</h2>
+      <div class="space-y-3">
+        <div
+          *ngFor="let payment of recentPayments"
+          class="flex items-center justify-between rounded-lg bg-gray-50 p-3 dark:bg-gray-700"
+        >
+          <div>
+            <p class="font-medium text-gray-900 dark:text-white">{{ payment.patient }}</p>
+            <p class="text-sm text-gray-500 dark:text-gray-400">{{ payment.date }}</p>
+          </div>
+          <div class="text-right">
+            <p class="font-bold text-gray-900 dark:text-white">S/. {{ payment.amount }}</p>
+            <span
+              class="inline-flex rounded-full px-2 py-1 text-xs font-semibold"
+              [class]="getStatusClass(payment.status)"
+            >
+              {{ getStatusText(payment.status) }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Citas de Hoy -->
+    <div class="rounded-lg bg-white p-6 shadow-lg dark:bg-gray-800">
+      <h2 class="mb-4 text-xl font-bold text-gray-900 dark:text-white">Citas de Hoy</h2>
+      <div class="space-y-3">
+        <div
+          *ngFor="let appointment of todayAppointments"
+          class="rounded-lg bg-gray-50 p-3 dark:bg-gray-700"
+        >
+          <div class="mb-2 flex items-center justify-between">
+            <span class="font-medium text-gray-900 dark:text-white">{{ appointment.time }}</span>
+            <span
+              class="inline-flex rounded-full px-2 py-1 text-xs font-semibold"
+              [class]="getStatusClass(appointment.status)"
+            >
+              {{ getStatusText(appointment.status) }}
+            </span>
+          </div>
+          <p class="text-sm text-gray-600 dark:text-gray-300">{{ appointment.area }}</p>
+          <p class="text-sm text-gray-500 dark:text-gray-400">{{ appointment.doctor }}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Satisfacción del Cliente -->
+    <div class="rounded-lg bg-white p-6 shadow-lg dark:bg-gray-800">
+      <h2 class="mb-4 text-xl font-bold text-gray-900 dark:text-white">Satisfacción del Cliente</h2>
+      <div class="h-64">
+        <canvas
+          baseChart
+          [data]="satisfactionChartData"
+          [options]="satisfactionChartOptions"
+          [type]="'doughnut'"
+        >
+        </canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- Especialidades Preferidas -->
+  <div class="rounded-lg bg-white p-6 shadow-lg dark:bg-gray-800">
+    <h2 class="mb-4 text-xl font-bold text-gray-900 dark:text-white">
+      Especialidades Más Solicitadas
+    </h2>
+    <div class="h-80">
+      <canvas
+        baseChart
+        [data]="specialtiesChartData"
+        [options]="specialtiesChartOptions"
+        [type]="'bar'"
+      >
+      </canvas>
+    </div>
+  </div>
+</div>

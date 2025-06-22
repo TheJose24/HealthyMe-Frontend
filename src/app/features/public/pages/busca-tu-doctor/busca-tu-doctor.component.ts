@@ -3,6 +3,13 @@ import type { ElementRef } from '@angular/core';
 import { Component, ViewChild } from '@angular/core';
 import { trigger, transition, style, animate, query, stagger } from '@angular/animations';
 
+interface IDoctor {
+  nombre: string;
+  especialidad: string;
+  descripcion: string;
+  imagen: string;
+}
+
 @Component({
   selector: 'app-busca-tu-doctor',
   standalone: true,
@@ -50,7 +57,9 @@ import { trigger, transition, style, animate, query, stagger } from '@angular/an
   ],
 })
 export class BuscaTuDoctorComponent {
-  doctores = [
+  @ViewChild('listaDoctores') public position!: ElementRef<HTMLElement>;
+
+  public doctores: IDoctor[] = [
     {
       nombre: 'Dr. Javier Rodríguez',
       especialidad: 'Cardiología',
@@ -263,21 +272,20 @@ export class BuscaTuDoctorComponent {
     },
   ];
 
-  especialidades: string[] = ['Todos', 'Cardiología', 'Pediatría', 'Neurología', 'Psiquiatría'];
-  especialidadDefault: string = 'Todos';
-  paginaActual: number = 1;
-  doctoresPorPagina: number = 9;
+  public especialidades: string[] = [
+    'Todos',
+    'Cardiología',
+    'Pediatría',
+    'Neurología',
+    'Psiquiatría',
+  ];
 
-  get especialidadSeleccionada(): string {
-    return this.especialidadDefault;
-  }
+  public especialidadDefault: string = 'Todos';
+  public paginaActual: number = 1;
+  public doctoresPorPagina: number = 9;
 
-  set especialidadSeleccionada(value: string) {
-    this.especialidadDefault = value;
-    this.paginaActual = 1;
-  }
-
-  get doctoresFiltrados() {
+  // Getters y Setters
+  public get doctoresFiltrados(): IDoctor[] {
     if (this.especialidadSeleccionada === 'Todos') {
       return this.doctores;
     }
@@ -286,23 +294,33 @@ export class BuscaTuDoctorComponent {
     );
   }
 
-  get doctoresPaginados() {
+  public get doctoresPaginados(): IDoctor[] {
     const startIndex = (this.paginaActual - 1) * this.doctoresPorPagina;
     return this.doctoresFiltrados.slice(startIndex, startIndex + this.doctoresPorPagina);
   }
 
-  get totalPaginas(): number {
+  public get totalPaginas(): number {
     return Math.ceil(this.doctoresFiltrados.length / this.doctoresPorPagina);
   }
 
-  cambiarPagina(pagina: number) {
+  public get especialidadSeleccionada(): string {
+    return this.especialidadDefault;
+  }
+
+  public set especialidadSeleccionada(value: string) {
+    this.especialidadDefault = value;
+    this.paginaActual = 1;
+  }
+
+  // Métodos públicos
+  public cambiarPagina(pagina: number): void {
     setTimeout(() => {
       this.paginaActual = pagina;
       this.scrollToElement();
     }, 50);
   }
 
-  anterior() {
+  public anterior(): void {
     if (this.paginaActual > 1) {
       setTimeout(() => {
         this.paginaActual--;
@@ -311,7 +329,7 @@ export class BuscaTuDoctorComponent {
     }
   }
 
-  siguiente() {
+  public siguiente(): void {
     if (this.paginaActual < this.totalPaginas) {
       setTimeout(() => {
         this.paginaActual++;
@@ -320,9 +338,8 @@ export class BuscaTuDoctorComponent {
     }
   }
 
-  @ViewChild('listaDoctores') position!: ElementRef<HTMLElement>;
-
-  private scrollToElement() {
+  // Métodos privados
+  private scrollToElement(): void {
     this.position.nativeElement.scrollIntoView({
       behavior: 'smooth',
       block: 'start',
