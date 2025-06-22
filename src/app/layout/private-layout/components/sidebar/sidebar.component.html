@@ -1,0 +1,182 @@
+<aside
+  class="fixed inset-y-0 left-0 z-50 flex h-full flex-col bg-gradient-to-br from-gray-900 via-gray-800 to-black shadow-2xl transition-all duration-300 ease-in-out"
+  [class.w-80]="!isCollapsed"
+  [class.w-16]="isCollapsed"
+>
+  <!-- Header del Sidebar -->
+  <div
+    class="flex h-20 items-center justify-between border-b border-gray-700 px-6"
+    [class.px-3]="isCollapsed"
+  >
+    <!-- Logo y Título - Solo visible cuando no está colapsado -->
+    <div *ngIf="!isCollapsed" class="flex items-center space-x-3">
+      <app-logo [isDarkMode]="true"></app-logo>
+    </div>
+
+    <!-- Toggle Button -->
+    <button
+      type="button"
+      (click)="onToggleSidebar()"
+      class="group relative flex h-10 w-10 items-center justify-center rounded-lg bg-gray-700/50 text-gray-300 transition-all duration-300 hover:bg-gray-600 hover:text-white focus:outline-none focus:ring-2 focus:ring-primary/50"
+      [class.mx-auto]="isCollapsed"
+      [attr.aria-label]="isCollapsed ? 'Expandir sidebar' : 'Contraer sidebar'"
+      [title]="isCollapsed ? 'Expandir sidebar' : 'Contraer sidebar'"
+    >
+      <!-- Icono animado -->
+      <div class="relative h-5 w-5">
+        <i
+          class="ri-menu-fold-line absolute inset-0 text-lg transition-all duration-300"
+          [class.rotate-180]="isCollapsed"
+          [class.opacity-100]="!isCollapsed"
+          [class.opacity-0]="isCollapsed"
+        ></i>
+        <i
+          class="ri-menu-unfold-line absolute inset-0 text-lg transition-all duration-300"
+          [class.rotate-0]="isCollapsed"
+          [class.opacity-100]="isCollapsed"
+          [class.opacity-0]="!isCollapsed"
+        ></i>
+      </div>
+
+      <!-- Efecto de ripple -->
+      <span
+        class="absolute inset-0 rounded-lg bg-white/10 opacity-0 transition-opacity duration-200 group-active:opacity-100"
+      ></span>
+    </button>
+  </div>
+
+  <!-- Información del Usuario -->
+  <div class="border-b border-gray-700 p-6" [class.px-3]="isCollapsed">
+    <div class="flex items-center space-x-3" [class.justify-center]="isCollapsed">
+      <div class="relative">
+        <img
+          [src]="userAvatar || '/images/avatars/default-avatar.png'"
+          [alt]="userName"
+          class="h-12 w-12 rounded-full object-cover ring-2 ring-gray-600"
+        />
+        <div
+          class="absolute -bottom-1 -right-1 h-4 w-4 rounded-full bg-green-400 ring-2 ring-gray-800"
+        ></div>
+      </div>
+      <div *ngIf="!isCollapsed" class="flex-1 overflow-hidden">
+        <p class="truncate text-sm font-semibold text-white">
+          {{ userName }}
+        </p>
+        <p class="truncate text-xs text-gray-300">
+          {{ userEmail }}
+        </p>
+        <span
+          class="mt-1 inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium"
+          [class]="getRoleColor()"
+        >
+          {{ getRoleDisplayName() }}
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Navegación -->
+  <nav class="flex-1 overflow-y-auto p-4" [class.px-2]="isCollapsed">
+    <ul class="space-y-1">
+      <li *ngFor="let item of menuItems; trackBy: trackByLabel">
+        <!-- Divider -->
+        <div *ngIf="item.divider" class="my-4 border-t border-gray-700"></div>
+
+        <!-- Item sin submenu -->
+        <div *ngIf="!item.children && !item.divider">
+          <a
+            [routerLink]="item.route"
+            routerLinkActive="bg-primary text-white shadow-lg ring-2 ring-primary/50"
+            class="group flex items-center rounded-xl px-4 py-3 text-sm font-medium text-gray-300 transition-all duration-200 hover:bg-gray-700 hover:text-white"
+            [class.justify-center]="isCollapsed"
+            [title]="item.label"
+          >
+            <i [class]="item.icon" class="text-lg"></i>
+            <span *ngIf="!isCollapsed" class="ml-3 flex-1">{{ item.label }}</span>
+            <span
+              *ngIf="item.badge && !isCollapsed"
+              class="ml-auto inline-flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-xs text-white"
+            >
+              {{ item.badge }}
+            </span>
+          </a>
+        </div>
+
+        <!-- Item con submenu -->
+        <div *ngIf="item.children && !item.divider">
+          <button
+            type="button"
+            (click)="toggleSubmenu(item)"
+            class="group flex w-full items-center rounded-xl px-4 py-3 text-left text-sm font-medium text-gray-300 transition-all duration-200 hover:bg-gray-700 hover:text-white"
+            [class.justify-center]="isCollapsed"
+            [class.bg-gray-700]="item.isExpanded"
+            [class.text-white]="item.isExpanded"
+            [title]="item.label"
+          >
+            <i [class]="item.icon" class="text-lg"></i>
+            <span *ngIf="!isCollapsed" class="ml-3 flex-1">{{ item.label }}</span>
+            <i
+              *ngIf="!isCollapsed"
+              class="ri-arrow-down-s-line text-lg transition-transform duration-200"
+              [class.rotate-180]="item.isExpanded"
+            ></i>
+          </button>
+
+          <!-- Submenu -->
+          <ul
+            *ngIf="item.isExpanded && !isCollapsed"
+            class="ml-8 mt-2 space-y-1 border-l-2 border-gray-600 pl-4"
+          >
+            <li *ngFor="let child of item.children">
+              <a
+                [routerLink]="child.route"
+                routerLinkActive="bg-primary/80 text-white ring-1 ring-primary/50"
+                class="group flex items-center rounded-lg px-3 py-2 text-sm text-gray-400 transition-all duration-200 hover:bg-gray-700 hover:text-white"
+              >
+                <i [class]="child.icon" class="text-base"></i>
+                <span class="ml-2">{{ child.label }}</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- Footer Actions -->
+  <div class="border-t border-gray-700 p-4" [class.px-2]="isCollapsed">
+    <button
+      type="button"
+      (click)="onLogout()"
+      class="group flex w-full items-center rounded-xl px-4 py-3 text-sm font-medium text-red-400 transition-all duration-200 hover:bg-red-900/30 hover:text-red-300"
+      [class.justify-center]="isCollapsed"
+    >
+      <i class="ri-logout-box-line text-lg"></i>
+      <span *ngIf="!isCollapsed" class="ml-3">Cerrar Sesión</span>
+    </button>
+  </div>
+</aside>
+
+<!-- Botón flotante para mostrar sidebar en móviles cuando está colapsado -->
+<button
+  type="button"
+  *ngIf="isCollapsed"
+  (click)="onToggleSidebar()"
+  class="fixed left-4 top-4 z-50 flex h-12 w-12 items-center justify-center rounded-xl bg-gray-800 text-white shadow-lg transition-all duration-300 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-primary/50 lg:hidden"
+  aria-label="Mostrar menú"
+>
+  <i class="ri-menu-line text-xl"></i>
+</button>
+
+<!-- Backdrop para móviles -->
+<button
+  *ngIf="!isCollapsed"
+  type="button"
+  class="cursor-default·bg-black/60·lg:hidden fixed inset-0 z-40"
+  (click)="onToggleSidebar()"
+  (keydown.escape)="onToggleSidebar()"
+  aria-label="Cerrar menú lateral"
+  tabindex="0"
+>
+  <span class="sr-only">Cerrar menú lateral</span>
+</button>

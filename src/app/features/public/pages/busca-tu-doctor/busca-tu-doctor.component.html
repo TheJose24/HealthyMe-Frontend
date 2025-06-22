@@ -30,6 +30,7 @@
       <div class="mb-8">
         <div class="flex flex-wrap gap-2">
           <button
+            type="button"
             *ngFor="let especialidad of especialidades"
             [class.bg-blue-600]="especialidadSeleccionada === especialidad"
             [class.text-white]="especialidadSeleccionada === especialidad"
@@ -75,6 +76,7 @@
       <div class="mt-8 flex justify-center">
         <nav class="inline-flex">
           <button
+            type="button"
             (click)="anterior()"
             class="mx-1 px-4 py-2 text-lg font-extrabold text-blue-500 dark:text-white"
             [disabled]="paginaActual === 1"
@@ -83,6 +85,7 @@
           </button>
 
           <button
+            type="button"
             *ngFor="let pagina of [].constructor(totalPaginas); let i = index"
             (click)="cambiarPagina(i + 1)"
             class="mx-1 rounded-lg px-4 py-2 dark:text-white"
@@ -93,6 +96,7 @@
           </button>
 
           <button
+            type="button"
             (click)="siguiente()"
             class="mx-1 px-4 py-2 text-lg font-extrabold text-blue-500 dark:text-white"
             [disabled]="paginaActual === totalPaginas"
