@@ -1,0 +1,876 @@
+<section class="font-inter min-h-screen bg-gray-50 dark:bg-gray-900">
+  <!-- Encabezado con imagen y título extendido de extremo a extremo -->
+  <div class="relative h-64 w-full overflow-hidden md:h-80 lg:h-96">
+    <img
+      src="/assets/images/citas/citas-portada.png"
+      alt="Reserva tu Cita en Línea Banner"
+      class="absolute inset-0 h-full w-full object-cover object-center"
+      onerror="this.onerror=null;this.src='https://placehold.co/1200x400/C0E0FF/000000?text=Imagen+No+Disponible';"
+    />
+    <div
+      class="absolute inset-0 flex flex-col items-center justify-end bg-blue-500 bg-opacity-20 pb-8 md:pb-12 lg:pb-16"
+    >
+      <h1 class="mb-2 text-center text-3xl font-semibold text-black drop-shadow-lg md:text-4xl">
+        Reserva tu
+      </h1>
+      <h1
+        class="text-center text-5xl font-extrabold text-blue-600 drop-shadow-lg md:text-6xl lg:text-7xl"
+      >
+        Cita en Línea
+      </h1>
+    </div>
+  </div>
+
+  <div class="container mx-auto px-4 py-8 sm:px-6 md:py-12 lg:px-8">
+    <!-- Progress Stepper -->
+    <div
+      class="mb-8 flex items-center justify-between rounded-lg bg-white p-4 shadow-md dark:bg-gray-800"
+    >
+      <!-- Añadidos tabindex y keydown.enter para accesibilidad -->
+      <div
+        class="flex flex-1 cursor-pointer items-center justify-center"
+        [ngClass]="{ 'font-bold text-blue-600': currentStep >= 1 }"
+        (click)="goToStep(1)"
+        (keydown.enter)="goToStep(1)"
+        tabindex="0"
+        role="button"
+        aria-label="Paso 1: Datos del paciente"
+      >
+        <span
+          class="mr-2 inline-flex h-8 w-8 items-center justify-center rounded-full text-white transition-colors duration-300"
+          [ngClass]="{ 'bg-blue-600': currentStep >= 1, 'bg-gray-300': currentStep < 1 }"
+          >1</span
+        >
+        <span class="hidden sm:inline">Datos del paciente</span>
+      </div>
+      <div
+        class="flex flex-1 cursor-pointer items-center justify-center"
+        [ngClass]="{ 'font-bold text-blue-600': currentStep >= 2 }"
+        (click)="goToStep(2)"
+        (keydown.enter)="goToStep(2)"
+        tabindex="0"
+        role="button"
+        aria-label="Paso 2: Especialidad y Médico"
+      >
+        <span
+          class="mr-2 inline-flex h-8 w-8 items-center justify-center rounded-full text-white transition-colors duration-300"
+          [ngClass]="{ 'bg-blue-600': currentStep >= 2, 'bg-gray-300': currentStep < 2 }"
+          >2</span
+        >
+        <span class="hidden sm:inline">Especialidad / Médico</span>
+      </div>
+      <div
+        class="flex flex-1 cursor-pointer items-center justify-center"
+        [ngClass]="{ 'font-bold text-blue-600': currentStep >= 3 }"
+        (click)="goToStep(3)"
+        (keydown.enter)="goToStep(3)"
+        tabindex="0"
+        role="button"
+        aria-label="Paso 3: Fecha y Hora"
+      >
+        <span
+          class="mr-2 inline-flex h-8 w-8 items-center justify-center rounded-full text-white transition-colors duration-300"
+          [ngClass]="{ 'bg-blue-600': currentStep >= 3, 'bg-gray-300': currentStep < 3 }"
+          >3</span
+        >
+        <span class="hidden sm:inline">Fecha y Hora</span>
+      </div>
+      <div
+        class="flex flex-1 cursor-pointer items-center justify-center"
+        [ngClass]="{ 'font-bold text-blue-600': currentStep === 4 }"
+        (click)="goToStep(4)"
+        (keydown.enter)="goToStep(4)"
+        tabindex="0"
+        role="button"
+        aria-label="Paso 4: Pago"
+      >
+        <span
+          class="mr-2 inline-flex h-8 w-8 items-center justify-center rounded-full text-white transition-colors duration-300"
+          [ngClass]="{ 'bg-blue-600': currentStep === 4, 'bg-gray-300': currentStep < 4 }"
+          >4</span
+        >
+        <span class="hidden sm:inline">Pago</span>
+      </div>
+    </div>
+
+    <!-- Form Container -->
+    <!-- The (ngSubmit) is now only for navigation, the final submit is handled by button (click) -->
+    <form (ngSubmit)="currentStep !== 4 ? goToNextStep() : null">
+      <!-- Step 1: Datos del paciente -->
+      <div
+        #stepContent
+        class="step-content step-1 rounded-lg bg-white p-6 shadow-inner dark:bg-gray-800 md:p-10"
+        data-step="1"
+      >
+        <h2 class="mb-4 text-xl font-bold text-blue-800 dark:text-blue-200 md:text-2xl">
+          Datos del paciente
+        </h2>
+        <p class="mb-6 text-sm text-gray-600 dark:text-gray-400">
+          Por favor completa el siguiente formulario. Al ingresar tu tipo de documento, número de
+          documento y apellido paterno presiona [enter] y te aparecerán todos tus datos si ya has
+          sido atendido en la clínica anteriormente
+        </p>
+
+        <div [formGroup]="patientForm" class="mb-6 grid grid-cols-1 gap-6 md:grid-cols-2">
+          <div>
+            <label for="dni" class="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300"
+              >DNI:</label
+            >
+            <input
+              type="text"
+              id="dni"
+              formControlName="dni"
+              class="mt-1 block w-full rounded-md border border-gray-300 px-4 py-2 shadow-sm transition-all duration-300 ease-in-out focus:border-blue-500 focus:outline-none focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
+              placeholder="DNI (8 dígitos)"
+            />
+            <div
+              *ngIf="
+                patientForm.get('dni')?.invalid &&
+                (patientForm.get('dni')?.dirty || patientForm.get('dni')?.touched)
+              "
+              class="mt-1 text-xs text-red-500"
+            >
+              DNI es requerido y debe tener 8 dígitos.
+            </div>
+          </div>
+          <div>
+            <label
+              for="sexo"
+              class="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300"
+              >Sexo:</label
+            >
+            <select
+              id="sexo"
+              formControlName="sexo"
+              class="mt-1 block w-full rounded-md border border-gray-300 py-2 pl-3 pr-10 shadow-sm transition-all duration-300 ease-in-out focus:border-blue-500 focus:outline-none focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+            >
+              <option value="" disabled>Seleccione...</option>
+              <option *ngFor="let s of sexos" [value]="s">{{ s }}</option>
+            </select>
+            <div
+              *ngIf="
+                patientForm.get('sexo')?.invalid &&
+                (patientForm.get('sexo')?.dirty || patientForm.get('sexo')?.touched)
+              "
+              class="mt-1 text-xs text-red-500"
+            >
+              Sexo es requerido.
+            </div>
+          </div>
+          <div>
+            <label
+              for="apellidoPaterno"
+              class="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300"
+              >Apellido Paterno:</label
+            >
+            <input
+              type="text"
+              id="apellidoPaterno"
+              formControlName="apellidoPaterno"
+              class="mt-1 block w-full rounded-md border border-gray-300 px-4 py-2 shadow-sm transition-all duration-300 ease-in-out focus:border-blue-500 focus:outline-none focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
+              placeholder="Apellido Paterno"
+            />
+            <div
+              *ngIf="
+                patientForm.get('apellidoPaterno')?.invalid &&
+                (patientForm.get('apellidoPaterno')?.dirty ||
+                  patientForm.get('apellidoPaterno')?.touched)
+              "
+              class="mt-1 text-xs text-red-500"
+            >
+              Apellido Paterno es requerido.
+            </div>
+          </div>
+          <div>
+            <label
+              for="direccion"
+              class="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300"
+              >Dirección:</label
+            >
+            <input
+              type="text"
+              id="direccion"
+              formControlName="direccion"
+              class="mt-1 block w-full rounded-md border border-gray-300 px-4 py-2 shadow-sm transition-all duration-300 ease-in-out focus:border-blue-500 focus:outline-none focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
+              placeholder="Dirección"
+            />
+            <div
+              *ngIf="
+                patientForm.get('direccion')?.invalid &&
+                (patientForm.get('direccion')?.dirty || patientForm.get('direccion')?.touched)
+              "
+              class="mt-1 text-xs text-red-500"
+            >
+              Dirección es requerida.
+            </div>
+          </div>
+          <div>
+            <label
+              for="nombre"
+              class="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300"
+              >Nombre:</label
+            >
+            <input
+              type="text"
+              id="nombre"
+              formControlName="nombre"
+              class="mt-1 block w-full rounded-md border border-gray-300 px-4 py-2 shadow-sm transition-all duration-300 ease-in-out focus:border-blue-500 focus:outline-none focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
+              placeholder="Nombre"
+            />
+            <div
+              *ngIf="
+                patientForm.get('nombre')?.invalid &&
+                (patientForm.get('nombre')?.dirty || patientForm.get('nombre')?.touched)
+              "
+              class="mt-1 text-xs text-red-500"
+            >
+              Nombre es requerido.
+            </div>
+          </div>
+          <div>
+            <label
+              for="telefono"
+              class="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300"
+              >Teléfono:</label
+            >
+            <input
+              type="tel"
+              id="telefono"
+              formControlName="telefono"
+              class="mt-1 block w-full rounded-md border border-gray-300 px-4 py-2 shadow-sm transition-all duration-300 ease-in-out focus:border-blue-500 focus:outline-none focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
+              placeholder="Teléfono (9 dígitos)"
+            />
+            <div
+              *ngIf="
+                patientForm.get('telefono')?.invalid &&
+                (patientForm.get('telefono')?.dirty || patientForm.get('telefono')?.touched)
+              "
+              class="mt-1 text-xs text-red-500"
+            >
+              Teléfono es requerido y debe tener 9 dígitos.
+            </div>
+          </div>
+          <div>
+            <label
+              for="fechaNacimiento"
+              class="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300"
+              >Fecha de nacimiento:</label
+            >
+            <input
+              type="date"
+              id="fechaNacimiento"
+              formControlName="fechaNacimiento"
+              class="mt-1 block w-full rounded-md border border-gray-300 px-4 py-2 shadow-sm transition-all duration-300 ease-in-out focus:border-blue-500 focus:outline-none focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+            />
+            <div
+              *ngIf="
+                patientForm.get('fechaNacimiento')?.invalid &&
+                (patientForm.get('fechaNacimiento')?.dirty ||
+                  patientForm.get('fechaNacimiento')?.touched)
+              "
+              class="mt-1 text-xs text-red-500"
+            >
+              Fecha de nacimiento es requerida.
+            </div>
+          </div>
+          <div>
+            <label
+              for="email"
+              class="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300"
+              >Email:</label
+            >
+            <input
+              type="email"
+              id="email"
+              formControlName="email"
+              class="mt-1 block w-full rounded-md border border-gray-300 px-4 py-2 shadow-sm transition-all duration-300 ease-in-out focus:border-blue-500 focus:outline-none focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
+              placeholder="correo@ejemplo.com"
+            />
+            <div
+              *ngIf="
+                patientForm.get('email')?.invalid &&
+                (patientForm.get('email')?.dirty || patientForm.get('email')?.touched)
+              "
+              class="mt-1 text-xs text-red-500"
+            >
+              Email es requerido y debe ser válido.
+            </div>
+          </div>
+        </div>
+        <div class="mb-6">
+          <label
+            for="informacionAdicional"
+            class="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300"
+            >Información adicional:</label
+          >
+          <textarea
+            id="informacionAdicional"
+            formControlName="informacionAdicional"
+            rows="3"
+            class="mt-1 block w-full rounded-md border border-gray-300 px-4 py-2 shadow-sm transition-all duration-300 ease-in-out focus:border-blue-500 focus:outline-none focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
+            placeholder="Cualquier información adicional relevante"
+          ></textarea>
+        </div>
+      </div>
+
+      <!-- Step 2: Especialidad / Médico -->
+      <div
+        #stepContent
+        class="step-content step-2 is-hidden rounded-lg bg-white p-6 shadow-inner dark:bg-gray-800 md:p-10"
+        data-step="2"
+      >
+        <h2 class="mb-4 text-xl font-bold text-blue-800 dark:text-blue-200 md:text-2xl">
+          Especialidad / Médico
+        </h2>
+        <div [formGroup]="specialtyDoctorForm" class="mb-6 grid grid-cols-1 gap-6 md:grid-cols-2">
+          <div>
+            <label
+              for="especialidad"
+              class="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300"
+              >Especialidad:</label
+            >
+            <select
+              id="especialidad"
+              formControlName="especialidad"
+              class="mt-1 block w-full rounded-md border border-gray-300 py-2 pl-3 pr-10 shadow-sm transition-all duration-300 ease-in-out focus:border-blue-500 focus:outline-none focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+            >
+              <option value="" disabled>Seleccione...</option>
+              <option *ngFor="let esp of especialidades" [value]="esp">{{ esp }}</option>
+            </select>
+            <div
+              *ngIf="
+                specialtyDoctorForm.get('especialidad')?.invalid &&
+                (specialtyDoctorForm.get('especialidad')?.dirty ||
+                  specialtyDoctorForm.get('especialidad')?.touched)
+              "
+              class="mt-1 text-xs text-red-500"
+            >
+              Especialidad es requerida.
+            </div>
+          </div>
+          <div>
+            <label
+              for="tipoConsulta"
+              class="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300"
+              >Tipo de consulta:</label
+            >
+            <select
+              id="tipoConsulta"
+              formControlName="tipoConsulta"
+              class="mt-1 block w-full rounded-md border border-gray-300 py-2 pl-3 pr-10 shadow-sm transition-all duration-300 ease-in-out focus:border-blue-500 focus:outline-none focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+            >
+              <option value="" disabled>Seleccione...</option>
+              <option *ngFor="let tipo of tiposConsulta" [value]="tipo">{{ tipo }}</option>
+            </select>
+            <div
+              *ngIf="
+                specialtyDoctorForm.get('tipoConsulta')?.invalid &&
+                (specialtyDoctorForm.get('tipoConsulta')?.dirty ||
+                  specialtyDoctorForm.get('tipoConsulta')?.touched)
+              "
+              class="mt-1 text-xs text-red-500"
+            >
+              Tipo de consulta es requerida.
+            </div>
+          </div>
+          <div>
+            <label
+              for="medico"
+              class="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300"
+              >Médico:</label
+            >
+            <select
+              id="medico"
+              formControlName="medico"
+              class="mt-1 block w-full rounded-md border border-gray-300 py-2 pl-3 pr-10 shadow-sm transition-all duration-300 ease-in-out focus:border-blue-500 focus:outline-none focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+            >
+              <option value="" disabled>Seleccione...</option>
+              <ng-container *ngIf="specialtyDoctorForm.get('especialidad')?.value">
+                <option
+                  *ngFor="let doc of medicos[specialtyDoctorForm.get('especialidad')?.value]"
+                  [value]="doc"
+                >
+                  {{ doc }}
+                </option>
+              </ng-container>
+            </select>
+            <div
+              *ngIf="
+                specialtyDoctorForm.get('medico')?.invalid &&
+                (specialtyDoctorForm.get('medico')?.dirty ||
+                  specialtyDoctorForm.get('medico')?.touched)
+              "
+              class="mt-1 text-xs text-red-500"
+            >
+              Médico es requerido.
+            </div>
+          </div>
+          <div class="mt-4 text-sm text-gray-600 dark:text-gray-400 md:col-span-2">
+            Estimado Cliente: En caso haya seleccionado primera consulta y no sea la primera vez en
+            que el médico especialista lo atiende, o, si ha seleccionado consulta de seguimiento, y
+            nunca ha sido tratado por el médico seleccionado, se procederá a reprogramar la cita
+            según disponibilidad del médico tratante. Agradecemos tu comprensión
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 3: Fecha y Hora -->
+      <div
+        #stepContent
+        class="step-content step-3 is-hidden rounded-lg bg-white p-6 shadow-inner dark:bg-gray-800 md:p-10"
+        data-step="3"
+      >
+        <h2 class="mb-4 text-xl font-bold text-blue-800 dark:text-blue-200 md:text-2xl">
+          Fecha y Hora
+        </h2>
+
+        <div [formGroup]="dateTimeForm" class="mb-6 grid grid-cols-1 gap-8 lg:grid-cols-2">
+          <!-- Calendar -->
+          <div class="rounded-lg bg-gray-100 p-4 shadow-md dark:bg-gray-700">
+            <h3 class="mb-4 text-lg font-semibold text-gray-800 dark:text-gray-200">Fecha</h3>
+            <div class="mb-4 flex items-center justify-between">
+              <button
+                type="button"
+                (click)="changeMonth(-1)"
+                class="rounded-full bg-blue-100 p-2 text-blue-600 transition-colors duration-200 hover:bg-blue-200 dark:bg-blue-800 dark:text-blue-200 dark:hover:bg-blue-700"
+                aria-label="Mes anterior"
+              >
+                <svg
+                  class="h-5 w-5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M15 19l-7-7 7-7"
+                  ></path>
+                </svg>
+              </button>
+              <span class="text-lg font-bold text-blue-800 dark:text-blue-200">
+                {{ currentMonth | date: 'MMMM yyyy' }}
+              </span>
+              <button
+                type="button"
+                (click)="changeMonth(1)"
+                class="rounded-full bg-blue-100 p-2 text-blue-600 transition-colors duration-200 hover:bg-blue-200 dark:bg-blue-800 dark:text-blue-200 dark:hover:bg-blue-700"
+                aria-label="Mes siguiente"
+              >
+                <svg
+                  class="h-5 w-5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M9 5l7 7-7 7"
+                  ></path>
+                </svg>
+              </button>
+            </div>
+            <div class="calendar-grid text-sm text-gray-600 dark:text-gray-400">
+              <div class="py-2 text-center font-bold text-gray-800 dark:text-gray-200">Lun</div>
+              <div class="py-2 text-center font-bold text-gray-800 dark:text-gray-200">Mar</div>
+              <div class="py-2 text-center font-bold text-gray-800 dark:text-gray-200">Mié</div>
+              <div class="py-2 text-center font-bold text-gray-800 dark:text-gray-200">Jue</div>
+              <div class="py-2 text-center font-bold text-gray-800 dark:text-gray-200">Vie</div>
+              <div class="py-2 text-center font-bold text-gray-800 dark:text-gray-200">Sáb</div>
+              <div class="py-2 text-center font-bold text-gray-800 dark:text-gray-200">Dom</div>
+              <!-- Añadidos tabindex y keydown.enter para accesibilidad en los días del calendario -->
+              <div
+                *ngFor="let day of days"
+                class="calendar-day"
+                [ngClass]="{
+                  'empty-day': day === null,
+                  today: isToday(day),
+                  selected: isSelectedDate(day),
+                }"
+                (click)="selectDate(day)"
+                (keydown.enter)="selectDate(day)"
+                tabindex="0"
+                [attr.aria-label]="day !== null ? 'Seleccionar ' + (day | date: 'fullDate') : null"
+              >
+                {{ day !== null ? (day | date: 'd') : '' }}
+              </div>
+            </div>
+            <div
+              *ngIf="
+                dateTimeForm.get('fecha')?.invalid &&
+                (dateTimeForm.get('fecha')?.dirty || dateTimeForm.get('fecha')?.touched)
+              "
+              class="mt-4 text-xs text-red-500"
+            >
+              Fecha es requerida.
+            </div>
+          </div>
+
+          <!-- Available Times -->
+          <div class="rounded-lg bg-gray-100 p-4 shadow-md dark:bg-gray-700">
+            <h3 class="mb-4 text-lg font-semibold text-gray-800 dark:text-gray-200">
+              Horas disponibles
+            </h3>
+            <div class="mb-4">
+              <h4 class="mb-2 font-medium text-gray-700 dark:text-gray-300">Turno Mañana</h4>
+              <div class="flex flex-wrap gap-2">
+                <div
+                  *ngFor="let time of morningTimes"
+                  class="time-slot"
+                  [ngClass]="{ selected: dateTimeForm.get('hora')?.value === time }"
+                  (click)="selectTime(time)"
+                  (keydown.enter)="selectTime(time)"
+                  tabindex="0"
+                  role="button"
+                  [attr.aria-label]="'Seleccionar hora ' + time"
+                >
+                  {{ time }}
+                </div>
+              </div>
+            </div>
+            <div class="mb-4">
+              <h4 class="mb-2 font-medium text-gray-700 dark:text-gray-300">Turno Tarde</h4>
+              <div class="flex flex-wrap gap-2">
+                <div
+                  *ngFor="let time of afternoonTimes"
+                  class="time-slot"
+                  [ngClass]="{ selected: dateTimeForm.get('hora')?.value === time }"
+                  (click)="selectTime(time)"
+                  (keydown.enter)="selectTime(time)"
+                  tabindex="0"
+                  role="button"
+                  [attr.aria-label]="'Seleccionar hora ' + time"
+                >
+                  {{ time }}
+                </div>
+              </div>
+            </div>
+            <div>
+              <h4 class="mb-2 font-medium text-gray-700 dark:text-gray-300">Turno Noche</h4>
+              <div class="flex flex-wrap gap-2">
+                <div
+                  *ngFor="let time of nightTimes"
+                  class="time-slot"
+                  [ngClass]="{ selected: dateTimeForm.get('hora')?.value === time }"
+                  (click)="selectTime(time)"
+                  (keydown.enter)="selectTime(time)"
+                  tabindex="0"
+                  role="button"
+                  [attr.aria-label]="'Seleccionar hora ' + time"
+                >
+                  {{ time }}
+                </div>
+              </div>
+            </div>
+            <div
+              *ngIf="
+                dateTimeForm.get('hora')?.invalid &&
+                (dateTimeForm.get('hora')?.dirty || dateTimeForm.get('hora')?.touched)
+              "
+              class="mt-4 text-xs text-red-500"
+            >
+              Hora es requerida.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 4: Pago -->
+      <div
+        #stepContent
+        class="step-content step-4 is-hidden rounded-lg bg-white p-6 shadow-inner dark:bg-gray-800 md:p-10"
+        data-step="4"
+      >
+        <h2 class="mb-4 text-xl font-bold text-blue-800 dark:text-blue-200 md:text-2xl">Pago</h2>
+
+        <div [formGroup]="paymentForm" class="mb-6 grid grid-cols-1 gap-8 lg:grid-cols-2">
+          <!-- Payment Method -->
+          <div>
+            <h3 class="mb-4 text-lg font-semibold text-gray-800 dark:text-gray-200">
+              Método de pago
+            </h3>
+            <div class="mb-6 flex items-center space-x-4">
+              <label for="metodoPagoYape" class="flex items-center">
+                <input
+                  type="radio"
+                  id="metodoPagoYape"
+                  value="Yape"
+                  formControlName="metodoPago"
+                  class="h-4 w-4 border-gray-300 text-blue-600 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:focus:ring-blue-600"
+                />
+                <img src="/assets/images/citas/yape.jpg" alt="Yape" class="ml-2 h-10 rounded-md" />
+              </label>
+              <label for="metodoPagoVisa" class="flex items-center">
+                <input
+                  type="radio"
+                  id="metodoPagoVisa"
+                  value="Visa"
+                  formControlName="metodoPago"
+                  class="h-4 w-4 border-gray-300 text-blue-600 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:focus:ring-blue-600"
+                />
+                <img src="/assets/images/citas/visa.png" alt="Visa" class="ml-2 h-10 rounded-md" />
+              </label>
+              <label for="metodoPagoMastercard" class="flex items-center">
+                <input
+                  type="radio"
+                  id="metodoPagoMastercard"
+                  value="Mastercard"
+                  formControlName="metodoPago"
+                  class="h-4 w-4 border-gray-300 text-blue-600 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:focus:ring-blue-600"
+                />
+                <img
+                  src="/assets/images/citas/mastercard.png"
+                  alt="Mastercard"
+                  class="ml-2 h-10 rounded-md"
+                />
+              </label>
+              <label for="metodoPagoPaypal" class="flex items-center">
+                <input
+                  type="radio"
+                  id="metodoPagoPaypal"
+                  value="Paypal"
+                  formControlName="metodoPago"
+                  class="h-4 w-4 border-gray-300 text-blue-600 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:focus:ring-blue-600"
+                />
+                <img
+                  src="/assets/images/citas/paypal.png"
+                  alt="Paypal"
+                  class="ml-2 h-10 rounded-md"
+                />
+              </label>
+            </div>
+            <div
+              *ngIf="
+                paymentForm.get('metodoPago')?.invalid &&
+                (paymentForm.get('metodoPago')?.dirty || paymentForm.get('metodoPago')?.touched)
+              "
+              class="mt-1 text-xs text-red-500"
+            >
+              Método de pago es requerido.
+            </div>
+
+            <div class="mb-4">
+              <label
+                for="titularTarjeta"
+                class="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300"
+                >Titular de tarjeta:</label
+              >
+              <input
+                type="text"
+                id="titularTarjeta"
+                formControlName="titularTarjeta"
+                class="mt-1 block w-full rounded-md border border-gray-300 px-4 py-2 shadow-sm transition-all duration-300 ease-in-out focus:border-blue-500 focus:outline-none focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
+                placeholder="Nombre en la tarjeta"
+              />
+              <div
+                *ngIf="
+                  paymentForm.get('titularTarjeta')?.invalid &&
+                  (paymentForm.get('titularTarjeta')?.dirty ||
+                    paymentForm.get('titularTarjeta')?.touched)
+                "
+                class="mt-1 text-xs text-red-500"
+              >
+                Titular de tarjeta es requerido.
+              </div>
+            </div>
+            <div class="mb-4">
+              <label
+                for="numeroTarjeta"
+                class="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300"
+                >Número de tarjeta:</label
+              >
+              <input
+                type="text"
+                id="numeroTarjeta"
+                formControlName="numeroTarjeta"
+                class="mt-1 block w-full rounded-md border border-gray-300 px-4 py-2 shadow-sm transition-all duration-300 ease-in-out focus:border-blue-500 focus:outline-none focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
+                placeholder="XXXX XXXX XXXX XXXX"
+              />
+              <div
+                *ngIf="
+                  paymentForm.get('numeroTarjeta')?.invalid &&
+                  (paymentForm.get('numeroTarjeta')?.dirty ||
+                    paymentForm.get('numeroTarjeta')?.touched)
+                "
+                class="mt-1 text-xs text-red-500"
+              >
+                Número de tarjeta es requerido y debe tener 16 dígitos.
+              </div>
+            </div>
+            <div class="mb-6 grid grid-cols-2 gap-4">
+              <div>
+                <label
+                  for="fechaVencimiento"
+                  class="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300"
+                  >Fecha de vencimiento:</label
+                >
+                <input
+                  type="text"
+                  id="fechaVencimiento"
+                  formControlName="fechaVencimiento"
+                  class="mt-1 block w-full rounded-md border border-gray-300 px-4 py-2 shadow-sm transition-all duration-300 ease-in-out focus:border-blue-500 focus:outline-none focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
+                  placeholder="MM/YY"
+                />
+                <div
+                  *ngIf="
+                    paymentForm.get('fechaVencimiento')?.invalid &&
+                    (paymentForm.get('fechaVencimiento')?.dirty ||
+                      paymentForm.get('fechaVencimiento')?.touched)
+                  "
+                  class="mt-1 text-xs text-red-500"
+                >
+                  Fecha de vencimiento es requerida (MM/YY).
+                </div>
+              </div>
+              <div>
+                <label
+                  for="cvv"
+                  class="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300"
+                  >CVV:</label
+                >
+                <input
+                  type="text"
+                  id="cvv"
+                  formControlName="cvv"
+                  class="mt-1 block w-full rounded-md border border-gray-300 px-4 py-2 shadow-sm transition-all duration-300 ease-in-out focus:border-blue-500 focus:outline-none focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
+                  placeholder="XXX"
+                />
+                <div
+                  *ngIf="
+                    paymentForm.get('cvv')?.invalid &&
+                    (paymentForm.get('cvv')?.dirty || paymentForm.get('cvv')?.touched)
+                  "
+                  class="mt-1 text-xs text-red-500"
+                >
+                  CVV es requerido (3 o 4 dígitos).
+                </div>
+              </div>
+            </div>
+            <div class="mb-6 flex items-center">
+              <input
+                type="checkbox"
+                id="guardarDatos"
+                formControlName="guardarDatos"
+                class="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:focus:ring-blue-600"
+              />
+              <label for="guardarDatos" class="ml-2 block text-sm text-gray-700 dark:text-gray-300">
+                Guardar datos para futuras compras
+              </label>
+            </div>
+          </div>
+
+          <!-- Reservation Summary -->
+          <div class="rounded-lg bg-gray-100 p-4 shadow-md dark:bg-gray-700">
+            <h3 class="mb-4 text-lg font-semibold text-gray-800 dark:text-gray-200">
+              Resumen de reserva
+            </h3>
+            <div class="mb-4 text-gray-700 dark:text-gray-300">
+              <p class="mb-2">
+                <span class="font-medium">Especialidad:</span> {{ selectedSpecialty || 'N/A' }}
+              </p>
+              <p class="mb-2">
+                <span class="font-medium">Médico:</span> {{ selectedDoctor || 'N/A' }}
+              </p>
+              <p class="mb-2">
+                <span class="font-medium">Fecha:</span> {{ selectedDate | date: 'dd-MM-yyyy' }}
+              </p>
+              <p class="mb-2"><span class="font-medium">Hora:</span> {{ selectedTime || 'N/A' }}</p>
+            </div>
+            <div class="mb-6 border-t border-gray-300 pt-4 dark:border-gray-600">
+              <p class="text-lg font-bold text-gray-800 dark:text-gray-200">
+                Monto total: S/. {{ totalAmount.toFixed(2) }}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Navigation Buttons -->
+      <div class="mt-8 flex justify-between">
+        <button
+          type="button"
+          *ngIf="currentStep > 1"
+          (click)="goToPreviousStep()"
+          class="transform rounded-full bg-gray-300 px-6 py-3 font-bold text-gray-800 shadow-lg transition duration-300 ease-in-out hover:scale-105 hover:bg-gray-400 focus:outline-none focus:ring-4 focus:ring-gray-300"
+        >
+          Anterior
+        </button>
+        <button
+          type="button"
+          *ngIf="currentStep < 4"
+          (click)="goToNextStep()"
+          class="ml-auto transform rounded-full bg-blue-600 px-8 py-3 font-bold text-white shadow-lg transition duration-300 ease-in-out hover:scale-105 hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-800"
+        >
+          Siguiente
+        </button>
+        <button
+          type="button"
+          *ngIf="currentStep === 4"
+          (click)="submitAppointment()"
+          class="ml-auto transform rounded-full bg-blue-600 px-8 py-3 font-bold text-white shadow-lg transition duration-300 ease-in-out hover:scale-105 hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-800"
+        >
+          Confirmar reserva
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Modal Structure -->
+  <div
+    *ngIf="showModal"
+    class="modal-overlay fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4"
+    [ngClass]="{ show: showModal }"
+  >
+    <div
+      class="modal-content mx-auto w-full max-w-md transform rounded-lg bg-white p-6 shadow-xl dark:bg-gray-800 sm:my-8 sm:w-full"
+    >
+      <div class="mb-4 flex items-center justify-between">
+        <h3
+          class="text-lg font-bold"
+          [ngClass]="{
+            'text-green-600': modalType === 'success',
+            'text-red-600': modalType === 'error',
+          }"
+        >
+          {{ modalType === 'success' ? 'Éxito' : 'Error' }}
+        </h3>
+        <button
+          type="button"
+          (click)="closeMessageBox()"
+          class="text-gray-400 transition-colors hover:text-gray-600 dark:hover:text-gray-300"
+          aria-label="Cerrar mensaje"
+        >
+          <svg
+            class="h-6 w-6"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M6 18L18 6M6 6l12 12"
+            ></path>
+          </svg>
+        </button>
+      </div>
+      <p class="mb-6 text-gray-700 dark:text-gray-300">{{ modalMessage }}</p>
+      <div class="flex justify-end">
+        <button
+          type="button"
+          (click)="closeMessageBox()"
+          class="rounded-md bg-blue-600 px-6 py-2 text-white transition-colors hover:bg-blue-700"
+        >
+          Aceptar
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
