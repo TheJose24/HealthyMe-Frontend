@@ -1,109 +1,40 @@
 import { CommonModule } from '@angular/common';
+import type { OnInit } from '@angular/core';
 import { Component } from '@angular/core';
 import { BaseChartDirective } from 'ng2-charts';
 import type { ChartConfiguration, ChartData } from 'chart.js';
-
-interface IPayment {
-  id: string;
-  patient: string;
-  amount: number;
-  date: string;
-  status: 'paid' | 'pending' | 'failed';
-}
-
-interface IAppointment {
-  id: string;
-  time: string;
-  area: string;
-  doctor: string;
-  patient: string;
-  status: 'confirmed' | 'pending' | 'completed';
-}
+import type { DashboardApiService } from './stats.service';
+import type { IAppointment, IPayment } from './stats.service.ts';
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, BaseChartDirective],
+  imports: [CommonModule, BaseChartDirective, HttpClientModule],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
   // Estadísticas generales
   public generalStats = {
-    totalPatients: 1247,
-    totalDoctors: 45,
-    monthlyAppointments: 389,
-    laboratories: 8,
+    totalPatients: 0,
+    totalDoctors: 0,
+    monthlyAppointments: 0,
+    laboratories: 0,
     rooms: 32,
   };
 
   // Últimos pagos
-  public recentPayments: IPayment[] = [
-    {
-      id: 'PAY001',
-      patient: 'María González',
-      amount: 150.0,
-      date: '2024-06-18',
-      status: 'paid',
-    },
-    {
-      id: 'PAY002',
-      patient: 'Carlos Mendoza',
-      amount: 275.5,
-      date: '2024-06-18',
-      status: 'pending',
-    },
-    {
-      id: 'PAY003',
-      patient: 'Ana Torres',
-      amount: 120.0,
-      date: '2024-06-17',
-      status: 'paid',
-    },
-  ];
-
+  public recentPayments: IPayment[] = [];
   // Citas de hoy
-  public todayAppointments: IAppointment[] = [
-    {
-      id: 'APP001',
-      time: '09:00',
-      area: 'Cardiología',
-      doctor: 'Dr. Juan Pérez',
-      patient: 'Luis Rodriguez',
-      status: 'confirmed',
-    },
-    {
-      id: 'APP002',
-      time: '10:30',
-      area: 'Pediatría',
-      doctor: 'Dra. Carmen Silva',
-      patient: 'Sofia Martinez',
-      status: 'pending',
-    },
-    {
-      id: 'APP003',
-      time: '11:15',
-      area: 'Neurología',
-      doctor: 'Dr. Roberto López',
-      patient: 'Miguel Castro',
-      status: 'confirmed',
-    },
-    {
-      id: 'APP004',
-      time: '14:00',
-      area: 'Ginecología',
-      doctor: 'Dra. Patricia Ruiz',
-      patient: 'Elena Vargas',
-      status: 'confirmed',
-    },
-  ];
+  public todayAppointments: IAppointment[] = [];
 
   // Gráfico de nuevos pacientes (últimos 4 meses)
   public newPatientsChartData: ChartData<'bar'> = {
-    labels: ['Marzo', 'Abril', 'Mayo', 'Junio'],
+    labels: [],
     datasets: [
       {
-        data: [85, 102, 94, 127],
+        data: [],
         label: 'Nuevos Pacientes',
         backgroundColor: 'rgba(59, 130, 246, 0.8)',
         borderColor: 'rgba(59, 130, 246, 1)',
@@ -138,10 +69,10 @@ export class HomeComponent {
 
   // Gráfico de balance (ingresos vs egresos)
   public balanceChartData: ChartData<'line'> = {
-    labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio'],
+    labels: [],
     datasets: [
       {
-        data: [45000, 52000, 48000, 61000, 58000, 67000],
+        data: [],
         label: 'Ingresos',
         backgroundColor: 'rgba(34, 197, 94, 0.1)',
         borderColor: 'rgba(34, 197, 94, 1)',
@@ -150,7 +81,7 @@ export class HomeComponent {
         tension: 0.4,
       },
       {
-        data: [35000, 38000, 42000, 45000, 44000, 48000],
+        data: [],
         label: 'Egresos',
         backgroundColor: 'rgba(239, 68, 68, 0.1)',
         borderColor: 'rgba(239, 68, 68, 1)',
@@ -189,17 +120,10 @@ export class HomeComponent {
 
   // Gráfico de especialidades preferidas (barras horizontales)
   public specialtiesChartData: ChartData<'bar'> = {
-    labels: [
-      'Cardiología',
-      'Pediatría',
-      'Ginecología',
-      'Neurología',
-      'Traumatología',
-      'Dermatología',
-    ],
+    labels: [],
     datasets: [
       {
-        data: [245, 198, 176, 154, 132, 98],
+        data: [],
         label: 'Citas',
         backgroundColor: [
           'rgba(99, 102, 241, 0.8)',
@@ -279,6 +203,50 @@ export class HomeComponent {
       },
     },
   };
+
+  public constructor(private dashboardService: DashboardApiService) {}
+
+  public ngOnInit(): void {
+    this.dashboardService.getTotalPacientes().subscribe(data => {
+      this.generalStats.totalPatients = data;
+    });
+
+    this.dashboardService.getTotalMedicos().subscribe(data => {
+      this.generalStats.totalDoctors = data;
+    });
+
+    this.dashboardService.getTotalCitas().subscribe(data => {
+      this.generalStats.monthlyAppointments = data;
+    });
+
+    this.dashboardService.getTotalReservas().subscribe(data => {
+      this.generalStats.laboratories = data;
+    });
+
+    this.dashboardService.getCitasDeHoy().subscribe(data => {
+      this.todayAppointments = data;
+    });
+
+    this.dashboardService.getHistorialPagos().subscribe(data => {
+      this.recentPayments = data;
+    });
+
+    this.dashboardService.getPacientesPorMes().subscribe(data => {
+      this.newPatientsChartData.labels = data.map(p => p.mes);
+      this.newPatientsChartData.datasets[0].data = data.map(p => p.cantidad);
+    });
+
+    this.dashboardService.getBalanceMensual().subscribe(data => {
+      this.balanceChartData.labels = data.map(b => b.mes);
+      this.balanceChartData.datasets[0].data = data.map(b => b.ingresos);
+      this.balanceChartData.datasets[1].data = data.map(b => b.egresos);
+    });
+
+    this.dashboardService.getEspecialidadesMasSolicitadas().subscribe(data => {
+      this.specialtiesChartData.labels = data.map(e => e.especialidad);
+      this.specialtiesChartData.datasets[0].data = data.map(e => e.cantidad);
+    });
+  }
 
   public getStatusClass(status: string): string {
     switch (status) {
