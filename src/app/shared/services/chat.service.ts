@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import type { Observable } from 'rxjs';
 import { BehaviorSubject, Subject } from 'rxjs';
-import type { OllamaService } from './ollama.service';
+// eslint-disable-next-line @typescript-eslint/consistent-type-imports
+import { OllamaService } from './ollama.service';
 import { ChatMessage } from '../models/chat-message.model';
 import type {
   IChatSession,

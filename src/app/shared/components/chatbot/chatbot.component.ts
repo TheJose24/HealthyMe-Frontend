@@ -9,7 +9,8 @@ import {
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Subscription } from 'rxjs';
-import type { ChatService } from '../../services/chat.service';
+// eslint-disable-next-line @typescript-eslint/consistent-type-imports
+import { ChatService } from '../../services/chat.service';
 import type { IChatMessage, IChatState } from '../../interfaces/chat.interface';
 import { trigger, transition, style, animate, query, stagger } from '@angular/animations';
 

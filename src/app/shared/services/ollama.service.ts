@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import type { HttpClient } from '@angular/common/http';
+// eslint-disable-next-line @typescript-eslint/consistent-type-imports
+import { HttpClient } from '@angular/common/http';
 import { HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import type { Observable } from 'rxjs';
 import { BehaviorSubject, throwError, retry, timeout, catchError } from 'rxjs';

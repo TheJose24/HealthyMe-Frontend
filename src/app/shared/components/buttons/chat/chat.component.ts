@@ -1,7 +1,8 @@
 import { Component, type OnInit, type OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Subscription } from 'rxjs';
-import type { ChatService } from '../../../services/chat.service';
+// eslint-disable-next-line @typescript-eslint/consistent-type-imports
+import { ChatService } from '../../../services/chat.service';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 
 @Component({
