@@ -1,7 +1,11 @@
 import { CommonModule } from '@angular/common';
-import type { ElementRef } from '@angular/core';
+import type { ElementRef, OnInit } from '@angular/core';
 import { Component, ViewChild } from '@angular/core';
 import { trigger, transition, style, animate, query, stagger } from '@angular/animations';
+import { HttpClientModule } from '@angular/common/http';
+import { lastValueFrom } from 'rxjs';
+import type { IMedico } from './services/doctor.model';
+import type { DoctorService } from './services/doctor.service';
 
 interface IDoctor {
   nombre: string;
@@ -13,7 +17,7 @@ interface IDoctor {
 @Component({
   selector: 'app-busca-tu-doctor',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, HttpClientModule],
   templateUrl: './busca-tu-doctor.component.html',
   styleUrl: './busca-tu-doctor.component.css',
   animations: [
@@ -56,10 +60,10 @@ interface IDoctor {
     ]),
   ],
 })
-export class BuscaTuDoctorComponent {
+export class BuscaTuDoctorComponent implements OnInit {
   @ViewChild('listaDoctores') public position!: ElementRef<HTMLElement>;
 
-  public doctores: IDoctor[] = [
+  private doctoresRespaldo: IDoctor[] = [
     {
       nombre: 'Dr. Javier Rodríguez',
       especialidad: 'Cardiología',
@@ -272,7 +276,7 @@ export class BuscaTuDoctorComponent {
     },
   ];
 
-  public especialidades: string[] = [
+  private especialidadesRespaldo: string[] = [
     'Todos',
     'Cardiología',
     'Pediatría',
@@ -280,9 +284,89 @@ export class BuscaTuDoctorComponent {
     'Psiquiatría',
   ];
 
+  public doctores: IDoctor[] = [];
+  public especialidades: string[] = [];
   public especialidadDefault: string = 'Todos';
   public paginaActual: number = 1;
   public doctoresPorPagina: number = 9;
+  public cargando: boolean = true;
+  public errorCarga: boolean = false;
+  private especialidadesCache = new Map<number, string>();
+
+  constructor(private doctorService: DoctorService) {}
+
+  ngOnInit(): void {
+    this.cargarDatos();
+  }
+
+  private async cargarDatos(): Promise<void> {
+    this.cargando = true;
+    this.errorCarga = false;
+
+    try {
+      // Cargar todos los médicos del Service
+      const medicosApi = await lastValueFrom(this.doctorService.listAllMedicos());
+      // console.log('Respuesta completa:', medicosApi);
+      // Transformar médicos
+      this.doctores = await this.transformarMedicos(medicosApi);
+      // Cargar lista de especialidades únicas
+      this.cargarEspecialidadesUnicas();
+    } catch (error) {
+      console.error('Error al cargar datos:', error);
+      this.usarDatosRespaldo();
+    } finally {
+      this.cargando = false;
+    }
+  }
+
+  private async transformarMedicos(medicosApi: IMedico[]): Promise<IDoctor[]> {
+    const doctoresTransformados: IDoctor[] = [];
+
+    for (const medico of medicosApi) {
+      let nombreEspecialidad = 'Especialidad no disponible';
+
+      try {
+        if (!this.especialidadesCache.has(medico.idEspecialidad)) {
+          const especialidades = await lastValueFrom(
+            this.doctorService.listEspecialidadByMedico(medico.idEspecialidad)
+          );
+          if (especialidades?.length) {
+            this.especialidadesCache.set(
+              medico.idEspecialidad,
+              especialidades[0].nombreEspecialidad
+            );
+          }
+        }
+        nombreEspecialidad =
+          this.especialidadesCache.get(medico.idEspecialidad) || nombreEspecialidad;
+      } catch (error) {
+        console.error(`Error al obtener especialidad para médico ${medico.idMedico}:`, error);
+      }
+
+      doctoresTransformados.push({
+        nombre: `${medico.persona.nombre} ${medico.persona.apellido}`,
+        especialidad: nombreEspecialidad,
+        descripcion: `Médico especializado en ${nombreEspecialidad}. Contacto: ${medico.persona.email} | Teléfono: ${medico.persona.telefono}`,
+        imagen: medico.imagenPerfil || './assets/images/doctor.png',
+      });
+    }
+
+    return doctoresTransformados;
+  }
+
+  private cargarEspecialidadesUnicas(): void {
+    // Obtener especialidades unicas
+    const especialidadesUnicas = [
+      ...new Set(this.doctores.map(d => d.especialidad).filter(Boolean)),
+    ];
+    this.especialidades = ['Todos', ...especialidadesUnicas];
+  }
+
+  private usarDatosRespaldo(): void {
+    this.errorCarga = true;
+    this.doctores = [...this.doctoresRespaldo];
+    this.especialidades = [...this.especialidadesRespaldo];
+  }
 
   // Getters y Setters
   public get doctoresFiltrados(): IDoctor[] {
