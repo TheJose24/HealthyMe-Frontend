@@ -1,0 +1,214 @@
+<div
+  *ngIf="isOpen"
+  [@slideInOut]
+  class="fixed bottom-24 right-6 z-40 flex h-[32rem] w-80 flex-col rounded-xl border border-gray-200 bg-white shadow-2xl dark:border-gray-700 dark:bg-gray-800 sm:w-96"
+>
+  <!-- Header del chat -->
+  <div
+    class="flex items-center justify-between rounded-t-xl bg-gradient-to-r from-blue-500 to-blue-600 p-4 text-white"
+  >
+    <div class="flex items-center space-x-3">
+      <!-- Avatar del bot -->
+      <div class="flex h-10 w-10 items-center justify-center rounded-full bg-white/20">
+        <i class="ri-robot-line text-xl"></i>
+      </div>
+
+      <!-- Info del bot -->
+      <div>
+        <h3 class="font-semibold">Asistente Médico</h3>
+        <div class="flex items-center space-x-1 text-sm">
+          <div
+            class="h-2 w-2 rounded-full"
+            [class.bg-green-400]="isConnected"
+            [class.bg-red-400]="!isConnected"
+          ></div>
+          <span>{{ isConnected ? 'En línea' : 'Desconectado' }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Botones de acción -->
+    <div class="flex items-center space-x-2">
+      <!-- Limpiar chat -->
+      <button
+        type="button"
+        (click)="clearChat()"
+        class="rounded-lg p-2 transition-colors duration-200 hover:bg-white/20"
+        title="Limpiar conversación"
+      >
+        <i class="ri-delete-bin-line text-lg"></i>
+      </button>
+
+      <!-- Cerrar chat -->
+      <button
+        type="button"
+        (click)="closeChat()"
+        class="rounded-lg p-2 transition-colors duration-200 hover:bg-white/20"
+        title="Cerrar chat"
+      >
+        <i class="ri-close-line text-lg"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- Área de mensajes -->
+  <div
+    #messagesContainer
+    class="flex-1 space-y-4 overflow-y-auto bg-gray-50 p-4 dark:bg-gray-900"
+    [@messageAnimation]="messages.length"
+  >
+    <!-- Mensaje de estado de conexión -->
+    <div *ngIf="!isConnected" class="mb-4 flex justify-center" [@fadeIn]>
+      <div
+        class="rounded-lg border border-yellow-300 bg-yellow-100 px-3 py-2 text-sm text-yellow-800 dark:border-yellow-700 dark:bg-yellow-900/20 dark:text-yellow-300"
+      >
+        <i class="ri-warning-line mr-1"></i>
+        Asistente desconectado. Funcionalidad limitada.
+      </div>
+    </div>
+
+    <!-- Lista de mensajes -->
+    <div
+      *ngFor="let message of messages; trackBy: trackByMessageId"
+      [class]="getMessageClasses(message)"
+    >
+      <!-- Mensaje del bot -->
+      <div *ngIf="message.sender === 'bot'" class="flex max-w-full items-start space-x-2">
+        <!-- Avatar del bot -->
+        <div
+          class="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-blue-100 dark:bg-blue-900/30"
+        >
+          <i class="ri-robot-line text-sm text-blue-600 dark:text-blue-400"></i>
+        </div>
+
+        <!-- Contenido del mensaje -->
+        <div class="flex flex-col">
+          <div [class]="getBubbleClasses(message)">
+            <!-- Indicador de escritura -->
+            <div *ngIf="message.isTyping" class="flex items-center space-x-1">
+              <div class="flex space-x-1">
+                <div class="h-2 w-2 animate-bounce rounded-full bg-gray-400"></div>
+                <div
+                  class="h-2 w-2 animate-bounce rounded-full bg-gray-400"
+                  style="animation-delay: 0.1s"
+                ></div>
+                <div
+                  class="h-2 w-2 animate-bounce rounded-full bg-gray-400"
+                  style="animation-delay: 0.2s"
+                ></div>
+              </div>
+              <span class="text-sm text-gray-500">Escribiendo...</span>
+            </div>
+
+            <!-- Contenido normal -->
+            <div *ngIf="!message.isTyping" class="whitespace-pre-wrap break-words">
+              {{ message.content }}
+            </div>
+          </div>
+
+          <!-- Metadata del mensaje -->
+          <div
+            *ngIf="!message.isTyping && message.metadata"
+            class="mt-1 text-xs text-gray-500 dark:text-gray-400"
+          >
+            <span *ngIf="message.metadata.confidence">
+              Confianza: {{ message.metadata.confidence * 100 | number: '1.0-0' }}%
+            </span>
+            <span *ngIf="message.metadata.processingTime" class="ml-2">
+              {{ message.metadata.processingTime }}ms
+            </span>
+          </div>
+
+          <!-- Timestamp -->
+          <div *ngIf="!message.isTyping" class="mt-1 text-xs text-gray-500 dark:text-gray-400">
+            {{ formatTime(message.timestamp) }}
+          </div>
+        </div>
+      </div>
+
+      <!-- Mensaje del usuario -->
+      <div
+        *ngIf="message.sender === 'user'"
+        class="flex max-w-full items-start justify-end space-x-2"
+      >
+        <!-- Contenido del mensaje -->
+        <div class="flex flex-col items-end">
+          <div [class]="getBubbleClasses(message)">
+            <div class="whitespace-pre-wrap break-words">{{ message.content }}</div>
+          </div>
+
+          <!-- Timestamp -->
+          <div class="mt-1 text-xs text-gray-500 dark:text-gray-400">
+            {{ formatTime(message.timestamp) }}
+          </div>
+        </div>
+
+        <!-- Avatar del usuario -->
+        <div
+          class="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-gray-100 dark:bg-gray-700"
+        >
+          <i class="ri-user-line text-sm text-gray-600 dark:text-gray-300"></i>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mensaje cuando no hay conversación -->
+    <div
+      *ngIf="messages.length === 0"
+      class="flex h-full flex-col items-center justify-center text-center text-gray-500 dark:text-gray-400"
+    >
+      <i class="ri-chat-3-line mb-2 text-4xl"></i>
+      <p class="text-sm">¡Hola! Soy tu asistente médico.</p>
+      <p class="mt-1 text-xs">Escribe tu consulta para comenzar.</p>
+    </div>
+  </div>
+
+  <!-- Input de mensaje -->
+  <div
+    class="rounded-b-xl border-t border-gray-200 bg-white p-4 dark:border-gray-700 dark:bg-gray-800"
+  >
+    <!-- Indicador de error -->
+    <div
+      *ngIf="chatState?.lastError"
+      class="mb-2 rounded-md border border-red-200 bg-red-50 p-2 text-sm text-red-800 dark:border-red-800 dark:bg-red-900/20 dark:text-red-300"
+    >
+      <i class="ri-error-warning-line mr-1"></i>
+      {{ chatState?.lastError }}
+    </div>
+
+    <!-- Campo de entrada -->
+    <div class="flex items-end space-x-2">
+      <div class="flex-1">
+        <textarea
+          #messageInput
+          [(ngModel)]="currentMessage"
+          (keydown)="onKeyPress($event)"
+          placeholder="Escribe tu consulta médica..."
+          rows="1"
+          class="w-full resize-none rounded-lg border border-gray-300 bg-gray-50 px-3 py-2 text-sm text-gray-900 placeholder-gray-500 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 dark:placeholder-gray-400"
+          [disabled]="isTyping"
+        ></textarea>
+      </div>
+
+      <!-- Botón de envío -->
+      <button
+        type="button"
+        (click)="sendMessage()"
+        [disabled]="!currentMessage.trim() || isTyping || !isConnected"
+        class="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-500 text-white transition-all duration-200 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500/20 disabled:cursor-not-allowed disabled:bg-gray-300 dark:disabled:bg-gray-600"
+      >
+        <i
+          class="text-lg transition-transform duration-200"
+          [class.ri-send-plane-line]="!isTyping"
+          [class.ri-loader-4-line]="isTyping"
+          [class.animate-spin]="isTyping"
+        ></i>
+      </button>
+    </div>
+
+    <!-- Información adicional -->
+    <div class="mt-2 text-center text-xs text-gray-500 dark:text-gray-400">
+      Presiona Enter para enviar, Shift+Enter para nueva línea
+    </div>
+  </div>
+</div>
