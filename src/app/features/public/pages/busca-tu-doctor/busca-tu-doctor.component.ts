@@ -1,11 +1,11 @@
 import { CommonModule } from '@angular/common';
 import type { ElementRef, OnInit } from '@angular/core';
-import { Component, ViewChild } from '@angular/core';
+import { Component, Inject, ViewChild } from '@angular/core';
 import { trigger, transition, style, animate, query, stagger } from '@angular/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { lastValueFrom } from 'rxjs';
 import type { IMedico } from './services/doctor.model';
-import type { DoctorService } from './services/doctor.service';
+import { DoctorService } from './services/doctor.service';
 
 interface IDoctor {
   nombre: string;
@@ -293,7 +293,7 @@ export class BuscaTuDoctorComponent implements OnInit {
   public errorCarga: boolean = false;
   private especialidadesCache = new Map<number, string>();
 
-  constructor(private doctorService: DoctorService) {}
+  constructor(@Inject(DoctorService) private doctorService: DoctorService) {}
 
   ngOnInit(): void {
     this.cargarDatos();
