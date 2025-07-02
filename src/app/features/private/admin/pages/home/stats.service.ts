@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import type { HttpClient } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import type { Observable } from 'rxjs';
+import { environment } from '../../../../../../environments/environment';
 
 export interface IAppointment {
   id: string;
@@ -45,32 +46,33 @@ export class StatsService {
   }
 }
 
+@Injectable({
+  providedIn: 'root',
+})
 export class DashboardApiService {
-  private apiPacientes = 'http://localhost:8080/api/v1/pacientes/count';
-  private apiMedicos = 'http://localhost:8080/api/medicos/count';
-  private apiCitas = 'http://localhost:8080/api/citas/count';
-  private apiLaboratorio = 'http://localhost:8080/api/reservas/count';
-  private readonly baseUrlCitas = 'http://localhost:8080/api/citas';
-  private readonly baseUrlFacturas = 'http://localhost:8080/payment/api/facturas';
-  private readonly baseUrlPagos = 'http://localhost:8080/payment/api/pagos';
-  private readonly baseUrlPacientes = 'http://localhost:8080/api/v1/pacientes';
+  private readonly baseUrlReservas = `${environment.apiUrl}/api/v1/reservas-lab`;
+  private readonly baseUrlCitas = `${environment.apiUrl}/api/v1/citas`;
+  private readonly baseUrlFacturas = `${environment.apiUrl}/api/v1/facturas`;
+  private readonly baseUrlPagos = `${environment.apiUrl}/api/v1/pagos`;
+  private readonly baseUrlPacientes = `${environment.apiUrl}/api/v1/pacientes`;
+  private readonly baseUrlMedicos = `${environment.apiUrl}/api/v1/medicos`;
 
   public constructor(private http: HttpClient) {}
 
   public getTotalPacientes(): Observable<number> {
-    return this.http.get<number>(this.apiPacientes);
+    return this.http.get<number>(`${this.baseUrlPacientes}/count`);
   }
 
   public getTotalMedicos(): Observable<number> {
-    return this.http.get<number>(this.apiMedicos);
+    return this.http.get<number>(`${this.baseUrlMedicos}/count`);
   }
 
   public getTotalCitas(): Observable<number> {
-    return this.http.get<number>(this.apiCitas);
+    return this.http.get<number>(`${this.baseUrlCitas}/count`);
   }
 
   public getTotalReservas(): Observable<number> {
-    return this.http.get<number>(this.apiLaboratorio);
+    return this.http.get<number>(`${this.baseUrlReservas}/count`);
   }
 
   public getCitasDeHoy(): Observable<IAppointment[]> {

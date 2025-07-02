@@ -3,7 +3,7 @@ import type { OnInit } from '@angular/core';
 import { Component } from '@angular/core';
 import { BaseChartDirective } from 'ng2-charts';
 import type { ChartConfiguration, ChartData } from 'chart.js';
-import type { DashboardApiService } from './stats.service';
+import { DashboardApiService } from './stats.service';
 import type { IAppointment, IPayment } from './stats.service.ts';
 import { HttpClientModule } from '@angular/common/http';
 
