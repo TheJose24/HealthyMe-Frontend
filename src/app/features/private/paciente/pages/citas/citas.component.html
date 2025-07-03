@@ -1,0 +1,107 @@
+<div class="space-y-6 p-6">
+  <h2 class="text-2xl font-bold">Mis Citas</h2>
+
+  <div class="flex items-center space-x-4">
+    <label for="filtro" class="font-medium">Filtrar por estado:</label>
+    <select
+      id="filtro"
+      [(ngModel)]="filtro"
+      (change)="onFiltroChange(filtro)"
+      class="rounded-md border p-2"
+    >
+      <option value="">Todos</option>
+      <option *ngFor="let e of estados" [value]="e">{{ e | titlecase }}</option>
+    </select>
+  </div>
+
+  <div class="overflow-x-auto">
+    <table class="min-w-full rounded-lg bg-white shadow">
+      <thead class="bg-gray-100">
+        <tr>
+          <th class="px-4 py-2 text-left">Fecha</th>
+          <th class="px-4 py-2 text-left">Hora</th>
+          <th class="px-4 py-2 text-left">Estado</th>
+          <th class="px-4 py-2 text-left">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let c of displayedCitas" class="border-b">
+          <td class="px-4 py-2">{{ c.fecha }}</td>
+          <td class="px-4 py-2">{{ c.hora }}</td>
+          <td class="px-4 py-2">{{ c.estado | titlecase }}</td>
+          <td class="space-x-2 px-4 py-2">
+            <button type="button" (click)="openDetail(c)" class="text-blue-500 hover:underline">
+              Ver detalle
+            </button>
+            <button
+              type="button"
+              *ngIf="c.estado === 'PENDIENTE'"
+              (click)="cancelar(c.id)"
+              class="text-red-500 hover:underline"
+            >
+              Cancelar
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="mt-4 flex items-center justify-center space-x-2">
+    <button
+      type="button"
+      (click)="prevPage()"
+      [disabled]="currentPage === 1"
+      class="rounded-md bg-gray-200 px-3 py-1 hover:bg-gray-300 disabled:opacity-50"
+    >
+      Anterior
+    </button>
+    <ng-container *ngFor="let p of pages">
+      <button
+        type="button"
+        (click)="goToPage(p)"
+        [ngClass]="{
+          'bg-blue-500 font-bold text-white': p === currentPage,
+          'bg-gray-100': p !== currentPage,
+        }"
+        class="rounded-md px-3 py-1"
+      >
+        {{ p }}
+      </button>
+    </ng-container>
+    <button
+      type="button"
+      (click)="nextPage()"
+      [disabled]="currentPage === totalPages"
+      class="rounded-md bg-gray-200 px-3 py-1 hover:bg-gray-300 disabled:opacity-50"
+    >
+      Siguiente
+    </button>
+  </div>
+
+  <div
+    *ngIf="selectedCita"
+    class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50"
+  >
+    <div class="w-full max-w-md rounded-lg bg-white p-6 shadow-lg">
+      <h3 class="mb-4 text-xl font-semibold">Detalle de la Cita</h3>
+      <p class="mb-2"><span class="font-medium">ID:</span> {{ selectedCita.id }}</p>
+      <p class="mb-2"><span class="font-medium">Fecha:</span> {{ selectedCita.fecha }}</p>
+      <p class="mb-2"><span class="font-medium">Hora:</span> {{ selectedCita.hora }}</p>
+      <p class="mb-2">
+        <span class="font-medium">Estado:</span> {{ selectedCita.estado | titlecase }}
+      </p>
+      <p class="mb-2"><span class="font-medium">Medico ID:</span> {{ selectedCita.idMedico }}</p>
+      <p class="mb-4">
+        <span class="font-medium">Paciente ID:</span> {{ selectedCita.idPaciente }}
+      </p>
+      <button
+        type="button"
+        (click)="closeModal()"
+        class="mt-2 rounded-md bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
+      >
+        Cerrar
+      </button>
+    </div>
+  </div>
+</div>

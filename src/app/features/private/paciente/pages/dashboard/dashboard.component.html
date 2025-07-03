@@ -1,0 +1,72 @@
+<div class="space-y-6 p-6">
+  <!-- Tarjeta Próxima cita -->
+  <div class="rounded-lg bg-white p-4 shadow">
+    <h3 class="mb-2 font-semibold">Próxima cita</h3>
+    <p *ngIf="nextCita">{{ nextCita.fecha }} — {{ nextCita.hora }}</p>
+    <p *ngIf="!nextCita" class="text-gray-500">Sin citas</p>
+  </div>
+
+  <!-- Contadores -->
+  <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
+    <div *ngFor="let key of keys" class="rounded-lg bg-white p-4 shadow">
+      <h3 class="mb-2 font-semibold">{{ key | titlecase }}</h3>
+      <p class="text-2xl">{{ counts[key] }}</p>
+    </div>
+  </div>
+
+  <!-- Gráficas de triaje -->
+  <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+    <div class="rounded-lg bg-white p-4 shadow">
+      <h3 class="mb-4 font-semibold">Evolución de Peso</h3>
+      <canvas
+        baseChart
+        [data]="pesoData"
+        [options]="{ responsive: true }"
+        chartType="line"
+      ></canvas>
+    </div>
+    <div class="rounded-lg bg-white p-4 shadow">
+      <h3 class="mb-4 font-semibold">Presión Arterial</h3>
+      <canvas
+        baseChart
+        [data]="presionData"
+        [options]="{ responsive: true }"
+        chartType="line"
+      ></canvas>
+    </div>
+  </div>
+
+  <!-- Gráfica de barras -->
+  <div class="rounded-lg bg-white p-4 shadow">
+    <h3 class="mb-4 font-semibold">Citas por mes</h3>
+    <canvas baseChart [data]="citasMesData" [options]="{ responsive: true }" chartType="bar">
+    </canvas>
+  </div>
+
+  <!-- Tabla de últimas consultas -->
+  <div class="overflow-auto rounded-lg bg-white p-4 shadow">
+    <h3 class="mb-4 font-semibold">Últimas consultas</h3>
+    <table class="min-w-full table-auto">
+      <thead class="bg-gray-100">
+        <tr>
+          <th class="px-4 py-2 text-left">Fecha</th>
+          <th class="px-4 py-2 text-left">Hora</th>
+          <th class="px-4 py-2 text-left">Estado</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let c of ultimas" class="border-b">
+          <td class="px-4 py-2">{{ c.fecha }}</td>
+          <td class="px-4 py-2">{{ c.hora }}</td>
+          <td class="px-4 py-2">{{ c.estado }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Calendario -->
+  <div class="rounded-lg bg-white p-4 shadow">
+    <h3 class="mb-4 font-semibold">Calendario de citas</h3>
+    <full-calendar [options]="calendarOptions"></full-calendar>
+  </div>
+</div>
