@@ -3,55 +3,20 @@ import type { Routes } from '@angular/router';
 export const routes: Routes = [
   {
     path: '',
-    loadComponent: () =>
-      import('./layout/public-layout/public-layout.component').then(c => c.PublicLayoutComponent),
-    children: [
-      {
-        path: '',
-        loadComponent: () => import('./pages/inicio/inicio.component').then(c => c.InicioComponent),
-        pathMatch: 'full',
-        title: 'Inicio',
-      },
-      /*{
-        path: 'servicios',
-        loadComponent: () =>
-          import('./pages/servicios/servicios.component').then(c => c.ServiciosComponent),
-        title: 'Servicios',
-      },
-      {
-        path: 'doctores',
-        loadComponent: () =>
-          import('./pages/doctores/doctores.component').then(c => c.DoctoresComponent),
-        title: 'Busca tu doctor',
-      },
-      {
-        path: 'nosotros',
-        loadComponent: () =>
-          import('./pages/nosotros/nosotros.component').then(c => c.NosotrosComponent),
-        title: 'Nosotros',
-      },
-      {
-        path: 'citas',
-        loadChildren: () => import('./pages/citas/citas.routes').then(r => r.citasRoutes),
-      },*/
-      {
-        path: '404',
-        loadComponent: () =>
-          import('./pages/not-found/not-found.component').then(c => c.NotFoundComponent),
-        title: 'Página no encontrada',
-      },
-    ],
+    loadChildren: () => import('./features/public/public.routes').then(r => r.PUBLIC_ROUTES),
   },
-
-  // Rutas para los dashboards (separadas del layout público)
-  /*{
-    path: 'dashboard',
+  {
+    path: 'admin',
+    loadChildren: () => import('./features/private/admin/admin.routes').then(r => r.ADMIN_ROUTES),
+  },
+  {
+    path: '404',
     loadComponent: () =>
-      import('./layout/dashboard-layout/dashboard-layout.component').then(
-        c => c.DashboardLayoutComponent
+      import('./features/public/pages/not-found/not-found.component').then(
+        c => c.NotFoundComponent
       ),
-    loadChildren: () => import('./dashboard/dashboard.routes').then(r => r.dashboardRoutes),
-  },*/
+    title: 'Página no encontrada',
+  },
 
   {
     path: '**',

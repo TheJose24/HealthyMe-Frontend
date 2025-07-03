@@ -1,0 +1,110 @@
+<div class="relative">
+  <section
+    class="grid min-h-[500px] grid-cols-1 gap-x-5 gap-y-5 bg-gradient-to-b from-blue-400 via-blue-500 via-70% to-white to-100% px-2 py-10 dark:bg-gradient-to-b dark:from-gray-900 dark:to-gray-800 sm:px-8 md:grid-cols-2 lg:px-10 xl:px-32"
+  >
+    <div class="flex flex-col justify-center">
+      <span
+        class="max-w-96 px-6 py-4 text-4xl font-extrabold uppercase text-white lg:text-5xl xl:text-6xl 2xl:max-w-[800px] 2xl:text-[90px]"
+      >
+        Tu salud merece al mejor <strong class="text-indigo-700">especialista</strong>
+      </span>
+      <p
+        class="lg:text-md max-w-96 px-6 py-2 text-sm font-light text-gray-100 2xl:max-w-[800px] 2xl:text-xl"
+      >
+        Con expertos certificados y años de experiencia, tu salud está en las mejores manos.
+      </p>
+    </div>
+    <div
+      class="flex max-w-[800px] rounded-bl-[180px] rounded-br-[400px] rounded-tl-[500px] rounded-tr-[350px] bg-white bg-opacity-50 drop-shadow-lg"
+    >
+      <img
+        class="w-full drop-shadow-xl lg:rounded-br-[290px]"
+        src="./assets/images/doctores-banner.png"
+        alt="Doctor y su Paciente"
+      />
+    </div>
+  </section>
+  <section #listaDoctores class="flex bg-white px-2 py-10 dark:bg-gray-800">
+    <div class="container mx-auto px-2 py-8 md:px-4">
+      <!-- Filtros -->
+      <div class="mb-8">
+        <div class="flex flex-wrap gap-2">
+          <button
+            type="button"
+            *ngFor="let especialidad of especialidades"
+            [class.bg-blue-600]="especialidadSeleccionada === especialidad"
+            [class.text-white]="especialidadSeleccionada === especialidad"
+            [class.bg-gray-200]="especialidadSeleccionada !== especialidad"
+            [class.text-gray-800]="especialidadSeleccionada !== especialidad"
+            class="rounded-md px-4 py-2 font-semibold transition-colors duration-200 hover:bg-blue-500 hover:text-white"
+            (click)="especialidadSeleccionada = especialidad"
+          >
+            {{ especialidad }}
+          </button>
+        </div>
+      </div>
+
+      <!-- Contador de resultados -->
+      <p class="mb-6 text-gray-600 dark:text-white">
+        Contamos con {{ doctoresFiltrados.length }} doctores
+      </p>
+
+      <!-- Doctores -->
+      <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <div
+          *ngFor="let doctor of doctoresPaginados"
+          class="overflow-hidden rounded-2xl shadow-lg shadow-blue-200 transition-all duration-500 hover:scale-[1.02] hover:shadow-lg hover:shadow-blue-400 dark:shadow-gray-200"
+        >
+          <div class="flex justify-center bg-sky-50 dark:bg-slate-500">
+            <img class="h-96 py-2" src="{{ doctor.imagen }}" alt="{{ doctor.nombre }}" />
+          </div>
+          <div class="flex flex-col items-center justify-center p-6">
+            <h3 class="mb-2 text-xl font-bold text-blue-950 dark:text-white">
+              {{ doctor.nombre }}
+            </h3>
+            <p class="mb-2 font-semibold text-blue-900 dark:text-gray-300">
+              {{ doctor.especialidad }}
+            </p>
+            <p class="text-center font-normal text-gray-400 dark:text-blue-100">
+              {{ doctor.descripcion }}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Controles de paginación -->
+      <div class="mt-8 flex justify-center">
+        <nav class="inline-flex">
+          <button
+            type="button"
+            (click)="anterior()"
+            class="mx-1 px-4 py-2 text-lg font-extrabold text-blue-500 dark:text-white"
+            [disabled]="paginaActual === 1"
+          >
+            ←
+          </button>
+
+          <button
+            type="button"
+            *ngFor="let pagina of [].constructor(totalPaginas); let i = index"
+            (click)="cambiarPagina(i + 1)"
+            class="mx-1 rounded-lg px-4 py-2 dark:text-white"
+            [class.bg-blue-500]="paginaActual === i + 1"
+            [class.text-white]="paginaActual === i + 1"
+          >
+            {{ i + 1 }}
+          </button>
+
+          <button
+            type="button"
+            (click)="siguiente()"
+            class="mx-1 px-4 py-2 text-lg font-extrabold text-blue-500 dark:text-white"
+            [disabled]="paginaActual === totalPaginas"
+          >
+            →
+          </button>
+        </nav>
+      </div>
+    </div>
+  </section>
+</div>

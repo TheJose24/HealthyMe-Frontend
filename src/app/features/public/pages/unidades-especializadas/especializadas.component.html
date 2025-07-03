@@ -1,0 +1,89 @@
+<section
+  class="hero-banner sr-hero relative overflow-hidden bg-cover bg-center dark:bg-gray-900"
+  style="background-image: url('/assets/images/unidades/banner-unidades.jpg')"
+>
+  <div
+    class="absolute inset-0"
+    style="
+      background: radial-gradient(circle at center, rgba(13, 42, 75, 0.4), rgba(13, 42, 75, 0.8));
+    "
+  ></div>
+
+  <div class="relative z-10 mx-auto max-w-2xl px-4 py-24 text-center md:text-left">
+    <span
+      class="mb-4 inline-flex items-center space-x-2 rounded-full bg-blue-200 bg-opacity-50 px-2 py-1 text-xs font-semibold text-blue-900 dark:bg-blue-800 dark:bg-opacity-50 dark:text-white"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="h-4 w-4 text-blue-600 dark:text-blue-300"
+        fill="currentColor"
+        viewBox="0 0 20 20"
+      >
+        <path
+          fill-rule="evenodd"
+          clip-rule="evenodd"
+          d="M10 18a8 8 0 110-16 8 8 0 010 16zm1-8h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V7a1 1 0 112 0v3z"
+        />
+      </svg>
+      <span>Unidades Especializadas</span>
+    </span>
+
+    <h2
+      class="mb-6 text-2xl font-extrabold leading-snug text-white dark:text-gray-100 sm:text-3xl md:text-4xl lg:text-5xl"
+    >
+      Conoce Nuestras Especialidades
+    </h2>
+
+    <p class="mb-8 text-base text-gray-100 dark:text-gray-300 sm:text-lg">
+      En HealthyMe contamos con servicios diseñados para cubrir tus necesidades de salud, con
+      tecnología de punta y profesionales altamente capacitados que te brindan atención
+      personalizada.
+    </p>
+  </div>
+</section>
+
+<section class="bg-white py-16 dark:bg-gray-900">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+      <div
+        *ngFor="let esp of especialidades"
+        class="card-sr transform overflow-hidden rounded-lg border-2 border-transparent bg-blue-50/50 transition hover:border-blue-100 hover:shadow-[0_8px_20px_rgba(59,130,246,0.2)] dark:bg-gray-800 dark:hover:shadow-[0_8px_20px_rgba(59,130,246,0.3)]"
+      >
+        <img
+          [src]="esp.image"
+          [alt]="esp.title"
+          class="h-56 w-full object-cover transition-transform duration-500 hover:scale-105"
+        />
+        <div class="p-6 text-center">
+          <h3 class="mb-2 text-xl font-semibold text-gray-800 dark:text-gray-100">
+            {{ esp.title }}
+          </h3>
+          <p class="mb-4 text-gray-600 dark:text-gray-300">
+            {{ esp.tagline }}
+          </p>
+          <button
+            type="button"
+            (click)="irADetalle(esp.slug)"
+            class="inline-flex items-center gap-2 rounded-full bg-blue-600 px-5 py-2 font-medium text-white transition-colors duration-300 hover:bg-blue-700"
+          >
+            Información
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-4 w-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M9 5l7 7-7 7"
+              />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

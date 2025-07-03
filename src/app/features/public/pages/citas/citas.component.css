@@ -1,0 +1,113 @@
+/* Estilos base para el cuerpo (asumiendo que Inter se carga globalmente o en index.html) */
+body {
+  font-family: 'Inter', sans-serif;
+}
+
+/* Estilos para el contenido de cada paso del formulario */
+.step-content {
+  transition:
+    opacity 0.5s ease-in-out,
+    transform 0.5s ease-in-out;
+  opacity: 0;
+  transform: translateY(20px);
+  /* NO display: none aquí. Se controlará con .is-hidden */
+}
+
+/* Nueva clase para ocultar completamente el elemento */
+.step-content.is-hidden {
+  display: none;
+}
+
+/* Estilos para el paso activo (visible y en posición final) */
+.step-content.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Estilos específicos para la cuadrícula del calendario */
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+}
+
+/* Estilos para cada día del calendario */
+.calendar-day {
+  padding: 8px;
+  text-align: center;
+  border-radius: 8px;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease-in-out,
+    color 0.2s ease-in-out,
+    transform 0.2s ease-in-out,
+    box-shadow 0.2s ease-in-out;
+  font-weight: 500;
+  color: #4b5563; /* gray-700 */
+}
+
+/* Efecto hover para los días no vacíos del calendario */
+.calendar-day:not(.empty-day):hover {
+  background-color: #dbeafe; /* blue-100 */
+  color: #1e40af; /* blue-800 */
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilo para el día actual en el calendario */
+.calendar-day.today {
+  border: 2px solid #3b82f6; /* blue-500 */
+  background-color: #e0f2fe; /* blue-50 */
+  color: #1d4ed8; /* blue-700 */
+  font-weight: 600;
+}
+
+/* Estilo para el día seleccionado en el calendario */
+.calendar-day.selected {
+  background: linear-gradient(to right, #3b82f6, #2563eb); /* blue-500 to blue-600 */
+  color: white;
+  font-weight: 700;
+  box-shadow: 0 6px 12px rgba(59, 130, 246, 0.4);
+  transform: scale(1.05);
+}
+
+/* Estilo para los días vacíos (relleno) del calendario */
+.empty-day {
+  visibility: hidden; /* Oculta los placeholders pero mantiene el espacio */
+}
+
+/* Estilos para los bloques de hora disponibles */
+.time-slot {
+  @apply cursor-pointer rounded-lg px-4 py-2 transition-colors duration-200;
+  @apply bg-blue-100 text-blue-800 hover:bg-blue-200;
+}
+
+/* Estilo para el bloque de hora seleccionado */
+.time-slot.selected {
+  @apply bg-blue-600 text-white hover:bg-blue-700;
+}
+
+/* Estilos para el modal */
+.modal-overlay {
+  transition: opacity 0.3s ease-in-out;
+  opacity: 0;
+  visibility: hidden;
+}
+
+.modal-overlay.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+.modal-content {
+  transition:
+    transform 0.3s ease-in-out,
+    opacity 0.3s ease-in-out;
+  transform: translateY(-20px);
+  opacity: 0;
+}
+
+.modal-overlay.show .modal-content {
+  transform: translateY(0);
+  opacity: 1;
+}

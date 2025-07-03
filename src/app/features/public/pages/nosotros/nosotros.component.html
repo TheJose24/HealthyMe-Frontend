@@ -1,0 +1,285 @@
+<div class="min-h-screen bg-gray-50 dark:bg-gray-900">
+  <!-- Hero Section -->
+  <section class="relative h-[70vh] overflow-hidden">
+    <!-- Imagen de fondo con overlay -->
+    <div
+      class="absolute inset-0 bg-cover bg-center bg-no-repeat"
+      style="background-image: url('/assets/images/nosotros/nosotros.jpeg')"
+    ></div>
+    <div class="absolute inset-0 bg-gradient-to-r from-blue-900/80 to-indigo-900/60"></div>
+
+    <!-- Contenido del hero -->
+    <div class="relative flex h-full items-center justify-center text-center">
+      <div class="max-w-4xl px-4" [@fadeInUp]>
+        <h1 class="mb-6 text-5xl font-bold text-white md:text-6xl lg:text-7xl">Sobre Nosotros</h1>
+        <p class="text-xl text-blue-100 md:text-2xl">
+          De Papeles a Píxeles: Digitalizando la Salud con HealthyMe
+        </p>
+        <div
+          class="mx-auto mt-8 h-1 w-24 rounded-full bg-gradient-to-r from-blue-400 to-green-400"
+        ></div>
+      </div>
+    </div>
+
+    <!-- Indicador de scroll -->
+    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 transform animate-bounce">
+      <i class="ri-arrow-down-line text-2xl text-white"></i>
+    </div>
+  </section>
+
+  <!-- Sección Misión y Visión -->
+  <section class="bg-white py-20 dark:bg-gray-800">
+    <div class="container mx-auto px-4">
+      <div class="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
+        <!-- Contenido de texto -->
+        <div class="space-y-8" [@staggerAnimation]>
+          <!-- Misión -->
+          <div
+            class="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-blue-50 to-indigo-50 p-8 shadow-lg transition-all duration-300 hover:shadow-xl dark:from-blue-900/20 dark:to-indigo-900/20"
+          >
+            <div class="absolute -right-4 -top-4 h-24 w-24 rounded-full bg-blue-500/10"></div>
+            <div class="relative">
+              <div class="mb-4 flex items-center space-x-3">
+                <div
+                  class="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-500 text-white"
+                >
+                  <i class="ri-target-line text-xl"></i>
+                </div>
+                <h3 class="text-2xl font-bold text-gray-900 dark:text-white">Misión</h3>
+              </div>
+              <p class="leading-relaxed text-gray-700 dark:text-gray-300">
+                Brindar atención médica de excelencia integrando tecnología innovadora para
+                optimizar la gestión clínica, mejorando la experiencia tanto de pacientes como de
+                profesionales de la salud. Combinamos soluciones digitales seguras con calidez
+                humana, garantizando accesibilidad, precisión y confidencialidad en cada
+                interacción.
+              </p>
+            </div>
+          </div>
+
+          <!-- Visión -->
+          <div
+            class="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-green-50 to-emerald-50 p-8 shadow-lg transition-all duration-300 hover:shadow-xl dark:from-green-900/20 dark:to-emerald-900/20"
+          >
+            <div class="absolute -right-4 -top-4 h-24 w-24 rounded-full bg-green-500/10"></div>
+            <div class="relative">
+              <div class="mb-4 flex items-center space-x-3">
+                <div
+                  class="flex h-12 w-12 items-center justify-center rounded-xl bg-green-500 text-white"
+                >
+                  <i class="ri-eye-line text-xl"></i>
+                </div>
+                <h3 class="text-2xl font-bold text-gray-900 dark:text-white">Visión</h3>
+              </div>
+              <p class="leading-relaxed text-gray-700 dark:text-gray-300">
+                Ser el referente nacional en salud digital, transformando la gestión médica
+                tradicional mediante soluciones tecnológicas innovadoras como plataformas
+                inteligentes, telemedicina y historiales clínicos seguros, equilibrando
+                perfectamente la innovación tecnológica con el trato humano personalizado.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Imagen -->
+        <div class="relative" [@scaleIn]>
+          <div class="relative overflow-hidden rounded-2xl shadow-2xl">
+            <img
+              src="assets/images/nosotros/mision_vision.jpeg"
+              alt="Misión y Visión HealthyMe"
+              class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+            />
+            <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+          </div>
+
+          <!-- Elementos decorativos -->
+          <div class="absolute -right-6 -top-6 h-24 w-24 rounded-full bg-blue-500/20 blur-xl"></div>
+          <div
+            class="absolute -bottom-6 -left-6 h-32 w-32 rounded-full bg-green-500/20 blur-xl"
+          ></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sección de Valores -->
+  <section class="bg-gray-50 py-20 dark:bg-gray-900">
+    <div class="container mx-auto px-4">
+      <div class="mb-16 text-center" [@fadeInUp]>
+        <h2 class="mb-4 text-4xl font-bold text-gray-900 dark:text-white">Nuestros Valores</h2>
+        <p class="mx-auto max-w-2xl text-xl text-gray-600 dark:text-gray-300">
+          Los principios que guían nuestro compromiso diario con la excelencia en salud
+        </p>
+      </div>
+
+      <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-4" [@staggerAnimation]>
+        <div
+          *ngFor="let valor of valores; trackBy: trackByValorId"
+          class="group relative overflow-hidden rounded-2xl bg-white p-8 shadow-lg transition-all duration-300 hover:-translate-y-2 hover:shadow-xl dark:bg-gray-800"
+        >
+          <!-- Gradiente de fondo -->
+          <div
+            [class]="
+              'absolute inset-0 bg-gradient-to-br opacity-5 transition-opacity group-hover:opacity-10 ' +
+              valor.color
+            "
+          ></div>
+
+          <div class="relative">
+            <!-- Icono -->
+            <div
+              [class]="
+                'mb-6 flex h-16 w-16 items-center justify-center rounded-xl bg-gradient-to-br text-white ' +
+                valor.color
+              "
+            >
+              <i [class]="valor.icono + ' text-2xl'"></i>
+            </div>
+
+            <!-- Contenido -->
+            <h3 class="mb-4 text-xl font-bold text-gray-900 dark:text-white">
+              {{ valor.titulo }}
+            </h3>
+            <p class="leading-relaxed text-gray-600 dark:text-gray-300">
+              {{ valor.descripcion }}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sección de Estadísticas -->
+  <section #statsSection class="bg-blue-600 py-20 dark:bg-blue-800">
+    <div class="container mx-auto px-4">
+      <div class="mb-16 text-center" [@fadeInUp]>
+        <h2 class="mb-4 text-4xl font-bold text-white">Nuestros Logros en Números</h2>
+        <p class="mx-auto max-w-2xl text-xl text-blue-100">
+          Datos que reflejan nuestro compromiso y dedicación
+        </p>
+      </div>
+
+      <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
+        <div
+          *ngFor="let stat of estadisticas; trackBy: trackByStatId"
+          class="text-center"
+          [@scaleIn]
+        >
+          <div
+            class="group relative overflow-hidden rounded-2xl bg-white/10 p-8 backdrop-blur-sm transition-all duration-300 hover:bg-white/20"
+          >
+            <!-- Icono -->
+            <div class="mb-4 flex justify-center">
+              <div class="flex h-16 w-16 items-center justify-center rounded-full bg-white/20">
+                <i [class]="stat.icono + ' text-3xl text-white'"></i>
+              </div>
+            </div>
+
+            <!-- Número -->
+            <div class="mb-2 text-4xl font-bold text-white">
+              {{ stat.numero }}
+            </div>
+
+            <!-- Título -->
+            <h3 class="mb-2 text-xl font-semibold text-white">
+              {{ stat.titulo }}
+            </h3>
+
+            <!-- Descripción -->
+            <p class="text-blue-100">
+              {{ stat.descripcion }}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sección de Equipo de Liderazgo -->
+  <section class="bg-white py-20 dark:bg-gray-800">
+    <div class="container mx-auto px-4">
+      <div class="mb-16 text-center" [@fadeInUp]>
+        <h2 class="mb-4 text-4xl font-bold text-gray-900 dark:text-white">
+          Nuestro Equipo de Liderazgo
+        </h2>
+        <p class="mx-auto max-w-2xl text-xl text-gray-600 dark:text-gray-300">
+          Profesionales comprometidos con la transformación digital de la salud
+        </p>
+      </div>
+
+      <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3" [@staggerAnimation]>
+        <div
+          *ngFor="let member of equipoLiderago; trackBy: trackByMemberId"
+          class="group relative overflow-hidden rounded-2xl bg-gray-50 transition-all duration-300 hover:shadow-xl dark:bg-gray-700"
+        >
+          <!-- Imagen -->
+          <div class="relative h-80 overflow-hidden">
+            <img
+              [src]="member.imagen"
+              [alt]="member.nombre"
+              class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+              onerror="this.src='assets/images/team/default-avatar.jpg'"
+            />
+            <div
+              class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"
+            ></div>
+
+            <!-- LinkedIn button -->
+            <button
+              type="button"
+              *ngIf="member.linkedin"
+              (click)="openLinkedIn(member.linkedin)"
+              class="absolute bottom-4 right-4 flex h-10 w-10 items-center justify-center rounded-full bg-blue-600 text-white opacity-0 transition-all duration-300 hover:bg-blue-700 group-hover:opacity-100"
+            >
+              <i class="ri-linkedin-line"></i>
+            </button>
+          </div>
+
+          <!-- Contenido -->
+          <div class="p-6">
+            <div class="mb-2 text-sm font-medium text-blue-600 dark:text-blue-400">
+              {{ member.especialidad }}
+            </div>
+            <h3 class="mb-2 text-xl font-bold text-gray-900 dark:text-white">
+              {{ member.nombre }}
+            </h3>
+            <p class="mb-4 text-lg font-semibold text-gray-700 dark:text-gray-300">
+              {{ member.cargo }}
+            </p>
+            <p class="leading-relaxed text-gray-600 dark:text-gray-400">
+              {{ member.descripcion }}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Call to Action -->
+  <section class="bg-gradient-to-r from-blue-600 to-indigo-700 py-20">
+    <div class="container mx-auto px-4 text-center" [@fadeInUp]>
+      <h2 class="mb-6 text-4xl font-bold text-white">
+        ¿Listo para Transformar tu Experiencia de Salud?
+      </h2>
+      <p class="mx-auto mb-8 max-w-2xl text-xl text-blue-100">
+        Únete a miles de pacientes que ya confían en HealthyMe para su bienestar
+      </p>
+      <div class="flex flex-col justify-center space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0">
+        <a
+          href="/contacto"
+          class="inline-flex items-center rounded-full bg-white px-8 py-4 text-lg font-semibold text-blue-600 transition hover:bg-gray-100"
+        >
+          <i class="ri-phone-line mr-2"></i>
+          Contáctanos
+        </a>
+        <a
+          href="/doctores"
+          class="inline-flex items-center rounded-full border-2 border-white px-8 py-4 text-lg font-semibold text-white transition hover:bg-white hover:text-blue-600"
+        >
+          <i class="ri-user-heart-line mr-2"></i>
+          Conoce a Nuestros Médicos
+        </a>
+      </div>
+    </div>
+  </section>
+</div>
