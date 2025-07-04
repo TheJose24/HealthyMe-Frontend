@@ -21,7 +21,7 @@ export interface ICounts {
 
 @Injectable({ providedIn: 'root' })
 export class CitaService {
-  private baseUrl = `${environment.apiUrl}/api/citas`;
+  private baseUrl = `${environment.apiUrl}/api/v1/citas`;
 
   public constructor(private http: HttpClient) {}
 
