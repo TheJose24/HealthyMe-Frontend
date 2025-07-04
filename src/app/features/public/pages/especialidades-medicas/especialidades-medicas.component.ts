@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import type { OnInit, AfterViewInit } from '@angular/core';
-import type { Router } from '@angular/router';
+// eslint-disable-next-line @typescript-eslint/consistent-type-imports
+import { Router } from '@angular/router';
 import ScrollReveal from 'scrollreveal';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
