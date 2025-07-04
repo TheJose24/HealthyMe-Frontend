@@ -37,15 +37,15 @@ export class CitaService {
     return this.http.get<ICitaDTO[]>(`${this.baseUrl}/usuario/${usuarioId}/ultimas?size=${size}`);
   }
   public getAllByUsuario(usuarioId: number): Observable<ICitaDTO[]> {
-    return this.http.get<ICitaDTO[]>(`${environment.apiUrl}/usuario/${usuarioId}`);
+    return this.http.get<ICitaDTO[]>(`${this.baseUrl}/usuario/${usuarioId}`);
   }
   public getByUsuarioAndEstado(usuarioId: number, estado: string): Observable<ICitaDTO[]> {
-    return this.http.get<ICitaDTO[]>(`${environment.apiUrl}/usuario/${usuarioId}?estado=${estado}`);
+    return this.http.get<ICitaDTO[]>(`${this.baseUrl}/usuario/${usuarioId}?estado=${estado}`);
   }
   public delete(id: string): Observable<void> {
-    return this.http.delete<void>(`${environment.apiUrl}/${id}`);
+    return this.http.delete<void>(`${this.baseUrl}/${id}`);
   }
   public getById(id: string): Observable<ICitaDTO> {
-    return this.http.get<ICitaDTO>(`${environment.apiUrl}/${id}`);
+    return this.http.get<ICitaDTO>(`${this.baseUrl}/${id}`);
   }
 }
