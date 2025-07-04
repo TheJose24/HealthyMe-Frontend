@@ -1,0 +1,22 @@
+.especialidades-bg {
+  background: linear-gradient(120deg, #f8fafc 0%, #e0e7ff 100%);
+}
+
+.text-primary {
+  color: #2563eb;
+}
+
+.plus-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  margin-top: 1.5rem;
+  transition: transform 0.2s;
+}
+.plus-btn:hover {
+  transform: scale(1.1);
+}

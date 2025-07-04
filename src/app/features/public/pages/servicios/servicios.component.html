@@ -1,0 +1,111 @@
+<div class="especialidades-bg min-h-screen px-2 py-8 md:px-0">
+  <div class="container mx-auto">
+    <div class="mb-6 text-center">
+      <h1 class="mb-2 text-5xl font-extrabold text-primary md:text-6xl">Especialidades</h1>
+      <h2 class="mb-2 mt-6 text-2xl font-bold text-primary md:text-3xl">
+        Especialidades Medico- Quirurgicas
+      </h2>
+    </div>
+    <div class="mb-8 grid grid-cols-1 items-stretch gap-8 md:grid-cols-4">
+      <ng-container *ngFor="let esp of especialidadesMedicas; trackBy: trackByNombre">
+        <div
+          class="card-sr flex transform flex-col overflow-hidden rounded-lg border-2 border-transparent bg-blue-50/50 transition hover:border-blue-100 hover:shadow-[0_8px_20px_rgba(59,130,246,0.2)]"
+        >
+          <img
+            [src]="esp.imagen"
+            [alt]="esp.nombre"
+            class="h-48 w-full object-cover transition-transform duration-500 hover:scale-105"
+          />
+          <div class="flex flex-1 flex-col justify-end p-6 text-center">
+            <h3 class="mb-2 text-xl font-semibold text-gray-800">{{ esp.nombre }}</h3>
+            <a
+              [routerLink]="esp.ruta"
+              class="mt-2 inline-flex items-center justify-center gap-2 rounded-full bg-gray-800 px-5 py-2 font-medium text-white transition-colors duration-300 hover:bg-gray-900"
+            >
+              {{ esp.boton }}
+            </a>
+          </div>
+        </div>
+      </ng-container>
+      <!-- Botón "+" como columna extra -->
+      <div class="flex items-center justify-center">
+        <button
+          type="button"
+          (click)="irEspecialidadesMedicas()"
+          class="plus-btn"
+          title="Ver todas las especialidades médicas"
+          aria-label="Ver todas las especialidades médicas"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-8 w-8 text-primary"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <circle cx="12" cy="12" r="11" stroke-width="2" stroke="#2563eb" fill="white" />
+            <path
+              stroke="#2563eb"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M12 8v8m-4-4h8"
+            />
+          </svg>
+        </button>
+      </div>
+    </div>
+    <h2 class="mb-6 text-center text-2xl font-bold text-primary md:text-3xl">
+      Unidades Especializadas
+    </h2>
+    <div class="grid grid-cols-1 items-stretch gap-8 md:grid-cols-4">
+      <ng-container *ngFor="let esp of especialidadesUnidades; trackBy: trackByNombre">
+        <div
+          class="card-sr flex transform flex-col overflow-hidden rounded-lg border-2 border-transparent bg-blue-50/50 transition hover:border-blue-100 hover:shadow-[0_8px_20px_rgba(59,130,246,0.2)]"
+        >
+          <img
+            [src]="esp.imagen"
+            [alt]="esp.nombre"
+            class="h-48 w-full object-cover transition-transform duration-500 hover:scale-105"
+          />
+          <div class="flex flex-1 flex-col justify-end p-6 text-center">
+            <h3 class="mb-2 text-xl font-semibold text-gray-800">{{ esp.nombre }}</h3>
+            <a
+              [routerLink]="esp.ruta"
+              class="mt-2 inline-flex items-center justify-center gap-2 rounded-full bg-gray-800 px-5 py-2 font-medium text-white transition-colors duration-300 hover:bg-gray-900"
+            >
+              {{ esp.boton }}
+            </a>
+          </div>
+        </div>
+      </ng-container>
+      <!-- Botón "+" como columna extra -->
+      <div class="flex items-center justify-center">
+        <button
+          type="button"
+          (click)="irUnidadesEspecializadas()"
+          class="plus-btn"
+          title="Ver todas las unidades especializadas"
+          aria-label="Ver todas las unidades especializadas"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-8 w-8 text-primary"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <circle cx="12" cy="12" r="11" stroke-width="2" stroke="#2563eb" fill="white" />
+            <path
+              stroke="#2563eb"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M12 8v8m-4-4h8"
+            />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

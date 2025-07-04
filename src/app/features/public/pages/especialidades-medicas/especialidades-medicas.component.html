@@ -1,0 +1,53 @@
+<section class="especialidades-bg min-h-screen px-2 py-8 md:px-0">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <h1 class="mb-8 text-center text-4xl font-extrabold text-primary md:text-5xl">
+      Especialidades Médicas
+    </h1>
+    <form
+      class="mb-10 flex flex-col items-center justify-center gap-4 md:flex-row"
+      (ngSubmit)="filtrar()"
+    >
+      <input
+        type="text"
+        [(ngModel)]="filtro"
+        name="filtro"
+        placeholder="Especialidad Médica"
+        class="w-full rounded-full border border-blue-300 px-5 py-2 focus:outline-none focus:ring-2 focus:ring-primary md:w-96"
+        (keyup.enter)="filtrar()"
+        autocomplete="off"
+      />
+      <button
+        type="submit"
+        class="rounded-full bg-primary px-8 py-2 font-semibold text-white shadow transition hover:bg-blue-700"
+      >
+        Buscar
+      </button>
+    </form>
+    <div class="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
+      <div
+        *ngFor="let esp of especialidadesFiltradas"
+        class="card-sr transform overflow-hidden rounded-lg border-2 border-transparent bg-blue-50/50 transition hover:border-blue-100 hover:shadow-[0_8px_20px_rgba(59,130,246,0.2)]"
+      >
+        <img
+          [src]="esp.imagen"
+          [alt]="esp.nombre"
+          class="h-48 w-full object-cover transition-transform duration-500 hover:scale-105"
+        />
+        <div class="relative flex flex-col items-center pb-6">
+          <div
+            class="especialidad-label -mt-6 mb-2 min-w-[180px] rounded-xl bg-white px-6 py-2 text-center shadow"
+          >
+            <span class="font-semibold text-gray-800">{{ esp.nombre }}</span>
+          </div>
+          <button
+            type="button"
+            (click)="reservar(esp.slug)"
+            class="rounded-full bg-primary px-6 py-2 font-semibold text-white shadow transition hover:bg-blue-700"
+          >
+            Reserva Aquí
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

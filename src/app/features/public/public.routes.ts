@@ -21,13 +21,22 @@ export const PUBLIC_ROUTES: Routes = [
         title: 'Libro de Reclamaciones',
       },
 
-      /*{
+      {
         path: 'servicios',
         loadComponent: () =>
           import('./pages/servicios/servicios.component').then(c => c.ServiciosComponent),
         title: 'Servicios',
       },
-      */
+
+      {
+        path: 'especialidades-medicas',
+        loadComponent: () =>
+          import('./pages/especialidades-medicas/especialidades-medicas.component').then(
+            c => c.EspecialidadesMedicasComponent
+          ),
+        title: 'Servicios',
+      },
+
       {
         path: 'doctores',
         loadComponent: () =>
