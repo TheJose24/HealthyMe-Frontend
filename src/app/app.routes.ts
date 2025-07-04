@@ -10,6 +10,11 @@ export const routes: Routes = [
     loadChildren: () => import('./features/private/admin/admin.routes').then(r => r.ADMIN_ROUTES),
   },
   {
+    path: 'paciente',
+    loadChildren: () =>
+      import('./features/private/paciente/paciente.routes').then(r => r.PACIENTE_ROUTES),
+  },
+  {
     path: '404',
     loadComponent: () =>
       import('./features/public/pages/not-found/not-found.component').then(
