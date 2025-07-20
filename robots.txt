@@ -1,0 +1,21 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://healthyme.devbyjose.me/sitemap.xml
+
+# Disallow private areas
+Disallow: /admin/
+Disallow: /paciente/
+Disallow: /api/
+Disallow: /assets/temp/
+
+# Allow important public pages
+Allow: /citas/agendar
+Allow: /doctores
+Allow: /especialidades-medicas
+Allow: /servicios
+Allow: /sedes
+Allow: /contacto
+
+# Tasa de rastreo
+Crawl-delay: 10

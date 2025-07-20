@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  
+  <!-- Página Principal -->
+  <url>
+    <loc>https://healthyme.devbyjose.me/</loc>
+    <lastmod>2025-01-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://healthyme.devbyjose.me/assets/img/og-image.jpg</image:loc>
+      <image:title>HealthyMe - Plataforma de Citas Médicas</image:title>
+      <image:caption>Sistema integral de gestión de citas médicas</image:caption>
+    </image:image>
+  </url>
+
+  <!-- Sección Institucional -->
+  <url>
+    <loc>https://healthyme.devbyjose.me/nosotros</loc>
+    <lastmod>2025-01-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://healthyme.devbyjose.me/assets/img/about-healthyme.jpg</image:loc>
+      <image:title>Sobre HealthyMe</image:title>
+      <image:caption>Conoce nuestra misión y visión en salud digital</image:caption>
+    </image:image>
+  </url>
+
+  <!-- Servicios Médicos -->
+  <url>
+    <loc>https://healthyme.devbyjose.me/servicios</loc>
+    <lastmod>2025-01-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://healthyme.devbyjose.me/assets/img/servicios-medicos.jpg</image:loc>
+      <image:title>Servicios Médicos HealthyMe</image:title>
+      <image:caption>Amplio catálogo de servicios médicos especializados</image:caption>
+    </image:image>
+  </url>
+
+  <!-- Especialidades Médicas -->
+  <url>
+    <loc>https://healthyme.devbyjose.me/especialidades-medicas</loc>
+    <lastmod>2025-01-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://healthyme.devbyjose.me/assets/img/especialidades-medicas.jpg</image:loc>
+      <image:title>Especialidades Médicas</image:title>
+      <image:caption>Encuentra la especialidad médica que necesitas</image:caption>
+    </image:image>
+  </url>
+
+  <!-- Directorio de Doctores -->
+  <url>
+    <loc>https://healthyme.devbyjose.me/doctores</loc>
+    <lastmod>2025-01-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://healthyme.devbyjose.me/assets/img/doctores-healthyme.jpg</image:loc>
+      <image:title>Busca tu Doctor - HealthyMe</image:title>
+      <image:caption>Directorio completo de profesionales médicos</image:caption>
+    </image:image>
+  </url>
+
+  <!-- Agendar Citas (Página Principal de Conversión) -->
+  <url>
+    <loc>https://healthyme.devbyjose.me/citas/agendar</loc>
+    <lastmod>2025-01-20</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.95</priority>
+    <image:image>
+      <image:loc>https://healthyme.devbyjose.me/assets/img/agendar-cita.jpg</image:loc>
+      <image:title>Agendar Cita Médica Online</image:title>
+      <image:caption>Sistema fácil y rápido para agendar citas médicas</image:caption>
+    </image:image>
+  </url>
+
+  <!-- Sedes -->
+  <url>
+    <loc>https://healthyme.devbyjose.me/sedes</loc>
+    <lastmod>2025-01-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://healthyme.devbyjose.me/assets/img/sedes-healthyme.jpg</image:loc>
+      <image:title>Nuestras Sedes - HealthyMe</image:title>
+      <image:caption>Encuentra la sede más cercana a ti</image:caption>
+    </image:image>
+  </url>
+
+  <!-- Unidades Especializadas -->
+  <url>
+    <loc>https://healthyme.devbyjose.me/unidades-especializadas</loc>
+    <lastmod>2025-01-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://healthyme.devbyjose.me/assets/img/unidades-especializadas.jpg</image:loc>
+      <image:title>Unidades Especializadas</image:title>
+      <image:caption>Centros de excelencia médica especializada</image:caption>
+    </image:image>
+  </url>
+
+  <!-- Unidades Especializadas Específicas (Ejemplos) -->
+  <url>
+    <loc>https://healthyme.devbyjose.me/unidades-especializadas/cardiologia</loc>
+    <lastmod>2025-01-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://healthyme.devbyjose.me/unidades-especializadas/oncologia</loc>
+    <lastmod>2025-01-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://healthyme.devbyjose.me/unidades-especializadas/neurologia</loc>
+    <lastmod>2025-01-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://healthyme.devbyjose.me/unidades-especializadas/pediatria</loc>
+    <lastmod>2025-01-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://healthyme.devbyjose.me/unidades-especializadas/ginecologia</loc>
+    <lastmod>2025-01-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- Contacto -->
+  <url>
+    <loc>https://healthyme.devbyjose.me/contacto</loc>
+    <lastmod>2025-01-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://healthyme.devbyjose.me/assets/img/contacto-healthyme.jpg</image:loc>
+      <image:title>Contacto - HealthyMe</image:title>
+      <image:caption>Contáctanos para resolver tus dudas y agendar citas</image:caption>
+    </image:image>
+  </url>
+
+  <!-- Libro de Reclamaciones (Requerimiento Legal) -->
+  <url>
+    <loc>https://healthyme.devbyjose.me/libro-reclamaciones</loc>
+    <lastmod>2025-01-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.4</priority>
+  </url>
+
+  <!-- Página 404 (Para Crawlers) -->
+  <url>
+    <loc>https://healthyme.devbyjose.me/404</loc>
+    <lastmod>2025-01-20</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.1</priority>
+  </url>
+
+</urlset>
