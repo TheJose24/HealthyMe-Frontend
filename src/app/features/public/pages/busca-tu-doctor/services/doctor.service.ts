@@ -16,7 +16,7 @@ export class DoctorService {
   constructor(@Inject(HttpClient) private http: HttpClient) {}
 
   // Obtener todos los medicos
-  listAllMedicos() {
+  listAllMedicos(): Observable<IMedico[]> {
     return this.http.get<IMedico[]>(this.urlApiMedico).pipe(catchError(this.handleError));
   }
 
@@ -28,7 +28,7 @@ export class DoctorService {
   }
 
   // Manejo de errores
-  private handleError(error: HttpErrorResponse) {
+  private handleError(error: HttpErrorResponse): Observable<never> {
     if (error.status === 0) {
       console.error('Se ha producido un error', error.error);
     } else {

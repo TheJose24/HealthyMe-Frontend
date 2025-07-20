@@ -326,85 +326,98 @@
           <div>
             <label
               for="especialidad"
-              class="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300"
-              >Especialidad:</label
+              class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300"
             >
+              Especialidad médica *
+            </label>
             <select
               id="especialidad"
               formControlName="especialidad"
               class="mt-1 block w-full rounded-md border border-gray-300 py-2 pl-3 pr-10 shadow-sm transition-all duration-300 ease-in-out focus:border-blue-500 focus:outline-none focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
             >
-              <option value="" disabled>Seleccione...</option>
-              <option *ngFor="let esp of especialidades" [value]="esp">{{ esp }}</option>
+              <option value="" disabled>Seleccione una especialidad...</option>
+              <option *ngFor="let especialidad of especialidades" [value]="especialidad.nombre">
+                {{ especialidad.nombre }}
+              </option>
             </select>
             <div
               *ngIf="
                 specialtyDoctorForm.get('especialidad')?.invalid &&
-                (specialtyDoctorForm.get('especialidad')?.dirty ||
-                  specialtyDoctorForm.get('especialidad')?.touched)
+                specialtyDoctorForm.get('especialidad')?.touched
               "
-              class="mt-1 text-xs text-red-500"
+              class="mt-1 text-sm text-red-600"
             >
-              Especialidad es requerida.
-            </div>
-          </div>
-          <div>
-            <label
-              for="tipoConsulta"
-              class="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300"
-              >Tipo de consulta:</label
-            >
-            <select
-              id="tipoConsulta"
-              formControlName="tipoConsulta"
-              class="mt-1 block w-full rounded-md border border-gray-300 py-2 pl-3 pr-10 shadow-sm transition-all duration-300 ease-in-out focus:border-blue-500 focus:outline-none focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
-            >
-              <option value="" disabled>Seleccione...</option>
-              <option *ngFor="let tipo of tiposConsulta" [value]="tipo">{{ tipo }}</option>
-            </select>
-            <div
-              *ngIf="
-                specialtyDoctorForm.get('tipoConsulta')?.invalid &&
-                (specialtyDoctorForm.get('tipoConsulta')?.dirty ||
-                  specialtyDoctorForm.get('tipoConsulta')?.touched)
-              "
-              class="mt-1 text-xs text-red-500"
-            >
-              Tipo de consulta es requerida.
+              La especialidad es requerida
             </div>
           </div>
           <div>
             <label
               for="medico"
-              class="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300"
-              >Médico:</label
+              class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300"
             >
+              Médico *
+            </label>
             <select
               id="medico"
               formControlName="medico"
-              class="mt-1 block w-full rounded-md border border-gray-300 py-2 pl-3 pr-10 shadow-sm transition-all duration-300 ease-in-out focus:border-blue-500 focus:outline-none focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+              class="mt-1 block w-full rounded-md border border-gray-300 py-2 pl-3 pr-10 shadow-sm transition-all duration-300 ease-in-out focus:border-blue-500 focus:outline-none focus:ring-blue-500 disabled:bg-gray-100 disabled:text-gray-400 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
             >
-              <option value="" disabled>Seleccione...</option>
-              <ng-container *ngIf="specialtyDoctorForm.get('especialidad')?.value">
-                <option
-                  *ngFor="let doc of medicos[specialtyDoctorForm.get('especialidad')?.value]"
-                  [value]="doc"
-                >
-                  {{ doc }}
-                </option>
-              </ng-container>
+              <option value="" disabled>
+                {{
+                  medicosDisponibles.length > 0
+                    ? 'Seleccione un médico...'
+                    : 'Primero seleccione una especialidad'
+                }}
+              </option>
+              <option *ngFor="let medico of medicosDisponibles" [value]="medico.nombre">
+                {{ medico.nombre }}
+              </option>
             </select>
             <div
               *ngIf="
                 specialtyDoctorForm.get('medico')?.invalid &&
-                (specialtyDoctorForm.get('medico')?.dirty ||
-                  specialtyDoctorForm.get('medico')?.touched)
+                specialtyDoctorForm.get('medico')?.touched
               "
-              class="mt-1 text-xs text-red-500"
+              class="mt-1 text-sm text-red-600"
             >
-              Médico es requerido.
+              El médico es requerido
+            </div>
+            <div
+              *ngIf="medicosDisponibles.length === 0 && selectedSpecialty"
+              class="mt-1 text-sm text-yellow-600"
+            >
+              No hay médicos disponibles para esta especialidad
             </div>
           </div>
+
+          <div class="md:col-span-2">
+            <label
+              for="tipoConsulta"
+              class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300"
+            >
+              Tipo de consulta *
+            </label>
+            <select
+              id="tipoConsulta"
+              formControlName="tipoConsulta"
+              class="mt-1 block w-full rounded-md border border-gray-300 py-2 pl-3 pr-10 shadow-sm transition-all duration-300 ease-in-out focus:border-blue-500 focus:outline-none focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+            >
+              <option value="" disabled>Seleccione tipo de consulta...</option>
+              <option *ngFor="let tipo of tiposConsulta" [value]="tipo">
+                {{ tipo }}
+              </option>
+            </select>
+            <div
+              *ngIf="
+                specialtyDoctorForm.get('tipoConsulta')?.invalid &&
+                specialtyDoctorForm.get('tipoConsulta')?.touched
+              "
+              class="mt-1 text-sm text-red-600"
+            >
+              El tipo de consulta es requerido
+            </div>
+          </div>
+
           <div class="mt-4 text-sm text-gray-600 dark:text-gray-400 md:col-span-2">
             Estimado Cliente: En caso haya seleccionado primera consulta y no sea la primera vez en
             que el médico especialista lo atiende, o, si ha seleccionado consulta de seguimiento, y
@@ -428,6 +441,10 @@
           <!-- Calendar -->
           <div class="rounded-lg bg-gray-100 p-4 shadow-md dark:bg-gray-700">
             <h3 class="mb-4 text-lg font-semibold text-gray-800 dark:text-gray-200">Fecha</h3>
+
+            <!-- CAMPO OCULTO PARA FECHA -->
+            <input type="hidden" formControlName="fecha" id="fechaHidden" />
+
             <div class="mb-4 flex items-center justify-between">
               <button
                 type="button"
@@ -483,7 +500,7 @@
               <div class="py-2 text-center font-bold text-gray-800 dark:text-gray-200">Vie</div>
               <div class="py-2 text-center font-bold text-gray-800 dark:text-gray-200">Sáb</div>
               <div class="py-2 text-center font-bold text-gray-800 dark:text-gray-200">Dom</div>
-              <!-- Añadidos tabindex y keydown.enter para accesibilidad en los días del calendario -->
+              <!-- Días del calendario -->
               <div
                 *ngFor="let day of days"
                 class="calendar-day"
@@ -500,6 +517,15 @@
                 {{ day !== null ? (day | date: 'd') : '' }}
               </div>
             </div>
+
+            <!-- Mostrar fecha seleccionada -->
+            <div
+              *ngIf="dateTimeForm.get('fecha')?.value"
+              class="mt-4 text-sm text-green-600 dark:text-green-400"
+            >
+              Fecha seleccionada: {{ dateTimeForm.get('fecha')?.value | date: 'dd/MM/yyyy' }}
+            </div>
+
             <div
               *ngIf="
                 dateTimeForm.get('fecha')?.invalid &&
@@ -516,6 +542,10 @@
             <h3 class="mb-4 text-lg font-semibold text-gray-800 dark:text-gray-200">
               Horas disponibles
             </h3>
+
+            <!--CAMPO OCULTO PARA HORA -->
+            <input type="hidden" formControlName="hora" id="horaHidden" />
+
             <div class="mb-4">
               <h4 class="mb-2 font-medium text-gray-700 dark:text-gray-300">Turno Mañana</h4>
               <div class="flex flex-wrap gap-2">
@@ -567,6 +597,15 @@
                 </div>
               </div>
             </div>
+
+            <!-- Mostrar hora seleccionada -->
+            <div
+              *ngIf="dateTimeForm.get('hora')?.value"
+              class="mt-4 text-sm text-green-600 dark:text-green-400"
+            >
+              Hora seleccionada: {{ dateTimeForm.get('hora')?.value }}
+            </div>
+
             <div
               *ngIf="
                 dateTimeForm.get('hora')?.invalid &&
@@ -594,52 +633,22 @@
             <h3 class="mb-4 text-lg font-semibold text-gray-800 dark:text-gray-200">
               Método de pago
             </h3>
-            <div class="mb-6 flex items-center space-x-4">
-              <label for="metodoPagoYape" class="flex items-center">
+            <div class="mb-6 flex flex-wrap items-center gap-4">
+              <label
+                *ngFor="let metodo of metodosPagoDisponibles"
+                [for]="'metodoPago' + metodo.id"
+                class="flex cursor-pointer items-center"
+              >
                 <input
                   type="radio"
-                  id="metodoPagoYape"
-                  value="Yape"
-                  formControlName="metodoPago"
-                  class="h-4 w-4 border-gray-300 text-blue-600 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:focus:ring-blue-600"
-                />
-                <img src="/assets/images/citas/yape.jpg" alt="Yape" class="ml-2 h-10 rounded-md" />
-              </label>
-              <label for="metodoPagoVisa" class="flex items-center">
-                <input
-                  type="radio"
-                  id="metodoPagoVisa"
-                  value="Visa"
-                  formControlName="metodoPago"
-                  class="h-4 w-4 border-gray-300 text-blue-600 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:focus:ring-blue-600"
-                />
-                <img src="/assets/images/citas/visa.png" alt="Visa" class="ml-2 h-10 rounded-md" />
-              </label>
-              <label for="metodoPagoMastercard" class="flex items-center">
-                <input
-                  type="radio"
-                  id="metodoPagoMastercard"
-                  value="Mastercard"
+                  [id]="'metodoPago' + metodo.id"
+                  [value]="metodo.nombre"
                   formControlName="metodoPago"
                   class="h-4 w-4 border-gray-300 text-blue-600 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:focus:ring-blue-600"
                 />
                 <img
-                  src="/assets/images/citas/mastercard.png"
-                  alt="Mastercard"
-                  class="ml-2 h-10 rounded-md"
-                />
-              </label>
-              <label for="metodoPagoPaypal" class="flex items-center">
-                <input
-                  type="radio"
-                  id="metodoPagoPaypal"
-                  value="Paypal"
-                  formControlName="metodoPago"
-                  class="h-4 w-4 border-gray-300 text-blue-600 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:focus:ring-blue-600"
-                />
-                <img
-                  src="/assets/images/citas/paypal.png"
-                  alt="Paypal"
+                  [src]="'/assets/images/citas/' + metodo.nombre.toLowerCase() + '.png'"
+                  [alt]="metodo.nombre"
                   class="ml-2 h-10 rounded-md"
                 />
               </label>
@@ -820,7 +829,6 @@
     </form>
   </div>
 
-  <!-- Modal Structure -->
   <div
     *ngIf="showModal"
     class="modal-overlay fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4"
@@ -835,11 +843,15 @@
           [ngClass]="{
             'text-green-600': modalType === 'success',
             'text-red-600': modalType === 'error',
+            'text-blue-600': modalType === 'loading',
           }"
         >
-          {{ modalType === 'success' ? 'Éxito' : 'Error' }}
+          {{
+            modalType === 'success' ? 'Éxito' : modalType === 'error' ? 'Error' : 'Procesando...'
+          }}
         </h3>
         <button
+          *ngIf="modalType !== 'loading'"
           type="button"
           (click)="closeMessageBox()"
           class="text-gray-400 transition-colors hover:text-gray-600 dark:hover:text-gray-300"
@@ -861,8 +873,15 @@
           </svg>
         </button>
       </div>
+
+      <!-- Loading spinner -->
+      <div *ngIf="modalType === 'loading'" class="mb-6 flex justify-center">
+        <div class="h-8 w-8 animate-spin rounded-full border-b-2 border-blue-600"></div>
+      </div>
+
       <p class="mb-6 text-gray-700 dark:text-gray-300">{{ modalMessage }}</p>
-      <div class="flex justify-end">
+
+      <div *ngIf="modalType !== 'loading'" class="flex justify-end">
         <button
           type="button"
           (click)="closeMessageBox()"
