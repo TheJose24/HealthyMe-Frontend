@@ -98,7 +98,7 @@ import { FooterComponent } from './components/footer/footer.component';
 })
 export class PrivateLayoutComponent {
   public sidebarCollapsed = false;
-  public currentUserRole: 'admin' | 'medico' | 'paciente' = 'paciente';
+  public currentUserRole: 'admin' | 'medico' | 'paciente' = 'admin';
   public currentUser = {
     name: 'Dr. Juan Pérez',
     email: 'juan.perez@healthyme.com',
