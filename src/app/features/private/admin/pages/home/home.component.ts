@@ -2,6 +2,8 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { BaseChartDirective } from 'ng2-charts';
 import type { ChartConfiguration, ChartData } from 'chart.js';
+import type { DashboardApiService } from '../services/stats.service';
+import { Observable, forkJoin } from 'rxjs';
 
 interface IPayment {
   id: string;
@@ -27,15 +29,42 @@ interface IAppointment {
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
   // Estadísticas generales
   public generalStats = {
-    totalPatients: 1247,
-    totalDoctors: 45,
-    monthlyAppointments: 389,
-    laboratories: 8,
-    rooms: 32,
+    totalPatients: 0,
+    totalDoctors: 0,
+    monthlyAppointments: 0,
+    laboratories: 0,
+    rooms: 0,
   };
+
+  constructor(private dashboardService: DashboardApiService) {}
+
+  ngOnInit(): void {
+    forkJoin({
+      patients: this.dashboardService.getTotalPacientes(),
+      doctors: this.dashboardService.getTotalMedicos(),
+      appointments: this.dashboardService.getTotalCitas(),
+      laboratories: this.dashboardService.getTotalReservas(),
+      rooms: this.fetchRoomCountStatic(), // Si aún no tienes endpoint, puedes dejarlo así
+    }).subscribe(result => {
+      this.generalStats = {
+        totalPatients: result.patients,
+        totalDoctors: result.doctors,
+        monthlyAppointments: result.appointments,
+        laboratories: result.laboratories,
+        rooms: result.rooms,
+      };
+    });
+  }
+  private fetchRoomCountStatic(): Observable<number> {
+    // Si no tienes endpoint para cuartos, devuelve un observable estático
+    return new Observable<number>(observer => {
+      observer.next(32);
+      observer.complete();
+    });
+  }
 
   // Últimos pagos
   public recentPayments: IPayment[] = [

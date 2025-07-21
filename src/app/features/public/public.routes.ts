@@ -92,6 +92,11 @@ export const PUBLIC_ROUTES: Routes = [
           keywords: 'contacto, citas médicas, consultas, healthyme',
         },
       },
+      {
+        path: 'login',
+        loadComponent: () => import('./pages/login/login.component').then(c => c.LoginComponent),
+        title: 'Iniciar sesión',
+      },
     ],
   },
 ];
