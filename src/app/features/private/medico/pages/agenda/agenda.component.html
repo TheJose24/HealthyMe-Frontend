@@ -1,0 +1,97 @@
+<div class="min-h-screen bg-gray-50 p-6">
+  <div class="mx-auto max-w-5xl">
+    <div class="mb-6 flex items-center justify-between">
+      <h1 class="text-3xl font-bold text-gray-800">Mi Agenda</h1>
+      <div class="space-x-2">
+        <button
+          type="button"
+          (click)="prev()"
+          class="rounded-lg bg-white px-4 py-2 shadow hover:bg-gray-100"
+        >
+          ←
+        </button>
+        <button
+          type="button"
+          (click)="today()"
+          class="rounded-lg bg-indigo-600 px-4 py-2 text-white shadow hover:bg-indigo-500"
+        >
+          Hoy
+        </button>
+        <button
+          type="button"
+          (click)="next()"
+          class="rounded-lg bg-white px-4 py-2 shadow hover:bg-gray-100"
+        >
+          →
+        </button>
+      </div>
+    </div>
+
+    <!-- Calendario -->
+    <div class="overflow-hidden rounded-2xl bg-white shadow">
+      <full-calendar #calendar [options]="calendarOptions"></full-calendar>
+    </div>
+  </div>
+</div>
+
+<!-- Modal de detalle -->
+<div *ngIf="showModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+  <div class="w-full max-w-lg overflow-hidden rounded-2xl bg-white shadow-xl">
+    <div class="flex items-center justify-between border-b px-6 py-4">
+      <h2 class="text-2xl font-semibold text-gray-800">Detalle de la cita</h2>
+      <button
+        type="button"
+        (click)="closeModal()"
+        class="text-xl leading-none text-gray-400 hover:text-gray-600"
+      >
+        ✕
+      </button>
+    </div>
+    <div class="space-y-4 px-6 py-5 text-gray-700">
+      <dl class="grid grid-cols-2 gap-x-6 gap-y-4">
+        <div>
+          <dt class="font-medium">Fecha</dt>
+          <dd>{{ selectedCita?.fecha }}</dd>
+        </div>
+        <div>
+          <dt class="font-medium">Hora</dt>
+          <dd>{{ selectedCita?.hora?.slice(0, 5) }} – {{ calcEndTime(selectedCita!) }}</dd>
+        </div>
+        <div>
+          <dt class="font-medium">Duración</dt>
+          <dd>30 min</dd>
+        </div>
+        <div>
+          <dt class="font-medium">Estado</dt>
+          <dd class="uppercase">{{ selectedCita?.estado }}</dd>
+        </div>
+        <div>
+          <dt class="font-medium">Consultorio</dt>
+          <dd>{{ selectedConsultorio?.nombre }}</dd>
+        </div>
+        <div>
+          <dt class="font-medium">Sede</dt>
+          <dd>{{ selectedConsultorio?.nombreSede }}</dd>
+        </div>
+        <div>
+          <dt class="font-medium">Habitación</dt>
+          <dd>{{ selectedConsultorio?.numeroHabitacion }}</dd>
+        </div>
+        <div>
+          <dt class="font-medium">Paciente</dt>
+          <dd>{{ selectedPaciente?.nombre }} {{ selectedPaciente?.apellido }}</dd>
+        </div>
+      </dl>
+    </div>
+
+    <div class="bg-gray-50 px-6 py-4 text-right">
+      <button
+        type="button"
+        class="rounded-lg bg-indigo-600 px-4 py-2 text-white shadow hover:bg-indigo-500"
+        (click)="closeModal()"
+      >
+        Cerrar
+      </button>
+    </div>
+  </div>
+</div>
