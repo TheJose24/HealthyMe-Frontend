@@ -20,6 +20,16 @@ export const PACIENTE_ROUTES: Routes = [
         path: 'citas',
         loadComponent: () => import('./pages/citas/citas.component').then(m => m.MisCitasComponent),
       },
+      {
+        path: 'diagnosticos',
+        loadComponent: () =>
+          import('./pages/diagnosticos/diagnosticos.component').then(m => m.DiagnosticosComponent),
+      },
+      {
+        path: 'recetas',
+        loadComponent: () =>
+          import('./pages/recetas/recetas.component').then(m => m.RecetasComponent),
+      },
     ],
   },
 ];
