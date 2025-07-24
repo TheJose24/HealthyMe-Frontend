@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 // eslint-disable-next-line @typescript-eslint/consistent-type-imports
 import { HttpClient } from '@angular/common/http';
 import type { Observable } from 'rxjs';
-import { environment } from '../../../../../../environments/environment';
+import { environment } from '../../../../../environments/environment';
+import { map } from 'rxjs';
 
 export interface ICitaDTO {
   id: string;
@@ -11,11 +12,18 @@ export interface ICitaDTO {
   estado: 'PENDIENTE' | 'REALIZADA' | 'CANCELADA';
   idMedico: number;
   idPaciente: number;
+  idConsultorio: number;
+  nombreMedico: string;
+  nombreEspecialidad: string;
+
+  nombreConsultorio?: string;
+  nombreSede?: string;
+  numeroHabitacion?: number;
 }
 
 export interface ICounts {
   pendientes: number;
-  cumplidas: number;
+  realizadas: number;
   canceladas: number;
 }
 
@@ -37,15 +45,33 @@ export class CitaService {
     return this.http.get<ICitaDTO[]>(`${this.baseUrl}/usuario/${usuarioId}/ultimas?size=${size}`);
   }
   public getAllByUsuario(usuarioId: number): Observable<ICitaDTO[]> {
-    return this.http.get<ICitaDTO[]>(`${this.baseUrl}/usuario/${usuarioId}`);
+    return this.http
+      .get<ICitaDTO[]>(`${this.baseUrl}/usuario/${usuarioId}`)
+      .pipe(map(list => list.map(this.toDto)));
   }
   public getByUsuarioAndEstado(usuarioId: number, estado: string): Observable<ICitaDTO[]> {
-    return this.http.get<ICitaDTO[]>(`${this.baseUrl}/usuario/${usuarioId}?estado=${estado}`);
+    return this.http
+      .get<ICitaDTO[]>(`${this.baseUrl}/usuario/${usuarioId}?estado=${estado}`)
+      .pipe(map(list => list.map(this.toDto)));
   }
-  public delete(id: string): Observable<void> {
-    return this.http.delete<void>(`${this.baseUrl}/${id}`);
+
+  public marcarCancelada(usuarioId: string): Observable<void> {
+    return this.http.patch<void>(`${this.baseUrl}/${usuarioId}/estado`, {
+      estado: 'CANCELADA',
+    });
   }
   public getById(id: string): Observable<ICitaDTO> {
-    return this.http.get<ICitaDTO>(`${this.baseUrl}/${id}`);
+    return this.http.get<ICitaDTO>(`${this.baseUrl}/${id}`).pipe(map(this.toDto));
   }
+  private toDto = (r: any): ICitaDTO => ({
+    id: r.id ?? r.id_cita ?? '',
+    fecha: r.fecha,
+    hora: r.hora,
+    estado: r.estado,
+    idMedico: r.idMedico ?? r.id_medico ?? null,
+    idPaciente: r.idPaciente ?? r.id_paciente,
+    nombreMedico: '',
+    nombreEspecialidad: '',
+    idConsultorio: r.idConsultorio ?? r.id_consultorio ?? null,
+  });
 }

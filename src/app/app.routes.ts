@@ -15,6 +15,11 @@ export const routes: Routes = [
       import('./features/private/paciente/paciente.routes').then(r => r.PACIENTE_ROUTES),
   },
   {
+    path: 'medico',
+    loadChildren: () =>
+      import('./features/private/medico/medico.routes').then(r => r.MEDICO_ROUTES),
+  },
+  {
     path: '404',
     loadComponent: () =>
       import('./features/public/pages/not-found/not-found.component').then(

@@ -11,11 +11,11 @@ import interactionPlugin from '@fullcalendar/interaction';
 import type { CalendarOptions } from '@fullcalendar/core';
 import type { ChartData } from 'chart.js';
 // eslint-disable-next-line @typescript-eslint/consistent-type-imports
-import { CitaService } from '../services/cita.service';
-import type { ICitaDTO, ICounts } from '../services/cita.service';
+import { CitaService } from '../../services/cita.service';
+import type { ICitaDTO, ICounts } from '../../services/cita.service';
 // eslint-disable-next-line @typescript-eslint/consistent-type-imports
-import { TriajeService } from '../services/triaje.service';
-import type { ITriajeDTO } from '../services/triaje.service';
+import { TriajeService } from '../../services/triaje.service';
+import type { ITriajeDTO } from '../../services/triaje.service';
 import { of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
@@ -30,10 +30,10 @@ export class DashboardComponent implements OnInit {
   @ViewChild(BaseChartDirective) public chart?: BaseChartDirective;
   public usuarioId = 3;
   public nextCita: ICitaDTO | null = null;
-  public counts: ICounts = { pendientes: 0, cumplidas: 0, canceladas: 0 };
+  public counts: ICounts = { pendientes: 0, realizadas: 0, canceladas: 0 };
   public ultimas: ICitaDTO[] = [];
 
-  public keys: (keyof ICounts)[] = ['pendientes', 'cumplidas', 'canceladas'];
+  public keys: (keyof ICounts)[] = ['pendientes', 'realizadas', 'canceladas'];
 
   public triajes: ITriajeDTO[] = [];
   public pesoData: ChartData<'line'> = { labels: [], datasets: [] };
@@ -70,7 +70,7 @@ export class DashboardComponent implements OnInit {
   private loadCountsByUsuario(): void {
     this.citaService
       .getCountsByUsuario(this.usuarioId)
-      .pipe(catchError(() => of({ pendientes: 0, cumplidas: 0, canceladas: 0 } as ICounts)))
+      .pipe(catchError(() => of({ pendientes: 0, realizadas: 0, canceladas: 0 } as ICounts)))
       .subscribe(cnt => (this.counts = cnt));
   }
 
@@ -94,10 +94,7 @@ export class DashboardComponent implements OnInit {
         };
         this.presionData = {
           labels,
-          datasets: [
-            { data: data.map(t => t.presionSistolica), label: 'Presión Sistólica' },
-            { data: data.map(t => t.presionDiastolica), label: 'Presión Diastólica' },
-          ],
+          datasets: [{ data: data.map(t => t.presionArterial), label: 'Presión Arterial' }],
         };
       });
   }

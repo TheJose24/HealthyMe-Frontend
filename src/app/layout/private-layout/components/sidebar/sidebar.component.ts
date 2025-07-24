@@ -215,7 +215,7 @@ export class SidebarComponent implements OnInit {
           {
             label: 'Consultas del Día',
             icon: 'ri-calendar-todo-line',
-            route: '/medico/consultas-hoy',
+            route: '/medico/consultas/hoy',
           },
           {
             label: 'Historial de Consultas',
@@ -268,9 +268,15 @@ export class SidebarComponent implements OnInit {
         roles: ['paciente'],
       },
       {
-        label: 'Mi Historia Clínica',
+        label: 'Mis Diagnósticos',
         icon: 'ri-file-user-line',
-        route: '/paciente/historia-clinica',
+        route: '/paciente/diagnosticos',
+        roles: ['paciente'],
+      },
+      {
+        label: 'Mis Recetas Médicas',
+        icon: 'ri-prescription-line',
+        route: '/paciente/recetas',
         roles: ['paciente'],
       },
       {
@@ -294,12 +300,6 @@ export class SidebarComponent implements OnInit {
             route: '/paciente/reportes',
           },
         ],
-      },
-      {
-        label: 'Mis Prescripciones',
-        icon: 'ri-prescription-line',
-        route: '/paciente/prescripciones',
-        roles: ['paciente'],
       },
       {
         label: 'Teleconsulta',

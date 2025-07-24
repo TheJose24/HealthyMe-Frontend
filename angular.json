@@ -25,6 +25,7 @@
               "node_modules/swiper/swiper-bundle.css",
               "node_modules/boxicons/css/boxicons.min.css",
               "node_modules/remixicon/fonts/remixicon.css",
+              "@angular/material/prebuilt-themes/pink-bluegrey.css",
               "src/styles.css"
             ],
             "scripts": [],

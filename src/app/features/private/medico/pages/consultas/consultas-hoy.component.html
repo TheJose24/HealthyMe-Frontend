@@ -1,0 +1,34 @@
+<h1 class="mb-6 text-2xl font-semibold">Consultas del día</h1>
+
+<table class="w-full text-sm" *ngIf="!isLoading; else loading">
+  <thead>
+    <tr class="border-b text-left">
+      <th class="py-2">Paciente</th>
+      <th>Hora</th>
+      <th>Especialidad</th>
+      <th class="text-center">Acción</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr *ngFor="let c of citas" class="border-b hover:bg-slate-50">
+      <td class="py-2">{{ c.pacienteNombre }}</td>
+      <td>{{ c.hora }}</td>
+      <td>{{ c.nombreEspecialidad }}</td>
+      <td class="text-center">
+        <a
+          [routerLink]="['/medico/consultas', c.id]"
+          mat-stroked-button
+          color="primary"
+          class="!text-xs"
+        >
+          Iniciar
+        </a>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<ng-template #loading>
+  <p class="py-10 text-center text-gray-500">Cargando citas…</p>
+</ng-template>
