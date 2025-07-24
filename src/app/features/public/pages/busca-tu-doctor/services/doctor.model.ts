@@ -1,7 +1,7 @@
 export interface IMedico {
   idMedico: number;
   idUsuario: number;
-  idEspecialidad: number;
+  nombre_especialidad: string;
   nombreUsuario: string;
   imagenPerfil: string;
   persona: {
@@ -12,10 +12,4 @@ export interface IMedico {
     email: string;
     edad: number;
   };
-}
-
-export interface IEspecialidad {
-  idEspecialidad: number;
-  nombreEspecialidad: string;
-  imgEspecialidad: string;
 }
