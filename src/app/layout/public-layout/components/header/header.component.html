@@ -55,7 +55,7 @@
             <a
               [routerLink]="item.route"
               routerLinkActive="text-primary-light border-b-2 border-primary-light font-medium"
-              [routerLinkActiveOptions]="{ exact: item.route === '/home' }"
+              [routerLinkActiveOptions]="{ exact: item.route === '/' }"
               class="px-2 py-3 text-gray-medium transition-colors duration-200 ease-in-out hover:border-b-2 hover:border-primary/40 hover:text-primary dark:text-gray-light dark:hover:text-primary-light"
             >
               {{ item.label }}
@@ -180,7 +180,7 @@
         <a
           [routerLink]="item.route"
           routerLinkActive="bg-primary/10 text-primary dark:bg-primary/20 dark:text-primary-light"
-          [routerLinkActiveOptions]="{ exact: item.route === '/home' }"
+          [routerLinkActiveOptions]="{ exact: item.route === '/' }"
           class="block rounded-md px-3 py-2 text-base font-medium text-gray-medium transition-colors hover:bg-gray-light/50 dark:text-gray-light dark:hover:bg-gray-softer/30"
           (click)="closeMobileMenu()"
         >

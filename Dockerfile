@@ -25,8 +25,8 @@ COPY nginx.conf /etc/nginx/conf.d/default.conf
 COPY --from=build /app/dist/healthy-me-frontend/browser /usr/share/nginx/html
 
 # Copia los archivos robots.txt y sitemap.xml al directorio raíz de NGINX
-#COPY robots.txt /usr/share/nginx/html/robots.txt
-#COPY sitemap.xml /usr/share/nginx/html/sitemap.xml
+COPY robots.txt /usr/share/nginx/html/robots.txt
+COPY sitemap.xml /usr/share/nginx/html/sitemap.xml
 
 # Configurar permisos y directorios necesarios
 RUN apk add --no-cache brotli nginx-mod-http-brotli \
