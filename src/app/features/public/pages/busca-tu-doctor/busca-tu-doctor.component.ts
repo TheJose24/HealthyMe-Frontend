@@ -291,7 +291,6 @@ export class BuscaTuDoctorComponent implements OnInit {
   public doctoresPorPagina: number = 9;
   public cargando: boolean = true;
   public errorCarga: boolean = false;
-  private especialidadesCache = new Map<number, string>();
 
   constructor(@Inject(DoctorService) private doctorService: DoctorService) {}
 
@@ -306,7 +305,7 @@ export class BuscaTuDoctorComponent implements OnInit {
     try {
       // Cargar todos los médicos del Service
       const medicosApi = await lastValueFrom(this.doctorService.listAllMedicos());
-      // console.log('Respuesta completa:', medicosApi);
+      console.log('Respuesta completa:', medicosApi);
       // Transformar médicos
       this.doctores = await this.transformarMedicos(medicosApi);
       // Cargar lista de especialidades únicas
@@ -326,22 +325,13 @@ export class BuscaTuDoctorComponent implements OnInit {
       let nombreEspecialidad = 'Especialidad no disponible';
 
       try {
-        if (!this.especialidadesCache.has(medico.idEspecialidad)) {
-          const especialidades = await lastValueFrom(
-            this.doctorService.listEspecialidadByMedico(medico.idEspecialidad)
-          );
-          if (especialidades?.length) {
-            this.especialidadesCache.set(
-              medico.idEspecialidad,
-              especialidades[0].nombreEspecialidad
-            );
-          }
-        }
-        nombreEspecialidad =
-          this.especialidadesCache.get(medico.idEspecialidad) || nombreEspecialidad;
+        // Intentar obtener el nombre de la especialidad
+        nombreEspecialidad = medico.nombre_especialidad || 'Especialidad no especificada';
       } catch (error) {
-        console.error(`Error al obtener especialidad para médico ${medico.idMedico}:`, error);
+        console.error('Error al obtener nombre de especialidad:', error);
       }
+
+      console.log('Nombre Especialidad:', nombreEspecialidad);
 
       doctoresTransformados.push({
         nombre: `${medico.persona.nombre} ${medico.persona.apellido}`,
