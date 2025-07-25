@@ -1,4 +1,4 @@
-export interface PersonaDTO {
+export interface IPersonaDTO {
   dni: string;
   nombre: string;
   apellido: string;

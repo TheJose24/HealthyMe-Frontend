@@ -61,7 +61,7 @@
         <tr *ngFor="let paciente of pacientes" class="border-b dark:border-gray-700">
           <td class="px-4 py-2">{{ paciente.idPaciente }}</td>
           <td class="px-4 py-2">{{ paciente.idUsuario }}</td>
-          <td class="px-4 py-2">{{ paciente.seguro.nombre }}</td>
+          <td class="px-4 py-2">{{ paciente.seguro?.nombre || 'Sin seguro' }}</td>
           <td class="space-x-2 px-4 py-2">
             <button
               class="rounded-md bg-blue-500 px-3 py-1 font-medium text-white transition hover:bg-blue-600"

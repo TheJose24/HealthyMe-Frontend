@@ -1,9 +1,13 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import type { FormBuilder, FormGroup } from '@angular/forms';
+// eslint-disable-next-line @typescript-eslint/consistent-type-imports
+import { FormBuilder } from '@angular/forms';
+import type { FormGroup } from '@angular/forms';
 import { Validators, ReactiveFormsModule } from '@angular/forms';
-import type { AuthService } from '../../../../shared/services/auth.service';
-import type { Router } from '@angular/router';
+// eslint-disable-next-line @typescript-eslint/consistent-type-imports
+import { AuthService } from '../../../../shared/services/auth.service';
+// eslint-disable-next-line @typescript-eslint/consistent-type-imports
+import { Router } from '@angular/router';
 import { RouterModule } from '@angular/router';
 
 @Component({
@@ -13,11 +17,11 @@ import { RouterModule } from '@angular/router';
   templateUrl: './login.component.html',
 })
 export class LoginComponent {
-  loginForm: FormGroup;
-  error: string | null = null;
-  isLoading = false;
+  public loginForm: FormGroup;
+  public error: string | null = null;
+  public isLoading = false;
 
-  constructor(
+  public constructor(
     private fb: FormBuilder,
     private authService: AuthService,
     private router: Router
@@ -28,7 +32,7 @@ export class LoginComponent {
     });
   }
 
-  async handleLogin() {
+  public async handleLogin(): Promise<void> {
     if (this.loginForm.invalid) return;
 
     this.isLoading = true;
@@ -36,11 +40,12 @@ export class LoginComponent {
 
     try {
       const response = await this.authService.login(nombreUsuario, password);
-      console.log('Access Token recibido →', response.accessToken);
       localStorage.setItem('accessToken', response.accessToken);
       localStorage.setItem('refreshToken', response.refreshToken);
 
       const user = await this.authService.getCurrentUser();
+
+      localStorage.setItem('user', JSON.stringify(user));
 
       if (user.rol === 'ADMIN') {
         this.router.navigate(['/admin']);

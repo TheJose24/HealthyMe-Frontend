@@ -1,23 +1,24 @@
 // src/app/shared/services/auth.service.ts
 
 import { Injectable } from '@angular/core';
-import type { HttpClient } from '@angular/common/http';
+// eslint-disable-next-line @typescript-eslint/consistent-type-imports
+import { HttpClient } from '@angular/common/http';
 import { HttpErrorResponse, HttpHeaders } from '@angular/common/http';
-import type { AuthResponse } from '../../shared/models/auth-response.model';
-import type { UserDTO } from '../../shared/interfaces/user.interface';
+import type { IAuthResponse } from '../../shared/models/auth-response.model';
+import type { IUserDTO } from '../../shared/interfaces/user.interface';
 import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private baseUrl = `${environment.apiUrl}/api/v1`;
   public error: string | null = null;
+  private baseUrl = `${environment.apiUrl}/api/v1`;
 
-  constructor(private http: HttpClient) {}
+  public constructor(private http: HttpClient) {}
 
   /** Login: devuelve AuthResponse o lanza HttpErrorResponse */
-  async login(nombreUsuario: string, password: string): Promise<AuthResponse> {
+  public async login(nombreUsuario: string, password: string): Promise<IAuthResponse> {
     try {
       const payload = { nombre_usuario: nombreUsuario, contrasena: password };
       const res = await this.http.post<any>(`${this.baseUrl}/auth/login`, payload).toPromise();
@@ -27,7 +28,7 @@ export class AuthService {
         throw new Error(this.error);
       }
 
-      const mapped: AuthResponse = {
+      const mapped: IAuthResponse = {
         accessToken: res.access_token,
         refreshToken: res.refresh_token,
         username: res.username,
@@ -50,7 +51,7 @@ export class AuthService {
   }
 
   /** Obtiene el usuario actual o lanza error */
-  async getCurrentUser(): Promise<UserDTO> {
+  public async getCurrentUser(): Promise<IUserDTO> {
     try {
       const token = localStorage.getItem('accessToken');
       if (!token) {
@@ -63,7 +64,7 @@ export class AuthService {
       });
 
       const user = await this.http
-        .get<UserDTO>(`${this.baseUrl}/users/me`, { headers })
+        .get<IUserDTO>(`${this.baseUrl}/users/me`, { headers })
         .toPromise();
 
       if (!user) {

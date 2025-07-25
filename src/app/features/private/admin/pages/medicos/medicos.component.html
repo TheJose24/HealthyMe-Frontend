@@ -74,8 +74,8 @@
       <tbody>
         <tr *ngFor="let medico of medicos" class="border-b dark:border-gray-700">
           <td class="px-4 py-2">{{ medico.idMedico }}</td>
-          <td class="px-4 py-2">{{ medico.persona.nombre }} {{ medico.persona.apellido }}</td>
-          <td class="px-4 py-2">{{ medico.idEspecialidad }}</td>
+          <td class="px-4 py-2">{{ medico.persona.nombre }}</td>
+          <td class="px-4 py-2">{{ getNombreEspecialidad(medico.idEspecialidad) }}</td>
           <td class="px-4 py-2">{{ medico.persona.email }}</td>
           <td class="px-4 py-2">{{ medico.rol }}</td>
           <td class="px-4 py-2">{{ medico.estado }}</td>

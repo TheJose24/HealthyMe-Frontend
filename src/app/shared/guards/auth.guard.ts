@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import type { CanActivate, Router } from '@angular/router';
-
+// eslint-disable-next-line @typescript-eslint/consistent-type-imports
+import { CanActivate, Router } from '@angular/router';
 @Injectable({ providedIn: 'root' })
 export class AuthGuard implements CanActivate {
-  constructor(private router: Router) {}
+  public constructor(private router: Router) {}
 
-  canActivate(): boolean {
+  public canActivate(): boolean {
     const token = localStorage.getItem('accessToken');
     if (!token) {
       this.router.navigate(['/login']);

@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import type { OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { FooterComponent } from './components/footer/footer.component';
@@ -96,7 +97,7 @@ import { FooterComponent } from './components/footer/footer.component';
     }
   `,
 })
-export class PrivateLayoutComponent {
+export class PrivateLayoutComponent implements OnInit {
   public sidebarCollapsed = false;
   public currentUserRole: 'admin' | 'medico' | 'paciente' = 'paciente';
   public currentUser = {
@@ -105,11 +106,20 @@ export class PrivateLayoutComponent {
     avatar: 'assets/images/avatars/patient4.png',
   };
 
+  public ngOnInit(): void {
+    const raw = localStorage.getItem('user');
+    if (raw) {
+      const user = JSON.parse(raw);
+      this.currentUserRole = user.rol?.toLowerCase() || 'paciente';
+      this.currentUser.name = user.nombreCompleto;
+      this.currentUser.email = user.email;
+      this.currentUser.avatar = user.avatarUrl || 'assets/images/default-avatar.png';
+    }
+  }
+
   public toggleSidebar(): void {
     this.sidebarCollapsed = !this.sidebarCollapsed;
   }
 
-  public handleLogout(): void {
-    // cerrar sesión
-  }
+  public handleLogout(): void {}
 }

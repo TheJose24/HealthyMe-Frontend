@@ -1,4 +1,5 @@
 import { CommonModule } from '@angular/common';
+import type { OnInit } from '@angular/core';
 import { Component } from '@angular/core';
 import { BaseChartDirective } from 'ng2-charts';
 import type { ChartConfiguration, ChartData } from 'chart.js';

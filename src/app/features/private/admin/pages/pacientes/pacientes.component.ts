@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import type { CrudService, PacienteDTO } from '../services/crud.service';
 import type { FormBuilder, FormGroup } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
+import { normalizePaciente } from '../../../../../shared/mappers/paciente.mapper';
 
 @Component({
   selector: 'app-pacientes',
@@ -37,8 +38,16 @@ export class PacientesComponent implements OnInit {
   }
 
   loadPacientes(): void {
-    this.crudService.getPacientes().subscribe(data => {
-      this.pacientes = data;
+    this.crudService.getPacientes().subscribe((data: any[]) => {
+      console.log(JSON.stringify(data, null, 2));
+      this.pacientes = data.map(raw => ({
+        idPaciente: raw.id,
+        idUsuario: raw.id_usuario,
+        seguro: {
+          id: raw.seguro?.id,
+          nombre: raw.seguro?.nombre || 'Sin seguro',
+        },
+      }));
     });
   }
 
@@ -53,11 +62,15 @@ export class PacientesComponent implements OnInit {
     this.pacienteForm.reset();
     this.isEditing = false;
   }
-
   savePaciente(): void {
-    const paciente: PacienteDTO = this.pacienteForm.value;
-    if (this.isEditing && paciente.idPaciente) {
-      this.crudService.updatePaciente(paciente.idPaciente, paciente).subscribe(() => {
+    const rawPaciente = this.pacienteForm.value;
+    const pacienteId = rawPaciente.idPaciente;
+    const paciente = normalizePaciente(rawPaciente);
+
+    console.log('Paciente a guardar →', JSON.stringify(paciente, null, 2));
+
+    if (this.isEditing && pacienteId) {
+      this.crudService.updatePaciente(pacienteId, paciente).subscribe(() => {
         this.loadPacientes();
         this.newPaciente();
       });
