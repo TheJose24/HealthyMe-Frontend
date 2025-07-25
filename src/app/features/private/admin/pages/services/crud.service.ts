@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+// eslint-disable-next-line @typescript-eslint/consistent-type-imports
 import { HttpClient } from '@angular/common/http';
 import { HttpParams } from '@angular/common/http';
 import type { Observable } from 'rxjs';

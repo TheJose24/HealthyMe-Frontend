@@ -35,6 +35,10 @@ export class AuthService {
         rol: res.rol,
       };
 
+      // guardar tokens en localStorage
+      localStorage.setItem('accessToken', mapped.accessToken);
+      localStorage.setItem('refreshToken', mapped.refreshToken);
+
       return mapped;
     } catch (err) {
       // Mapeo de HttpErrorResponse vs. otros errores

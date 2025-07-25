@@ -305,7 +305,6 @@ export class BuscaTuDoctorComponent implements OnInit {
     try {
       // Cargar todos los médicos del Service
       const medicosApi = await lastValueFrom(this.doctorService.listAllMedicos());
-      console.log('Respuesta completa:', medicosApi);
       // Transformar médicos
       this.doctores = await this.transformarMedicos(medicosApi);
       // Cargar lista de especialidades únicas
@@ -330,8 +329,6 @@ export class BuscaTuDoctorComponent implements OnInit {
       } catch (error) {
         console.error('Error al obtener nombre de especialidad:', error);
       }
-
-      console.log('Nombre Especialidad:', nombreEspecialidad);
 
       doctoresTransformados.push({
         nombre: `${medico.persona.nombre} ${medico.persona.apellido}`,

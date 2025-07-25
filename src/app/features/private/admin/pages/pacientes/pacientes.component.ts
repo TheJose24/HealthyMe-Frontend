@@ -41,7 +41,6 @@ export class PacientesComponent implements OnInit {
 
   loadPacientes(): void {
     this.crudService.getPacientes().subscribe((data: any[]) => {
-      console.log(JSON.stringify(data, null, 2));
       this.pacientes = data.map(raw => ({
         idPaciente: raw.id,
         idUsuario: raw.id_usuario,
@@ -68,8 +67,6 @@ export class PacientesComponent implements OnInit {
     const rawPaciente = this.pacienteForm.value;
     const pacienteId = rawPaciente.idPaciente;
     const paciente = normalizePaciente(rawPaciente);
-
-    console.log('Paciente a guardar →', JSON.stringify(paciente, null, 2));
 
     if (this.isEditing && pacienteId) {
       this.crudService.updatePaciente(pacienteId, paciente).subscribe(() => {
