@@ -1,0 +1,38 @@
+<!-- login.component.html -->
+<form
+  [formGroup]="loginForm"
+  (ngSubmit)="handleLogin()"
+  class="mx-auto max-w-md space-y-6 rounded-lg bg-white p-6 shadow-lg"
+>
+  <h2 class="text-center text-2xl font-semibold text-gray-800">Iniciar Sesión</h2>
+
+  <div>
+    <input
+      type="text"
+      formControlName="nombreUsuario"
+      placeholder="Usuario"
+      class="w-full rounded-md border border-gray-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+    />
+  </div>
+
+  <div>
+    <input
+      type="password"
+      formControlName="password"
+      placeholder="Contraseña"
+      class="w-full rounded-md border border-gray-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+    />
+  </div>
+
+  <button
+    type="submit"
+    [disabled]="isLoading"
+    class="w-full rounded-md bg-blue-600 py-3 font-medium text-white transition-colors hover:bg-blue-700 disabled:cursor-not-allowed disabled:bg-gray-400"
+  >
+    {{ isLoading ? 'Ingresando...' : 'Ingresar' }}
+  </button>
+
+  <div *ngIf="error" class="mt-2 text-center text-red-600">
+    {{ error }}
+  </div>
+</form>

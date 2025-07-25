@@ -1,0 +1,100 @@
+<div class="min-h-screen bg-gray-50 p-6 dark:bg-gray-900">
+  <div class="mb-8">
+    <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Gestión de Médicos</h1>
+    <p class="text-gray-600 dark:text-gray-300">Administra los médicos registrados en HealthyMe</p>
+  </div>
+
+  <div class="mb-6 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+    <button
+      class="rounded-md bg-blue-600 px-4 py-2 font-semibold text-white shadow transition hover:bg-blue-700"
+      (click)="newMedico()"
+    >
+      Nuevo Médico
+    </button>
+
+    <form
+      [formGroup]="medicoForm"
+      (ngSubmit)="saveMedico()"
+      class="flex flex-col items-center gap-4 md:flex-row"
+    >
+      <input
+        type="number"
+        formControlName="idUsuario"
+        placeholder="ID Usuario"
+        class="rounded-md border px-3 py-2 focus:ring-2 focus:ring-blue-500"
+      />
+      <input
+        type="number"
+        formControlName="idEspecialidad"
+        placeholder="ID Especialidad"
+        class="rounded-md border px-3 py-2 focus:ring-2 focus:ring-blue-500"
+      />
+
+      <select
+        formControlName="rol"
+        class="rounded-md border px-3 py-2 focus:ring-2 focus:ring-blue-500"
+      >
+        <option value="">Seleccione rol</option>
+        <option value="ADMIN">Admin</option>
+        <option value="MEDICO">Médico</option>
+        <option value="PACIENTE">Paciente</option>
+      </select>
+
+      <select
+        formControlName="estado"
+        class="rounded-md border px-3 py-2 focus:ring-2 focus:ring-blue-500"
+      >
+        <option value="ACTIVO">Activo</option>
+        <option value="SUSPENDIDO">Suspendido</option>
+        <option value="ELIMINADO">Eliminado</option>
+      </select>
+
+      <button
+        type="submit"
+        class="rounded-md bg-green-600 px-4 py-2 font-semibold text-white shadow transition hover:bg-green-700"
+      >
+        {{ isEditing ? 'Actualizar' : 'Crear' }}
+      </button>
+    </form>
+  </div>
+
+  <div class="overflow-x-auto rounded-lg bg-white shadow dark:bg-gray-800">
+    <table class="min-w-full">
+      <thead class="bg-gray-100 dark:bg-gray-700">
+        <tr>
+          <th class="px-4 py-2 text-left text-gray-700 dark:text-gray-200">ID Médico</th>
+          <th class="px-4 py-2 text-left text-gray-700 dark:text-gray-200">Nombre</th>
+          <th class="px-4 py-2 text-left text-gray-700 dark:text-gray-200">Especialidad</th>
+          <th class="px-4 py-2 text-left text-gray-700 dark:text-gray-200">Email</th>
+          <th class="px-4 py-2 text-left text-gray-700 dark:text-gray-200">Rol</th>
+          <th class="px-4 py-2 text-left text-gray-700 dark:text-gray-200">Estado</th>
+          <th class="px-4 py-2 text-left text-gray-700 dark:text-gray-200">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let medico of medicos" class="border-b dark:border-gray-700">
+          <td class="px-4 py-2">{{ medico.idMedico }}</td>
+          <td class="px-4 py-2">{{ medico.persona.nombre }}</td>
+          <td class="px-4 py-2">{{ getNombreEspecialidad(medico.idEspecialidad) }}</td>
+          <td class="px-4 py-2">{{ medico.persona.email }}</td>
+          <td class="px-4 py-2">{{ medico.rol }}</td>
+          <td class="px-4 py-2">{{ medico.estado }}</td>
+          <td class="space-x-2 px-4 py-2">
+            <button
+              class="rounded-md bg-blue-500 px-3 py-1 font-medium text-white transition hover:bg-blue-600"
+              (click)="selectMedico(medico)"
+            >
+              Editar
+            </button>
+            <button
+              class="rounded-md bg-red-500 px-3 py-1 font-medium text-white transition hover:bg-red-600"
+              (click)="deleteMedico(medico.idMedico)"
+            >
+              Eliminar
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
