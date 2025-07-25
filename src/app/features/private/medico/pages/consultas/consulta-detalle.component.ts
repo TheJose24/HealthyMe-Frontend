@@ -58,7 +58,7 @@ export class ConsultaDetalleComponent implements OnInit {
     sintomas: '',
     diagnostico: '',
     fecha: '',
-    idCita: 0,
+    idCita: '',
     idPaciente: 0,
     idMedico: 0,
   };
@@ -74,14 +74,14 @@ export class ConsultaDetalleComponent implements OnInit {
   ) {}
 
   public ngOnInit(): void {
-    const citaId = +this.route.snapshot.paramMap.get('citaId')!;
+    const citaId = this.route.snapshot.paramMap.get('citaId')!;
 
-    this.citaSrv.getById(String(citaId)).subscribe({
+    this.citaSrv.getById(citaId).subscribe({
       next: c => {
         this.cita = c;
         this.consulta = {
           ...this.consulta,
-          idCita: +c.id,
+          idCita: c.id,
           idPaciente: c.idPaciente,
           idMedico: c.idMedico,
           fecha: c.fecha,

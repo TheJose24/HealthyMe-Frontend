@@ -127,8 +127,23 @@
 
 <ng-template #confirmTpl>
   <div class="w-[22rem] rounded-2xl bg-white p-6 shadow-xl ring-1 ring-gray-200">
-    <h2 class="mb-6 flex items-baseline gap-2 text-xl font-semibold text-gray-900">
-      <mat-icon fontIcon="help" class="!text-primary-600 text-xl leading-none"></mat-icon>
+    <h2 class="mb-6 flex items-center gap-2 text-xl font-semibold text-gray-900">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="h-6 w-6 text-black"
+        viewBox="0 0 24 24"
+        fill="currentColor"
+      >
+        <path
+          fill-rule="evenodd"
+          d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10
+             10-4.477 10-10S17.523 2 12 2zm.25 15.25a1.25
+             1.25 0 11-2.5 0 1.25 1.25 0 012.5 0zM12 6a4
+             4 0 00-4 4h2a2 2 0 114 0c0 2-3 1.75-3 4.25h2c0-1.5
+             3-1.75 3-4.25a4 4 0 00-4-4z"
+          clip-rule="evenodd"
+        />
+      </svg>
       Guardar consulta
     </h2>
     <p class="mb-6 text-sm text-gray-600">

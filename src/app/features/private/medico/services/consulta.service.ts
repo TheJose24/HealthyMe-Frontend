@@ -9,7 +9,7 @@ export interface IConsulta {
   sintomas: string;
   diagnostico: string;
   fecha: string;
-  idCita: number;
+  idCita: string;
   idPaciente: number;
   idMedico: number;
 }
