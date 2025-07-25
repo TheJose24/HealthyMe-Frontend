@@ -36,6 +36,7 @@ export class SidebarComponent implements OnInit {
   @Output() public logout = new EventEmitter<void>();
 
   public menuItems: ISidebarItem[] = [];
+  public isLoggingOut = false;
 
   public constructor(private router: Router) {}
 
@@ -47,12 +48,62 @@ export class SidebarComponent implements OnInit {
     this.toggleSidebar.emit();
   }
 
-  public onLogout(): void {
-    this.logout.emit();
+  public async onLogout(): Promise<void> {
+    if (this.isLoggingOut) return;
+
+    // Mostrar confirmación
+    const confirmed = window.confirm('¿Estás seguro que deseas cerrar sesión?');
+    if (!confirmed) return;
+
+    try {
+      this.isLoggingOut = true;
+
+      // Llamar al servicio de logout
+      //await this.authService.logout();
+
+      // Limpiar datos locales
+      this.clearLocalData();
+
+      // Emitir evento para el componente padre
+      this.logout.emit();
+
+      // Redirigir al login
+      await this.router.navigate(['/login'], {
+        replaceUrl: true,
+        queryParams: { message: 'session-closed' },
+      });
+    } catch (error) {
+      console.error('Error al cerrar sesión:', error);
+
+      // Forzar limpieza y redirección en caso de error
+      this.clearLocalData();
+      await this.router.navigate(['/login'], {
+        replaceUrl: true,
+        queryParams: { error: 'logout-error' },
+      });
+    } finally {
+      this.isLoggingOut = false;
+    }
+  }
+
+  private clearLocalData(): void {
+    // Limpiar localStorage
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('refreshToken');
+    localStorage.removeItem('user');
+
+    // Limpiar sessionStorage
+    sessionStorage.removeItem('accessToken');
+    sessionStorage.removeItem('refreshToken');
+    sessionStorage.removeItem('user');
+
+    // Limpiar cualquier otro dato de sesión
+    localStorage.removeItem('userPreferences');
+    localStorage.removeItem('sidebarState');
   }
 
   public toggleSubmenu(item: ISidebarItem): void {
-    if (item.children) {
+    if (item.children && !this.isCollapsed) {
       item.isExpanded = !item.isExpanded;
     }
   }
