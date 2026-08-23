@@ -3,7 +3,7 @@
 ## Descripción General
 **HealthyMe Frontend** es la aplicación web desarrollada en Angular 17 para la gestión integral de clínicas médicas. Este proyecto ofrece una interfaz moderna, rápida y adaptable, que permite a pacientes, médicos y administradores interactuar de manera eficiente con los servicios ofrecidos por **HealthyMe Backend**.
 
-Esta plataforma está diseñada como parte del curso de "Desarrollo Web Integrado" de la Universidad Tecnológica del Perú, enfocándose en una arquitectura escalable y una experiencia de usuario optimizada.
+Está construida sobre una arquitectura modular por dominio funcional, con ESLint, Prettier, Husky y commitlint para mantener el estilo y los mensajes de commit consistentes en todo el equipo.
 
 ## Arquitectura del Frontend
 HealthyMe Frontend está diseñado para consumir los microservicios del backend de forma modular, organizando la estructura en función de cada dominio funcional:
@@ -201,12 +201,13 @@ tipo(<módulo>): título descriptivo en minúsculas y sin punto final
 - Detalle 2
 - Etc.
 ```
+```plaintext
 feat(auth): implementar sistema de registro con verificación de email
 
 - Añadido formulario de registro con validación
 - Integración con servicio de envío de emails
 - Creada página de confirmación de registro
-```plaintext
+```
 
 ```plaintext
 fix(citas): corregir conflicto en la programación simultánea de horarios
